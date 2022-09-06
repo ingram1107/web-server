@@ -42,7 +42,7 @@ int main(void) {
     fprintf(stderr, "web-server:     internet address: %d\n", ntohs(serverAddress.sin_addr.s_addr));
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
-    goto cleanup;
+    goto sock_cleanup;
   }
 
   int listenStatus = listen(serverSocket, 5);
@@ -67,7 +67,7 @@ int main(void) {
     fprintf(stderr, "web-server: fail to bind client socket\n");
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
-    goto cleanup;
+    goto sock_cleanup;
   }
 
   memset(receiveBuffer, 0, HTTP_HEADER_LEN);  /* Null terminate the received string */
@@ -98,7 +98,9 @@ int main(void) {
   free(serverData);
   return EXIT_SUCCESS;
 
-cleanup:
+sock_cleanup:
+  close(serverSocket);
+mem_cleanup:
   free(serverData);
   return EXIT_FAILURE;
 }
