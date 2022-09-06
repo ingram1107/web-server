@@ -13,8 +13,8 @@
 
 int main(void) {
   int errnum;
-  char *receiveBuffer = calloc(HTTP_HEADER_LEN, sizeof(char));
-  char *serverData = calloc(HTTP_HEADER_LEN, sizeof(char));
+  char receiveBuffer[HTTP_HEADER_LEN] = { 0 };
+  char serverData[HTTP_HEADER_LEN] = { 0 };
   int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
   if (serverSocket == -1) {
     errnum = errno;
@@ -95,12 +95,10 @@ int main(void) {
   }
   close(serverSocket);
 
-  free(serverData);
   return EXIT_SUCCESS;
 
 sock_cleanup:
   close(serverSocket);
 mem_cleanup:
-  free(serverData);
   return EXIT_FAILURE;
 }
