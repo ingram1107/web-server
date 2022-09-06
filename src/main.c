@@ -80,10 +80,6 @@ int main(void) {
     }
     memset(receiveBuffer, 0, HTTP_HEADER_LEN);
   }
-  /**
-   * TODO: the web browser is unable to display "Hello", tested in Chromium and
-   * Firefox
-   */
   snprintf(serverData, sizeof(serverData), "HTTP/1.1 200 OK\r\n\r\nHello");
   int responseStatus = write(clientSocket, &serverData, strlen(serverData));
   if (responseStatus == -1) {
