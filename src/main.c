@@ -21,7 +21,7 @@ int main(void) {
     fprintf(stderr, "web-server: fail to create server socket\n");
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
-    goto mem_cleanup;
+    goto failure;
   }
 
   struct sockaddr_in serverAddress = {
@@ -42,7 +42,7 @@ int main(void) {
     fprintf(stderr, "web-server:     internet address: %d\n", ntohs(serverAddress.sin_addr.s_addr));
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
-    goto sock_cleanup;
+    goto cleanup;
   }
 
   int listenStatus = listen(serverSocket, 5);
@@ -55,7 +55,7 @@ int main(void) {
     fprintf(stderr, "web-server:     internet address: %d\n", ntohs(serverAddress.sin_addr.s_addr));
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
-    goto sock_cleanup;
+    goto cleanup;
   }
 
   int clientSocket;
@@ -67,7 +67,7 @@ int main(void) {
     fprintf(stderr, "web-server: fail to bind client socket\n");
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
-    goto sock_cleanup;
+    goto cleanup;
   }
 
   memset(receiveBuffer, 0, HTTP_HEADER_LEN);  /* Null terminate the received string */
@@ -91,14 +91,14 @@ int main(void) {
     fprintf(stderr, "web-server: fail to write a response to the client socket\n");
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
-    goto sock_cleanup;
+    goto cleanup;
   }
   close(serverSocket);
 
   return EXIT_SUCCESS;
 
-sock_cleanup:
+cleanup:
   close(serverSocket);
-mem_cleanup:
+failure:
   return EXIT_FAILURE;
 }
