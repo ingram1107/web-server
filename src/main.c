@@ -15,7 +15,14 @@ int main(void) {
   int errnum;
   char *receiveBuffer = calloc(HTTP_HEADER_LEN, sizeof(char));
   char *serverData = calloc(HTTP_HEADER_LEN, sizeof(char));
-  int serverSocket = socket(AF_INET, SOCK_STREAM, 0); // TODO: err handling
+  int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+  if (serverSocket == -1) {
+    errnum = errno;
+    fprintf(stderr, "web-server: fail to create server socket\n");
+    fprintf(stderr, "web-server: return value %d\n", errnum);
+    perror("web-server");
+    goto mem_cleanup;
+  }
 
   struct sockaddr_in serverAddress = {
     .sin_family = AF_INET,
@@ -29,12 +36,27 @@ int main(void) {
   if (bindStatus == -1) {
     errnum = errno;
     fprintf(stderr, "web-server: fail to bind server socket\n");
+    fprintf(stderr, "web-server: socket details shown as follow:\n");
+    fprintf(stderr, "web-server:     address family: %d\n", serverAddress.sin_family);
+    fprintf(stderr, "web-server:     listen port: %d\n", ntohs(serverAddress.sin_port));
+    fprintf(stderr, "web-server:     internet address: %d\n", ntohs(serverAddress.sin_addr.s_addr));
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
     goto cleanup;
   }
 
-  listen(serverSocket, 5);  // TODO: err handling
+  int listenStatus = listen(serverSocket, 5);
+  if (listenStatus == -1) {
+    errnum = errno;
+    fprintf(stderr, "web-server: fail to listen for connections on server socket\n");
+    fprintf(stderr, "web-server: socket details shown as follow:\n");
+    fprintf(stderr, "web-server:     address family: %d\n", serverAddress.sin_family);
+    fprintf(stderr, "web-server:     listen port: %d\n", ntohs(serverAddress.sin_port));
+    fprintf(stderr, "web-server:     internet address: %d\n", ntohs(serverAddress.sin_addr.s_addr));
+    fprintf(stderr, "web-server: return value %d\n", errnum);
+    perror("web-server");
+    goto sock_cleanup;
+  }
 
   int clientSocket;
   clientSocket = accept(serverSocket,
@@ -49,13 +71,28 @@ int main(void) {
   }
 
   memset(receiveBuffer, 0, HTTP_HEADER_LEN);  /* Null terminate the received string */
-  read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
+  int messageSize;
+  while ((messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1)) > 0) {
+    if (receiveBuffer[messageSize-1] == '\n') {
+      printf("%s", receiveBuffer);
+      fflush(stdout);
+      break;
+    }
+    memset(receiveBuffer, 0, HTTP_HEADER_LEN);
+  }
   /**
    * TODO: the web browser is unable to display "Hello", tested in Chromium and
    * Firefox
    */
   snprintf(serverData, sizeof(serverData), "HTTP/1.1 200 OK\r\n\r\nHello");
-  write(clientSocket, &serverData, strlen(serverData));
+  int responseStatus = write(clientSocket, &serverData, strlen(serverData));
+  if (responseStatus == -1) {
+    errnum = errno;
+    fprintf(stderr, "web-server: fail to write a response to the client socket\n");
+    fprintf(stderr, "web-server: return value %d\n", errnum);
+    perror("web-server");
+    goto sock_cleanup;
+  }
   close(serverSocket);
 
   free(serverData);
