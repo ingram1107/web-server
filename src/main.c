@@ -61,7 +61,7 @@ int main(void) {
   int clientSocket;
   clientSocket = accept(serverSocket,
                         (struct sockaddr *) NULL,
-                        (unsigned int *) NULL);
+                        NULL);
   if (clientSocket == -1) {
     errnum = errno;
     fprintf(stderr, "web-server: fail to bind client socket\n");
