@@ -80,6 +80,39 @@ int main(void) {
   }
   receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
 
+  char httpMethod[8] = { 0 };
+  char httpPath[1024] = { 0 };
+  char httpVersion[10] = { 0 };
+  char* httpToken;
+
+  /**
+   * TODO: Might need to design a filter that do the same job as strtok do but
+   * much resilient to buffer overflow and able to treat all space character as
+   * the same.
+   */
+  /* Get HTTP method type */
+  httpToken = strtok(receiveBuffer, " ");
+  if (httpToken != NULL) {
+    strncpy(httpMethod, httpToken, strlen(httpToken));
+    printf("web-server: HTTP Method: %s\n", httpMethod);
+  }
+
+  /* Get HTTP request path */
+  httpToken = strtok(NULL, " ");
+  if (httpToken != NULL) {
+    strncpy(httpPath, httpToken, strlen(httpToken));
+    printf("web-server: HTTP Request Path: %s\n", httpPath);
+  }
+
+  /* Get HTTP version */
+  httpToken = strtok(NULL, "\n");
+  if (httpToken != NULL) {
+    strncpy(httpVersion, httpToken, strlen(httpToken));
+    printf("web-server: HTTP Version: %s\n", httpVersion);
+  }
+
+  fflush(stdout);
+
   snprintf(serverData, sizeof(serverData), "HTTP/1.1 200 OK\r\n\r\nHello");
   int responseStatus = write(clientSocket, &serverData, strlen(serverData));
   if (responseStatus == -1) {
