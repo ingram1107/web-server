@@ -73,7 +73,7 @@ int main(void) {
   int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
   if (messageSize < 0) {
     errnum = errno;
-    fprintf(stderr, "web-server: fail to bind client socket\n");
+    fprintf(stderr, "web-server: fail to read client socket\n");
     fprintf(stderr, "web-server: return value %d\n", errnum);
     perror("web-server");
     goto cleanup;
