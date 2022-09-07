@@ -11,6 +11,14 @@
 
 #define HTTP_HEADER_LEN 8192
 
+/**
+ * TODO: implement other HTTP method: HEAD, DELETE, CONNECT, OPTIONS, TRACE,
+ * PATCH
+ */
+const char httpGET[] = "GET";
+const char httpPOST[] = "POST";
+const char httpPUT[] = "PUT";
+
 int main(void) {
   int errnum;
   char receiveBuffer[HTTP_HEADER_LEN] = { 0 };
@@ -113,14 +121,28 @@ int main(void) {
 
   fflush(stdout);
 
-  snprintf(serverData, sizeof(serverData), "HTTP/1.1 200 OK\r\n\r\nHello");
-  int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-  if (responseStatus == -1) {
-    errnum = errno;
-    fprintf(stderr, "web-server: fail to write a response to the client socket\n");
-    fprintf(stderr, "web-server: return value %d\n", errnum);
-    perror("web-server");
-    goto cleanup;
+  if (strcmp(httpMethod, httpGET) == 0) {
+    if (strcmp(httpPath, "/") == 0) snprintf(serverData, sizeof(serverData), "HTTP/1.1 200 OK\r\n\r\nHello");
+    else snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found\r\n\r\n");
+
+    int responseStatus = write(clientSocket, &serverData, strlen(serverData));
+    if (responseStatus == -1) {
+      errnum = errno;
+      fprintf(stderr, "web-server: fail to write a response to the client socket\n");
+      fprintf(stderr, "web-server: return value %d\n", errnum);
+      perror("web-server");
+      goto cleanup;
+    }
+  } else {
+    snprintf(serverData, sizeof(serverData), "HTTP/1.1 405 Method Not Allowed\r\n\r\n");
+    int responseStatus = write(clientSocket, &serverData, strlen(serverData));
+    if (responseStatus == -1) {
+      errnum = errno;
+      fprintf(stderr, "web-server: fail to write a response to the client socket\n");
+      fprintf(stderr, "web-server: return value %d\n", errnum);
+      perror("web-server");
+      goto cleanup;
+    }
   }
   close(serverSocket);
 
