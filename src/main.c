@@ -70,16 +70,16 @@ int main(void) {
     goto cleanup;
   }
 
-  memset(receiveBuffer, 0, HTTP_HEADER_LEN);  /* Null terminate the received string */
-  int messageSize;
-  while ((messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1)) > 0) {
-    if (receiveBuffer[messageSize-1] == '\n') {
-      printf("%s", receiveBuffer);
-      fflush(stdout);
-      break;
-    }
-    memset(receiveBuffer, 0, HTTP_HEADER_LEN);
+  int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
+  if (messageSize < 0) {
+    errnum = errno;
+    fprintf(stderr, "web-server: fail to bind client socket\n");
+    fprintf(stderr, "web-server: return value %d\n", errnum);
+    perror("web-server");
+    goto cleanup;
   }
+  receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
+
   snprintf(serverData, sizeof(serverData), "HTTP/1.1 200 OK\r\n\r\nHello");
   int responseStatus = write(clientSocket, &serverData, strlen(serverData));
   if (responseStatus == -1) {
