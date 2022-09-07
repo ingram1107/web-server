@@ -20,7 +20,7 @@ if(BUILD_DOCS)
   set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/doxyfile)
 
   configure_file(${doxyfile_in} ${doxyfile} @ONLY)
-  message("Building documentation...")
+  message("-- Documentation generated from " ${doxyfile_in})
 
   add_custom_target(doc
     COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile_in}
