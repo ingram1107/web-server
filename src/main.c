@@ -122,8 +122,24 @@ int main(void) {
   fflush(stdout);
 
   if (strcmp(httpMethod, httpGET) == 0) {
-    if (strcmp(httpPath, "/") == 0) snprintf(serverData, sizeof(serverData), "HTTP/1.1 200 OK\r\n\r\nHello");
-    else snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found\r\n\r\n");
+    if (strcmp(httpPath, "/") == 0) {
+      char httpResponse[HTTP_HEADER_LEN] = "HTTP/1.1 200 OK\r\n\r\n";
+      char htmlFileName[] = "../tests/index.html";
+      FILE* htmlPage = fopen(htmlFileName, "r");
+      if (!htmlPage) {
+        errnum = errno;
+        fprintf(stderr, "web-server: fail to read file '%s'\n", htmlFileName);
+        fprintf(stderr, "web-server: return value %d\n", errnum);
+        perror("web-server");
+        goto cleanup;
+      }
+      char readBuffer[] = { 0 };
+      fread(readBuffer, sizeof(char), 4096, htmlPage);
+      strcat(httpResponse, readBuffer);
+
+      snprintf(serverData, sizeof(serverData), "%s", httpResponse);
+    } else
+      snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found");
 
     int responseStatus = write(clientSocket, &serverData, strlen(serverData));
     if (responseStatus == -1) {
