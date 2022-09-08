@@ -140,7 +140,7 @@ int main(void) {
 
         snprintf(serverData, sizeof(serverData), "%s", httpResponse);
       } else
-        snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found");
+        snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found\r\n\r\n");
 
       int responseStatus = write(clientSocket, &serverData, strlen(serverData));
       if (responseStatus == -1) {
