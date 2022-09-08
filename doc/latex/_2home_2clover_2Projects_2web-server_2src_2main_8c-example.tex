@@ -1,0 +1,127 @@
+\hypertarget{_2home_2clover_2Projects_2web-server_2src_2main_8c-example}{}\doxysection{/home/clover/\+Projects/web-\/server/src/main.\+c}
+print error and terminate the process
+
+print error and terminate the process\+Print error status of the process based on {\itshape errno} set, and then terminate the process right after, with an exit status of {\itshape 1}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em prompt} & Brief words should be displayed before the error message, typically the process name @noreturn\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <arpa/inet.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <asm-\/generic/errno.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <errno.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <netinet/in.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <sys/socket.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <sys/types.h>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <unistd.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define HTTP\_HEADER\_LEN 8192}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{const} \textcolor{keywordtype}{char} \mbox{\hyperlink{main_8c_ae782847b32dd682dcb0218d9facf3aa0}{httpGET}}[] = \textcolor{stringliteral}{"{}GET"{}};}
+\DoxyCodeLine{\textcolor{keyword}{const} \textcolor{keywordtype}{char} \mbox{\hyperlink{main_8c_a7cbfa0f543df080710e95850bb97428a}{httpPOST}}[] = \textcolor{stringliteral}{"{}POST"{}};}
+\DoxyCodeLine{\textcolor{keyword}{const} \textcolor{keywordtype}{char} \mbox{\hyperlink{main_8c_abad6a5a30f6b81eca71cc7c8e69adb78}{httpPUT}}[] = \textcolor{stringliteral}{"{}PUT"{}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void} printErrorAndExit(\textcolor{keywordtype}{char}* prompt) \{}
+\DoxyCodeLine{  perror(prompt);}
+\DoxyCodeLine{  exit(EXIT\_FAILURE);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} errnum;}
+\DoxyCodeLine{  \textcolor{keywordtype}{char} receiveBuffer[\mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \{ 0 \};}
+\DoxyCodeLine{  \textcolor{keywordtype}{char} serverData[\mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \{ 0 \};}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} serverSocket = socket(AF\_INET, SOCK\_STREAM, 0);}
+\DoxyCodeLine{  \textcolor{keywordflow}{if} (serverSocket == -\/1) printErrorAndExit(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{keyword}{struct }sockaddr\_in serverAddress = \{}
+\DoxyCodeLine{    .sin\_family = AF\_INET,}
+\DoxyCodeLine{    .sin\_port = htons(80),          \textcolor{comment}{/* connect with HTTP protocol */}}
+\DoxyCodeLine{    .sin\_addr.s\_addr = INADDR\_ANY,}
+\DoxyCodeLine{  \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} bindStatus = bind(serverSocket,}
+\DoxyCodeLine{                        (\textcolor{keyword}{struct} sockaddr *) \&serverAddress,}
+\DoxyCodeLine{                        \textcolor{keyword}{sizeof}(serverAddress));}
+\DoxyCodeLine{  \textcolor{keywordflow}{if} (bindStatus == -\/1) printErrorAndExit(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} listenStatus = listen(serverSocket, 5);}
+\DoxyCodeLine{  \textcolor{keywordflow}{if} (listenStatus == -\/1) printErrorAndExit(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{keywordflow}{while} (1) \{}
+\DoxyCodeLine{    \textcolor{keywordtype}{int} clientSocket;}
+\DoxyCodeLine{    clientSocket = accept(serverSocket,}
+\DoxyCodeLine{        (\textcolor{keyword}{struct} sockaddr *) NULL,}
+\DoxyCodeLine{        NULL);}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} (clientSocket == -\/1) printErrorAndExit(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{keywordtype}{int} messageSize = read(clientSocket, receiveBuffer, \mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}-\/1);}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} (messageSize < 0) printErrorAndExit(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{    receiveBuffer[messageSize-\/1] = \textcolor{charliteral}{'\(\backslash\)0'};  \textcolor{comment}{/* Null terminate the received string */}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{keywordtype}{char} httpMethod[8] = \{ 0 \};}
+\DoxyCodeLine{    \textcolor{keywordtype}{char} httpPath[1024] = \{ 0 \};}
+\DoxyCodeLine{    \textcolor{keywordtype}{char} httpVersion[10] = \{ 0 \};}
+\DoxyCodeLine{    \textcolor{keywordtype}{char}* httpToken;}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{comment}{/* Get HTTP method type */}}
+\DoxyCodeLine{    httpToken = strtok(receiveBuffer, \textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} (httpToken != NULL) \{}
+\DoxyCodeLine{      strncpy(httpMethod, httpToken, strlen(httpToken));}
+\DoxyCodeLine{      printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Method: \%s\(\backslash\)n"{}}, httpMethod);}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{comment}{/* Get HTTP request path */}}
+\DoxyCodeLine{    httpToken = strtok(NULL, \textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} (httpToken != NULL) \{}
+\DoxyCodeLine{      strncpy(httpPath, httpToken, strlen(httpToken));}
+\DoxyCodeLine{      printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Request Path: \%s\(\backslash\)n"{}}, httpPath);}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{comment}{/* Get HTTP version */}}
+\DoxyCodeLine{    httpToken = strtok(NULL, \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} (httpToken != NULL) \{}
+\DoxyCodeLine{      strncpy(httpVersion, httpToken, strlen(httpToken));}
+\DoxyCodeLine{      printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Version: \%s\(\backslash\)n"{}}, httpVersion);}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{    fflush(stdout);}
+\DoxyCodeLine{}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} (strcmp(httpMethod, \mbox{\hyperlink{main_8c_ae782847b32dd682dcb0218d9facf3aa0}{httpGET}}) == 0) \{}
+\DoxyCodeLine{      \textcolor{keywordflow}{if} (strcmp(httpPath, \textcolor{stringliteral}{"{}/"{}}) == 0) \{}
+\DoxyCodeLine{        \textcolor{keywordtype}{char} httpResponse[\mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \textcolor{stringliteral}{"{}HTTP/1.1 200 OK\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)n"{}};}
+\DoxyCodeLine{        \textcolor{keywordtype}{char} htmlFileName[] = \textcolor{stringliteral}{"{}../tests/index.html"{}};}
+\DoxyCodeLine{        FILE* htmlPage = fopen(htmlFileName, \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{        \textcolor{keywordflow}{if} (!htmlPage) printErrorAndExit(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{        \textcolor{keywordtype}{char} readBuffer[] = \{ 0 \};}
+\DoxyCodeLine{        fread(readBuffer, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}), 4096, htmlPage);}
+\DoxyCodeLine{        strcat(httpResponse, readBuffer);}
+\DoxyCodeLine{}
+\DoxyCodeLine{        snprintf(serverData, \textcolor{keyword}{sizeof}(serverData), \textcolor{stringliteral}{"{}\%s"{}}, httpResponse);}
+\DoxyCodeLine{      \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{        snprintf(serverData, \textcolor{keyword}{sizeof}(serverData), \textcolor{stringliteral}{"{}HTTP/1.1 404 Not Found\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{      \textcolor{keywordtype}{int} responseStatus = write(clientSocket, \&serverData, strlen(serverData));}
+\DoxyCodeLine{      \textcolor{keywordflow}{if} (responseStatus == -\/1) printErrorAndExit(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{      snprintf(serverData, \textcolor{keyword}{sizeof}(serverData), \textcolor{stringliteral}{"{}HTTP/1.1 405 Method Not Allowed\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{      \textcolor{keywordtype}{int} responseStatus = write(clientSocket, \&serverData, strlen(serverData));}
+\DoxyCodeLine{      \textcolor{keywordflow}{if} (responseStatus == -\/1) printErrorAndExit(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{    close(clientSocket);}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{  close(serverSocket);}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{keywordflow}{return} EXIT\_SUCCESS;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCodeInclude}
+ 

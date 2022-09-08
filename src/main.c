@@ -1,3 +1,4 @@
+/** @file */
 #include <arpa/inet.h>
 #include <asm-generic/errno.h>
 #include <errno.h>
@@ -9,21 +10,47 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+/**
+ * Accepted HTTP header length
+ */
 #define HTTP_HEADER_LEN 8192
 
 /**
  * TODO: implement other HTTP method: HEAD, DELETE, CONNECT, OPTIONS, TRACE,
  * PATCH
  */
+
+/**
+ * HTTP GET method pattern
+ */
 const char httpGET[] = "GET";
+/**
+ * HTTP POST method pattern
+ */
 const char httpPOST[] = "POST";
+/**
+ * HTTP PUT method pattern
+ */
 const char httpPUT[] = "PUT";
 
+/**
+ * @brief print error and terminate the process
+ *
+ * Print error status of the process based on @a errno set, and then terminate
+ * the process right after, with @a EXIT_FAILURE.
+ *
+ * @param[in] prompt Brief string that should be displayed before the error
+ *                   message, typically the process name
+ */
 void printErrorAndExit(char* prompt) {
   perror(prompt);
   exit(EXIT_FAILURE);
 }
 
+/**
+ * @brief main function
+ * @return int
+ */
 int main(void) {
   int errnum;
   char receiveBuffer[HTTP_HEADER_LEN] = { 0 };
