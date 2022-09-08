@@ -19,18 +19,17 @@ const char httpGET[] = "GET";
 const char httpPOST[] = "POST";
 const char httpPUT[] = "PUT";
 
+void printErrorAndExit(char* prompt) {
+  perror(prompt);
+  exit(EXIT_FAILURE);
+}
+
 int main(void) {
   int errnum;
   char receiveBuffer[HTTP_HEADER_LEN] = { 0 };
   char serverData[HTTP_HEADER_LEN] = { 0 };
   int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-  if (serverSocket == -1) {
-    errnum = errno;
-    fprintf(stderr, "web-server: fail to create server socket\n");
-    fprintf(stderr, "web-server: return value %d\n", errnum);
-    perror("web-server");
-    goto failure;
-  }
+  if (serverSocket == -1) printErrorAndExit("web-server");
 
   struct sockaddr_in serverAddress = {
     .sin_family = AF_INET,
@@ -41,52 +40,21 @@ int main(void) {
   int bindStatus = bind(serverSocket,
                         (struct sockaddr *) &serverAddress,
                         sizeof(serverAddress));
-  if (bindStatus == -1) {
-    errnum = errno;
-    fprintf(stderr, "web-server: fail to bind server socket\n");
-    fprintf(stderr, "web-server: socket details shown as follow:\n");
-    fprintf(stderr, "web-server:     address family: %d\n", serverAddress.sin_family);
-    fprintf(stderr, "web-server:     listen port: %d\n", ntohs(serverAddress.sin_port));
-    fprintf(stderr, "web-server:     internet address: %d\n", ntohs(serverAddress.sin_addr.s_addr));
-    fprintf(stderr, "web-server: return value %d\n", errnum);
-    perror("web-server");
-    goto cleanup;
-  }
+  if (bindStatus == -1) printErrorAndExit("web-server");
+
 
   int listenStatus = listen(serverSocket, 5);
-  if (listenStatus == -1) {
-    errnum = errno;
-    fprintf(stderr, "web-server: fail to listen for connections on server socket\n");
-    fprintf(stderr, "web-server: socket details shown as follow:\n");
-    fprintf(stderr, "web-server:     address family: %d\n", serverAddress.sin_family);
-    fprintf(stderr, "web-server:     listen port: %d\n", ntohs(serverAddress.sin_port));
-    fprintf(stderr, "web-server:     internet address: %d\n", ntohs(serverAddress.sin_addr.s_addr));
-    fprintf(stderr, "web-server: return value %d\n", errnum);
-    perror("web-server");
-    goto cleanup;
-  }
+  if (listenStatus == -1) printErrorAndExit("web-server");
 
   while (1) {
     int clientSocket;
     clientSocket = accept(serverSocket,
         (struct sockaddr *) NULL,
         NULL);
-    if (clientSocket == -1) {
-      errnum = errno;
-      fprintf(stderr, "web-server: fail to bind client socket\n");
-      fprintf(stderr, "web-server: return value %d\n", errnum);
-      perror("web-server");
-      goto cleanup;
-    }
+    if (clientSocket == -1) printErrorAndExit("web-server");
 
     int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
-    if (messageSize < 0) {
-      errnum = errno;
-      fprintf(stderr, "web-server: fail to read client socket\n");
-      fprintf(stderr, "web-server: return value %d\n", errnum);
-      perror("web-server");
-      goto cleanup;
-    }
+    if (messageSize < 0) printErrorAndExit("web-server");
     receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
 
     char httpMethod[8] = { 0 };
@@ -127,13 +95,7 @@ int main(void) {
         char httpResponse[HTTP_HEADER_LEN] = "HTTP/1.1 200 OK\r\n\r\n";
         char htmlFileName[] = "../tests/index.html";
         FILE* htmlPage = fopen(htmlFileName, "r");
-        if (!htmlPage) {
-          errnum = errno;
-          fprintf(stderr, "web-server: fail to read file '%s'\n", htmlFileName);
-          fprintf(stderr, "web-server: return value %d\n", errnum);
-          perror("web-server");
-          goto cleanup;
-        }
+        if (!htmlPage) printErrorAndExit("web-server");
         char readBuffer[] = { 0 };
         fread(readBuffer, sizeof(char), 4096, htmlPage);
         strcat(httpResponse, readBuffer);
@@ -143,32 +105,15 @@ int main(void) {
         snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found\r\n\r\n");
 
       int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-      if (responseStatus == -1) {
-        errnum = errno;
-        fprintf(stderr, "web-server: fail to write a response to the client socket\n");
-        fprintf(stderr, "web-server: return value %d\n", errnum);
-        perror("web-server");
-        goto cleanup;
-      }
+      if (responseStatus == -1) printErrorAndExit("web-server");
     } else {
       snprintf(serverData, sizeof(serverData), "HTTP/1.1 405 Method Not Allowed\r\n\r\n");
       int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-      if (responseStatus == -1) {
-        errnum = errno;
-        fprintf(stderr, "web-server: fail to write a response to the client socket\n");
-        fprintf(stderr, "web-server: return value %d\n", errnum);
-        perror("web-server");
-        goto cleanup;
-      }
+      if (responseStatus == -1) printErrorAndExit("web-server");
     }
     close(clientSocket);
   }
   close(serverSocket);
 
   return EXIT_SUCCESS;
-
-cleanup:
-  close(serverSocket);
-failure:
-  return EXIT_FAILURE;
 }
