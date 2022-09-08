@@ -66,98 +66,100 @@ int main(void) {
     goto cleanup;
   }
 
-  int clientSocket;
-  clientSocket = accept(serverSocket,
-                        (struct sockaddr *) NULL,
-                        NULL);
-  if (clientSocket == -1) {
-    errnum = errno;
-    fprintf(stderr, "web-server: fail to bind client socket\n");
-    fprintf(stderr, "web-server: return value %d\n", errnum);
-    perror("web-server");
-    goto cleanup;
-  }
-
-  int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
-  if (messageSize < 0) {
-    errnum = errno;
-    fprintf(stderr, "web-server: fail to read client socket\n");
-    fprintf(stderr, "web-server: return value %d\n", errnum);
-    perror("web-server");
-    goto cleanup;
-  }
-  receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
-
-  char httpMethod[8] = { 0 };
-  char httpPath[1024] = { 0 };
-  char httpVersion[10] = { 0 };
-  char* httpToken;
-
-  /**
-   * TODO: Might need to design a filter that do the same job as strtok do but
-   * much resilient to buffer overflow and able to treat all space character as
-   * the same.
-   */
-  /* Get HTTP method type */
-  httpToken = strtok(receiveBuffer, " ");
-  if (httpToken != NULL) {
-    strncpy(httpMethod, httpToken, strlen(httpToken));
-    printf("web-server: HTTP Method: %s\n", httpMethod);
-  }
-
-  /* Get HTTP request path */
-  httpToken = strtok(NULL, " ");
-  if (httpToken != NULL) {
-    strncpy(httpPath, httpToken, strlen(httpToken));
-    printf("web-server: HTTP Request Path: %s\n", httpPath);
-  }
-
-  /* Get HTTP version */
-  httpToken = strtok(NULL, "\n");
-  if (httpToken != NULL) {
-    strncpy(httpVersion, httpToken, strlen(httpToken));
-    printf("web-server: HTTP Version: %s\n", httpVersion);
-  }
-
-  fflush(stdout);
-
-  if (strcmp(httpMethod, httpGET) == 0) {
-    if (strcmp(httpPath, "/") == 0) {
-      char httpResponse[HTTP_HEADER_LEN] = "HTTP/1.1 200 OK\r\n\r\n";
-      char htmlFileName[] = "../tests/index.html";
-      FILE* htmlPage = fopen(htmlFileName, "r");
-      if (!htmlPage) {
-        errnum = errno;
-        fprintf(stderr, "web-server: fail to read file '%s'\n", htmlFileName);
-        fprintf(stderr, "web-server: return value %d\n", errnum);
-        perror("web-server");
-        goto cleanup;
-      }
-      char readBuffer[] = { 0 };
-      fread(readBuffer, sizeof(char), 4096, htmlPage);
-      strcat(httpResponse, readBuffer);
-
-      snprintf(serverData, sizeof(serverData), "%s", httpResponse);
-    } else
-      snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found");
-
-    int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-    if (responseStatus == -1) {
+  while (1) {
+    int clientSocket;
+    clientSocket = accept(serverSocket,
+        (struct sockaddr *) NULL,
+        NULL);
+    if (clientSocket == -1) {
       errnum = errno;
-      fprintf(stderr, "web-server: fail to write a response to the client socket\n");
+      fprintf(stderr, "web-server: fail to bind client socket\n");
       fprintf(stderr, "web-server: return value %d\n", errnum);
       perror("web-server");
       goto cleanup;
     }
-  } else {
-    snprintf(serverData, sizeof(serverData), "HTTP/1.1 405 Method Not Allowed\r\n\r\n");
-    int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-    if (responseStatus == -1) {
+
+    int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
+    if (messageSize < 0) {
       errnum = errno;
-      fprintf(stderr, "web-server: fail to write a response to the client socket\n");
+      fprintf(stderr, "web-server: fail to read client socket\n");
       fprintf(stderr, "web-server: return value %d\n", errnum);
       perror("web-server");
       goto cleanup;
+    }
+    receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
+
+    char httpMethod[8] = { 0 };
+    char httpPath[1024] = { 0 };
+    char httpVersion[10] = { 0 };
+    char* httpToken;
+
+    /**
+     * TODO: Might need to design a filter that do the same job as strtok do but
+     * much resilient to buffer overflow and able to treat all space character as
+     * the same.
+     */
+    /* Get HTTP method type */
+    httpToken = strtok(receiveBuffer, " ");
+    if (httpToken != NULL) {
+      strncpy(httpMethod, httpToken, strlen(httpToken));
+      printf("web-server: HTTP Method: %s\n", httpMethod);
+    }
+
+    /* Get HTTP request path */
+    httpToken = strtok(NULL, " ");
+    if (httpToken != NULL) {
+      strncpy(httpPath, httpToken, strlen(httpToken));
+      printf("web-server: HTTP Request Path: %s\n", httpPath);
+    }
+
+    /* Get HTTP version */
+    httpToken = strtok(NULL, "\n");
+    if (httpToken != NULL) {
+      strncpy(httpVersion, httpToken, strlen(httpToken));
+      printf("web-server: HTTP Version: %s\n", httpVersion);
+    }
+
+    fflush(stdout);
+
+    if (strcmp(httpMethod, httpGET) == 0) {
+      if (strcmp(httpPath, "/") == 0) {
+        char httpResponse[HTTP_HEADER_LEN] = "HTTP/1.1 200 OK\r\n\r\n";
+        char htmlFileName[] = "../tests/index.html";
+        FILE* htmlPage = fopen(htmlFileName, "r");
+        if (!htmlPage) {
+          errnum = errno;
+          fprintf(stderr, "web-server: fail to read file '%s'\n", htmlFileName);
+          fprintf(stderr, "web-server: return value %d\n", errnum);
+          perror("web-server");
+          goto cleanup;
+        }
+        char readBuffer[] = { 0 };
+        fread(readBuffer, sizeof(char), 4096, htmlPage);
+        strcat(httpResponse, readBuffer);
+
+        snprintf(serverData, sizeof(serverData), "%s", httpResponse);
+      } else
+        snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found");
+
+      int responseStatus = write(clientSocket, &serverData, strlen(serverData));
+      if (responseStatus == -1) {
+        errnum = errno;
+        fprintf(stderr, "web-server: fail to write a response to the client socket\n");
+        fprintf(stderr, "web-server: return value %d\n", errnum);
+        perror("web-server");
+        goto cleanup;
+      }
+    } else {
+      snprintf(serverData, sizeof(serverData), "HTTP/1.1 405 Method Not Allowed\r\n\r\n");
+      int responseStatus = write(clientSocket, &serverData, strlen(serverData));
+      if (responseStatus == -1) {
+        errnum = errno;
+        fprintf(stderr, "web-server: fail to write a response to the client socket\n");
+        fprintf(stderr, "web-server: return value %d\n", errnum);
+        perror("web-server");
+        goto cleanup;
+      }
     }
     close(clientSocket);
   }
