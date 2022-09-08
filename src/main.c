@@ -159,6 +159,7 @@ int main(void) {
       perror("web-server");
       goto cleanup;
     }
+    close(clientSocket);
   }
   close(serverSocket);
 
