@@ -2,6 +2,7 @@
 #include <arpa/inet.h>
 #include <asm-generic/errno.h>
 #include <errno.h>
+#include <http-handler.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,29 +10,6 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
-
-/**
- * Accepted HTTP header length
- */
-#define HTTP_HEADER_LEN 8192
-
-/**
- * TODO: implement other HTTP method: HEAD, DELETE, CONNECT, OPTIONS, TRACE,
- * PATCH
- */
-
-/**
- * HTTP GET method pattern
- */
-const char httpGET[] = "GET";
-/**
- * HTTP POST method pattern
- */
-const char httpPOST[] = "POST";
-/**
- * HTTP PUT method pattern
- */
-const char httpPUT[] = "PUT";
 
 /**
  * @brief print error and terminate the process
@@ -84,60 +62,17 @@ int main(void) {
     if (messageSize < 0) printErrorAndExit("web-server");
     receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
 
-    char httpMethod[8] = { 0 };
-    char httpPath[1024] = { 0 };
-    char httpVersion[10] = { 0 };
-    char* httpToken;
+    char responseMessage[HTTP_HEADER_LEN] = { 0 };
+    int handler = handleHTTPClientRequest(messageSize-1, receiveBuffer, HTTP_HEADER_LEN, responseMessage);
+    if (handler == -1) {
+      fprintf(stderr, "web-server: Failed to handle HTTP client request\n");
+      exit(EXIT_FAILURE);
+    };
 
-    /**
-     * TODO: Might need to design a filter that do the same job as strtok do but
-     * much resilient to buffer overflow and able to treat all space character as
-     * the same.
-     */
-    /* Get HTTP method type */
-    httpToken = strtok(receiveBuffer, " ");
-    if (httpToken != NULL) {
-      strncpy(httpMethod, httpToken, strlen(httpToken));
-      printf("web-server: HTTP Method: %s\n", httpMethod);
-    }
+    snprintf(serverData, sizeof(serverData), "%s", responseMessage);
+    int responseStatus = write(clientSocket, &serverData, strlen(serverData));
+    if (responseStatus == -1) printErrorAndExit("web-server");
 
-    /* Get HTTP request path */
-    httpToken = strtok(NULL, " ");
-    if (httpToken != NULL) {
-      strncpy(httpPath, httpToken, strlen(httpToken));
-      printf("web-server: HTTP Request Path: %s\n", httpPath);
-    }
-
-    /* Get HTTP version */
-    httpToken = strtok(NULL, "\n");
-    if (httpToken != NULL) {
-      strncpy(httpVersion, httpToken, strlen(httpToken));
-      printf("web-server: HTTP Version: %s\n", httpVersion);
-    }
-
-    fflush(stdout);
-
-    if (strcmp(httpMethod, httpGET) == 0) {
-      if (strcmp(httpPath, "/") == 0) {
-        char httpResponse[HTTP_HEADER_LEN] = "HTTP/1.1 200 OK\r\n\r\n";
-        char htmlFileName[] = "../tests/index.html";
-        FILE* htmlPage = fopen(htmlFileName, "r");
-        if (!htmlPage) printErrorAndExit("web-server");
-        char readBuffer[] = { 0 };
-        fread(readBuffer, sizeof(char), 4096, htmlPage);
-        strcat(httpResponse, readBuffer);
-
-        snprintf(serverData, sizeof(serverData), "%s", httpResponse);
-      } else
-        snprintf(serverData, sizeof(serverData), "HTTP/1.1 404 Not Found\r\n\r\n");
-
-      int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-      if (responseStatus == -1) printErrorAndExit("web-server");
-    } else {
-      snprintf(serverData, sizeof(serverData), "HTTP/1.1 405 Method Not Allowed\r\n\r\n");
-      int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-      if (responseStatus == -1) printErrorAndExit("web-server");
-    }
     close(clientSocket);
   }
   close(serverSocket);

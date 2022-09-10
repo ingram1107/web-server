@@ -30,6 +30,7 @@ if(BUILD_DOCS)
 endif()
 
 add_executable(${PROJECT_NAME} src/main.c)
+add_subdirectory(lib)
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC
@@ -41,6 +42,8 @@ target_link_directories(${PROJECT_NAME}
   PRIVATE
     lib
 )
+
+target_link_libraries(${PROJECT_NAME} Library)
 
 # cmake --install
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
