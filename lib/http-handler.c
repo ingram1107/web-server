@@ -1,7 +1,9 @@
 #include "http-handler.h"
 
+#include <asm-generic/errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 static int parseHTTPRequest(int receiveMessageSize,
                             char receiveMessage[receiveMessageSize],
@@ -57,8 +59,13 @@ static int createHTTPResponseMessage(int httpResponseMessageSize,
                               httpResponseMessageSize,
                               "HTTP/1.1 %s",
                               httpStatusStr[httpResponseStatus]);
-  if (returnStatus < 0 || returnStatus > httpResponseMessageSize)
-    return -1;  /* Failure */
+  if (returnStatus < 0) {
+    errno = EILSEQ;     /* Encoding Error */
+    return -1;          /* Failure */
+  } else if (returnStatus > httpResponseMessageSize) {
+    errno = EOVERFLOW;  /* String Too Large */
+    return -1;          /* Failure */
+  }
   return 0; /* Success */
 };
 

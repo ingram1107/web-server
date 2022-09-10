@@ -64,10 +64,7 @@ int main(void) {
 
     char responseMessage[HTTP_HEADER_LEN] = { 0 };
     int handler = handleHTTPClientRequest(messageSize-1, receiveBuffer, HTTP_HEADER_LEN, responseMessage);
-    if (handler == -1) {
-      fprintf(stderr, "web-server: Failed to handle HTTP client request\n");
-      exit(EXIT_FAILURE);
-    };
+    if (handler == -1) printErrorAndExit("web-server");
 
     snprintf(serverData, sizeof(serverData), "%s", responseMessage);
     int responseStatus = write(clientSocket, &serverData, strlen(serverData));
