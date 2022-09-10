@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ctrlf_0',['CTRLF',['../http-handler_8h.html#a6e2836e71b237d7f411e6753b18324cd',1,'http-handler.h']]]
+  ['crlf_0',['CRLF',['../http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f',1,'http-handler.h']]]
 ];
