@@ -1,0 +1,153 @@
+.TH "/home/clover/Projects/web-server/lib/http-handler.c" 3 "Sat Sep 10 2022" "web-server" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/home/clover/Projects/web-server/lib/http-handler.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'http\-handler\&.h'\fP
+.br
+\fC#include <asm\-generic/errno\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "static int \fBparseHTTPRequest\fP (int receiveMessageSize, char receiveMessage[receiveMessageSize], char *httpRequestMethod, char *httpRequestPath, char *httpRequestVersion, char *delimeter)"
+.br
+.ti -1c
+.RI "static int \fBcreateHTTPResponseMessage\fP (int httpResponseMessageSize, char httpResponseMessage[httpResponseMessageSize], int httpResponseStatus)"
+.br
+.ti -1c
+.RI "int \fBhandleHTTPClientRequest\fP (int receiveMessageSize, char receiveMessage[receiveMessageSize], int responseMessageSize, char responseMessage[responseMessageSize])"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "static int createHTTPResponseMessage (int httpResponseMessageSize, char httpResponseMessage[httpResponseMessageSize], int httpResponseStatus)\fC [static]\fP"
+
+.PP
+Definition at line \fB55\fP of file \fBhttp\-handler\&.c\fP\&.
+.PP
+.nf
+58 {
+59   int returnStatus = snprintf(httpResponseMessage,
+60                               httpResponseMessageSize,
+61                               "HTTP/1\&.1 %s",
+62                               httpStatusStr[httpResponseStatus]);
+63   if (returnStatus < 0) {
+64     errno = EILSEQ;     /* Encoding Error */
+65     return -1;          /* Failure */
+66   } else if (returnStatus > httpResponseMessageSize) {
+67     errno = EOVERFLOW;  /* String Too Large */
+68     return -1;          /* Failure */
+69   }
+70   return 0; /* Success */
+71 };
+.fi
+.SS "int handleHTTPClientRequest (int receiveMessageSize, char receiveMessage[receiveMessageSize], int responseMessageSize, char responseMessage[responseMessageSize])"
+
+.PP
+Definition at line \fB73\fP of file \fBhttp\-handler\&.c\fP\&.
+.PP
+.nf
+77 {
+78   char httpRequestMethod[HTTP_REQUEST_METHOD_LEN] = { 0 };
+79   char httpRequestPath[HTTP_REQUEST_PATH_LEN] = { 0 };
+80   char httpRequestVersion[HTTP_REQUEST_VERSION_LEN] = { 0 };
+81 
+82   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
+83                                          receiveMessage,
+84                                          httpRequestMethod,
+85                                          httpRequestPath,
+86                                          httpRequestVersion,
+87                                          " ");
+88   if (httpParseStatus == -1 ) {
+89     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
+90     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
+91             receiveMessage);
+92     return -1;  /* Failure */
+93   }
+94 
+95   int httpRequestMethodHandler = -1;
+96   for (int i = 0; i <= PATCH; i++)
+97     if (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)
+98       httpRequestMethodHandler = i;
+99 
+100   switch (httpRequestMethodHandler) {
+101     case GET:
+102       if (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -1)
+103         return -1;  /* Failure */
+104       break;
+105     case HEAD:
+106     case POST:
+107     case PUT:
+108     case DELETE:
+109     case CONNECT:
+110     case OPTIONS:
+111     case TRACE:
+112     case PATCH:
+113       if (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD_NOT_ALLOWED) == -1)
+114         return -1;  /* Failure */
+115       break;
+116     default:
+117       if (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT_IMPLEMENTED) == -1)
+118         return -1;  /* Failure */
+119       break;
+120   };
+121 
+122   return 0; /* Success */
+123 };
+.fi
+.SS "static int parseHTTPRequest (int receiveMessageSize, char receiveMessage[receiveMessageSize], char * httpRequestMethod, char * httpRequestPath, char * httpRequestVersion, char * delimeter)\fC [static]\fP"
+TODO: Might need to design a filter that do the same job as strtok do but much resilient to buffer overflow and able to treat all space character as the same\&.
+.PP
+Definition at line \fB9\fP of file \fBhttp\-handler\&.c\fP\&.
+.PP
+.nf
+15 {
+16   char* httpRequestToken;
+17   
+23   /* Get HTTP request method type */
+24   httpRequestToken = strtok(receiveMessage, delimeter);
+25   if (httpRequestToken != NULL) {
+26     strncpy(httpRequestMethod, httpRequestToken, strlen(httpRequestToken));
+27     printf("web-server: HTTP Method:       %s\n", httpRequestMethod);
+28   } else goto cleanup;
+29 
+30   /* Get HTTP request path */
+31   httpRequestToken = strtok(NULL, delimeter);
+32   if (httpRequestToken != NULL) {
+33     strncpy(httpRequestPath, httpRequestToken, strlen(httpRequestToken));
+34     printf("web-server: HTTP Request Path: %s\n", httpRequestPath);
+35   } else goto cleanup;
+36 
+37   /* Get HTTP request version */
+38   httpRequestToken = strtok(NULL, "\n");  /* TODO: replace this as delimeter so that it is generic */
+39   if (httpRequestToken != NULL) {
+40     strncpy(httpRequestVersion, httpRequestToken, strlen(httpRequestToken));
+41     printf("web-server: HTTP Version:      %s\n", httpRequestVersion);
+42   } else goto cleanup;
+43 
+44   fflush(stdout);
+45   return 0; /* Success */
+46 
+47 cleanup:
+48   fflush(stdout);
+49   strncpy(httpRequestMethod, "", strlen(""));
+50   strncpy(httpRequestPath, "", strlen(""));
+51   strncpy(httpRequestVersion, "", strlen(""));
+52   return -1;  /* Failure */
+53 };
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for web-server from the source code\&.

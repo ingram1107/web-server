@@ -1,14 +1,46 @@
+/**
+ * @file
+ * @author Little Clover
+ * @date 2022-09-10 18:13:09 PM +0800
+ */
 #ifndef HTTP_HANDLER_H
 #define HTTP_HANDLER_H
 
+/**
+ * Supported maximum HTTP header size
+ */
 #define HTTP_HEADER_LEN 8192
+/**
+ * Maximum string length of HTTP request method
+ */
 #define HTTP_REQUEST_METHOD_LEN 8
+/**
+ * Maximum string length of HTTP request path
+ */
 #define HTTP_REQUEST_PATH_LEN 1024
+/**
+ * Maximum string length of HTTP request version
+ */
 #define HTTP_REQUEST_VERSION_LEN 10
+/**
+ * CTRLF character
+ */
 #define CTRLF "\r\n\r\n"
 
+/**
+ * Supported HTTP request method adhered to the standard.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+ */
 enum httpMethod { GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH };
 
+/**
+ * A string map to @a httpMethod.
+ *
+ * @private
+ *
+ * @see httpMethod
+ */
 static const char* const httpMethodStr[] = {
   [GET] = "GET",
   [HEAD] = "HEAD",
@@ -21,6 +53,11 @@ static const char* const httpMethodStr[] = {
   [PATCH] = "PATCH",
 };
 
+/**
+ * Supported HTTP response status code adhered to the standard.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+ */
 enum httpStatus {
   CONTINUE = 100,
   SWITCHING_PROTOCOLS,
@@ -87,6 +124,13 @@ enum httpStatus {
   NETWORK_AUTHENTICATION_REQURIED
 };
 
+/**
+ * A string map to @a httpStatus.
+ *
+ * @private
+ *
+ * @see httpStatus
+ */
 static const char* const httpStatusStr[] = {
   [CONTINUE] = "100 OK" CTRLF,
   [SWITCHING_PROTOCOLS] = "101 Switching Protocols" CTRLF,
@@ -152,6 +196,29 @@ static const char* const httpStatusStr[] = {
   [NETWORK_AUTHENTICATION_REQURIED] = "511 Network Authentication Requried" CTRLF
 };
 
+/**
+ * parse HTTP request from the received message to get its request method,
+ * requested path and version base on the delimeter.
+ *
+ * @param[in] receiveMessageSize  The size of the @a receiveMessage
+ * @param[in] receiveMessage      The received HTTP request message with a size
+ *                                of @a receiveMessageSize
+ * @param[out] httpRequestMethod  The parsed HTTP request method from
+ *                                @a receiveMessage
+ * @param[out] httpRequestPath    The parsed HTTP request path from
+ *                                @a receiveMessage
+ * @param[out] httpRequestVersion The parsed HTTP request version from
+ *                                @a receiveMessage
+ * @param[in] delimeter           The delimeter for the parser to parse
+ *                                @a receiveMessage
+ *
+ * @retval 0  @a httpRequestMethod, @a httpRequestPath and
+ *            @a httpRequestVersion is parsed successfully from
+ *            @a receiveMessage.
+ * @retval -1 Parsing error on either @a httpRequestMethod, @a httpRequestPath
+ *            or @a httpRequestVersion.
+ * @private
+ */
 static int parseHTTPRequest(int receiveMessageSize,
                             char receiveMessage[receiveMessageSize],
                             char* httpRequestMethod,
@@ -159,11 +226,45 @@ static int parseHTTPRequest(int receiveMessageSize,
                             char* httpRequestVersion,
                             char* delimeter);
 
-
+/**
+ * create a HTTP response message based on the status code.
+ *
+ * @param[in] httpResponseMessageSize The size of the @a httpResponseMessage
+ * @param[out] httpResponseMessage    The will be created HTTP response Message
+ *                                    with a size of @a httpResponseMessage
+ * @param[in] httpResponseStatus      The response status code to create
+ *                                    @a httpResponseMessage
+ *
+ * @retval 0  @a httpResponseMessage has been successfully created.
+ * @retval -1 There is an encoding error or the HTTP status message string is
+ *            too large to @a httpResponseMessage
+ * @private
+ *
+ * @see httpStatus
+ * @see httpStatusStr[]
+ */
 static int createHTTPResponseMessage(int httpResponseMessageSize,
                                      char httpResponseMessage[httpResponseMessageSize],
                                      int httpResponseStatus);
 
+/**
+ * handle a HTTP client request message and then create an HTTP response status
+ * code based its request method.
+ *
+ * @param[in] receiveMessageSize The size of the @a receiveMessage
+ * @param[in] receiveMessage The HTTP client request message received with a
+ *                           size of @a receiveMessageSize
+ * @param[in] responseMessageSize The size of the @a responseMessage
+ * @param[out] responseMessage The HTTP response status code formatted as a
+ *                             string with a size of @a responseMessageSize
+ *
+ * @retval 0  @a responseMessage has been successfully created.
+ * @retval -1 Failure in either parsing the @a receiveMessage or creating a
+ *            @a responseMessage
+ *
+ * @see parseHTTPRequest()
+ * @see createHTTPResponseMessage()
+ */
 int handleHTTPClientRequest(int receiveMessageSize,
                             char receiveMessage[receiveMessageSize],
                             int responseMessageSize,

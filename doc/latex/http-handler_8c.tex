@@ -1,0 +1,156 @@
+\hypertarget{http-handler_8c}{}\doxysection{/home/clover/\+Projects/web-\/server/lib/http-\/handler.c File Reference}
+\label{http-handler_8c}\index{/home/clover/Projects/web-\/server/lib/http-\/handler.c@{/home/clover/Projects/web-\/server/lib/http-\/handler.c}}
+{\ttfamily \#include \char`\"{}http-\/handler.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$asm-\/generic/errno.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{http-handler_8c_ac28b9f5ef706c856f9333f9a7cde312b}{parse\+HTTPRequest}} (int receive\+Message\+Size, char receive\+Message\mbox{[}receive\+Message\+Size\mbox{]}, char $\ast$http\+Request\+Method, char $\ast$http\+Request\+Path, char $\ast$http\+Request\+Version, char $\ast$delimeter)
+\item 
+static int \mbox{\hyperlink{http-handler_8c_abbd248b43891c333624fcb3fa7ce9bab}{create\+HTTPResponse\+Message}} (int http\+Response\+Message\+Size, char http\+Response\+Message\mbox{[}http\+Response\+Message\+Size\mbox{]}, int http\+Response\+Status)
+\item 
+int \mbox{\hyperlink{http-handler_8c_aa58d558d7d605fab6edecc64c34c0f63}{handle\+HTTPClient\+Request}} (int receive\+Message\+Size, char receive\+Message\mbox{[}receive\+Message\+Size\mbox{]}, int response\+Message\+Size, char response\+Message\mbox{[}response\+Message\+Size\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{http-handler_8c_abbd248b43891c333624fcb3fa7ce9bab}\label{http-handler_8c_abbd248b43891c333624fcb3fa7ce9bab}} 
+\index{http-\/handler.c@{http-\/handler.c}!createHTTPResponseMessage@{createHTTPResponseMessage}}
+\index{createHTTPResponseMessage@{createHTTPResponseMessage}!http-\/handler.c@{http-\/handler.c}}
+\doxysubsubsection{\texorpdfstring{createHTTPResponseMessage()}{createHTTPResponseMessage()}}
+{\footnotesize\ttfamily static int create\+HTTPResponse\+Message (\begin{DoxyParamCaption}\item[{int}]{http\+Response\+Message\+Size,  }\item[{char}]{http\+Response\+Message\mbox{[}http\+Response\+Message\+Size\mbox{]},  }\item[{int}]{http\+Response\+Status }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00055}{55}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058 \{}
+\DoxyCodeLine{00059   \textcolor{keywordtype}{int} returnStatus = snprintf(httpResponseMessage,}
+\DoxyCodeLine{00060                               httpResponseMessageSize,}
+\DoxyCodeLine{00061                               \textcolor{stringliteral}{"{}HTTP/1.1 \%s"{}},}
+\DoxyCodeLine{00062                               httpStatusStr[httpResponseStatus]);}
+\DoxyCodeLine{00063   \textcolor{keywordflow}{if} (returnStatus < 0) \{}
+\DoxyCodeLine{00064     errno = EILSEQ;     \textcolor{comment}{/* Encoding Error */}}
+\DoxyCodeLine{00065     \textcolor{keywordflow}{return} -\/1;          \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00066   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (returnStatus > httpResponseMessageSize) \{}
+\DoxyCodeLine{00067     errno = EOVERFLOW;  \textcolor{comment}{/* String Too Large */}}
+\DoxyCodeLine{00068     \textcolor{keywordflow}{return} -\/1;          \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00069   \}}
+\DoxyCodeLine{00070   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
+\DoxyCodeLine{00071 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{http-handler_8c_aa58d558d7d605fab6edecc64c34c0f63}\label{http-handler_8c_aa58d558d7d605fab6edecc64c34c0f63}} 
+\index{http-\/handler.c@{http-\/handler.c}!handleHTTPClientRequest@{handleHTTPClientRequest}}
+\index{handleHTTPClientRequest@{handleHTTPClientRequest}!http-\/handler.c@{http-\/handler.c}}
+\doxysubsubsection{\texorpdfstring{handleHTTPClientRequest()}{handleHTTPClientRequest()}}
+{\footnotesize\ttfamily int handle\+HTTPClient\+Request (\begin{DoxyParamCaption}\item[{int}]{receive\+Message\+Size,  }\item[{char}]{receive\+Message\mbox{[}receive\+Message\+Size\mbox{]},  }\item[{int}]{response\+Message\+Size,  }\item[{char}]{response\+Message\mbox{[}response\+Message\+Size\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00073}{73}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00077 \{}
+\DoxyCodeLine{00078   \textcolor{keywordtype}{char} httpRequestMethod[HTTP\_REQUEST\_METHOD\_LEN] = \{ 0 \};}
+\DoxyCodeLine{00079   \textcolor{keywordtype}{char} httpRequestPath[HTTP\_REQUEST\_PATH\_LEN] = \{ 0 \};}
+\DoxyCodeLine{00080   \textcolor{keywordtype}{char} httpRequestVersion[HTTP\_REQUEST\_VERSION\_LEN] = \{ 0 \};}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082   \textcolor{keywordtype}{int} httpParseStatus = \mbox{\hyperlink{http-handler_8c_ac28b9f5ef706c856f9333f9a7cde312b}{parseHTTPRequest}}(receiveMessageSize,}
+\DoxyCodeLine{00083                                          receiveMessage,}
+\DoxyCodeLine{00084                                          httpRequestMethod,}
+\DoxyCodeLine{00085                                          httpRequestPath,}
+\DoxyCodeLine{00086                                          httpRequestVersion,}
+\DoxyCodeLine{00087                                          \textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{00088   \textcolor{keywordflow}{if} (httpParseStatus == -\/1 ) \{}
+\DoxyCodeLine{00089     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Failed to parse HTTP request header\(\backslash\)n"{}});}
+\DoxyCodeLine{00090     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Received HTTP request as follows:\(\backslash\)n\%s"{}},}
+\DoxyCodeLine{00091             receiveMessage);}
+\DoxyCodeLine{00092     \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00093   \}}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095   \textcolor{keywordtype}{int} httpRequestMethodHandler = -\/1;}
+\DoxyCodeLine{00096   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= PATCH; i++)}
+\DoxyCodeLine{00097     \textcolor{keywordflow}{if} (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)}
+\DoxyCodeLine{00098       httpRequestMethodHandler = i;}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100   \textcolor{keywordflow}{switch} (httpRequestMethodHandler) \{}
+\DoxyCodeLine{00101     \textcolor{keywordflow}{case} GET:}
+\DoxyCodeLine{00102       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -\/1)}
+\DoxyCodeLine{00103         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00104       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00105     \textcolor{keywordflow}{case} HEAD:}
+\DoxyCodeLine{00106     \textcolor{keywordflow}{case} POST:}
+\DoxyCodeLine{00107     \textcolor{keywordflow}{case} PUT:}
+\DoxyCodeLine{00108     \textcolor{keywordflow}{case} DELETE:}
+\DoxyCodeLine{00109     \textcolor{keywordflow}{case} CONNECT:}
+\DoxyCodeLine{00110     \textcolor{keywordflow}{case} OPTIONS:}
+\DoxyCodeLine{00111     \textcolor{keywordflow}{case} TRACE:}
+\DoxyCodeLine{00112     \textcolor{keywordflow}{case} PATCH:}
+\DoxyCodeLine{00113       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD\_NOT\_ALLOWED) == -\/1)}
+\DoxyCodeLine{00114         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00115       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00116     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00117       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT\_IMPLEMENTED) == -\/1)}
+\DoxyCodeLine{00118         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00119       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00120   \};}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
+\DoxyCodeLine{00123 \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{http-handler_8c_ac28b9f5ef706c856f9333f9a7cde312b}\label{http-handler_8c_ac28b9f5ef706c856f9333f9a7cde312b}} 
+\index{http-\/handler.c@{http-\/handler.c}!parseHTTPRequest@{parseHTTPRequest}}
+\index{parseHTTPRequest@{parseHTTPRequest}!http-\/handler.c@{http-\/handler.c}}
+\doxysubsubsection{\texorpdfstring{parseHTTPRequest()}{parseHTTPRequest()}}
+{\footnotesize\ttfamily static int parse\+HTTPRequest (\begin{DoxyParamCaption}\item[{int}]{receive\+Message\+Size,  }\item[{char}]{receive\+Message\mbox{[}receive\+Message\+Size\mbox{]},  }\item[{char $\ast$}]{http\+Request\+Method,  }\item[{char $\ast$}]{http\+Request\+Path,  }\item[{char $\ast$}]{http\+Request\+Version,  }\item[{char $\ast$}]{delimeter }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+TODO\+: Might need to design a filter that do the same job as strtok do but much resilient to buffer overflow and able to treat all space character as the same.
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00009}{9}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015 \{}
+\DoxyCodeLine{00016   \textcolor{keywordtype}{char}* httpRequestToken;}
+\DoxyCodeLine{00017   }
+\DoxyCodeLine{00023   \textcolor{comment}{/* Get HTTP request method type */}}
+\DoxyCodeLine{00024   httpRequestToken = strtok(receiveMessage, delimeter);}
+\DoxyCodeLine{00025   \textcolor{keywordflow}{if} (httpRequestToken != NULL) \{}
+\DoxyCodeLine{00026     strncpy(httpRequestMethod, httpRequestToken, strlen(httpRequestToken));}
+\DoxyCodeLine{00027     printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Method:       \%s\(\backslash\)n"{}}, httpRequestMethod);}
+\DoxyCodeLine{00028   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{goto} cleanup;}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030   \textcolor{comment}{/* Get HTTP request path */}}
+\DoxyCodeLine{00031   httpRequestToken = strtok(NULL, delimeter);}
+\DoxyCodeLine{00032   \textcolor{keywordflow}{if} (httpRequestToken != NULL) \{}
+\DoxyCodeLine{00033     strncpy(httpRequestPath, httpRequestToken, strlen(httpRequestToken));}
+\DoxyCodeLine{00034     printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Request Path: \%s\(\backslash\)n"{}}, httpRequestPath);}
+\DoxyCodeLine{00035   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{goto} cleanup;}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037   \textcolor{comment}{/* Get HTTP request version */}}
+\DoxyCodeLine{00038   httpRequestToken = strtok(NULL, \textcolor{stringliteral}{"{}\(\backslash\)n"{}});  \textcolor{comment}{/* TODO: replace this as delimeter so that it is generic */}}
+\DoxyCodeLine{00039   \textcolor{keywordflow}{if} (httpRequestToken != NULL) \{}
+\DoxyCodeLine{00040     strncpy(httpRequestVersion, httpRequestToken, strlen(httpRequestToken));}
+\DoxyCodeLine{00041     printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Version:      \%s\(\backslash\)n"{}}, httpRequestVersion);}
+\DoxyCodeLine{00042   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{goto} cleanup;}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   fflush(stdout);}
+\DoxyCodeLine{00045   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047 cleanup:}
+\DoxyCodeLine{00048   fflush(stdout);}
+\DoxyCodeLine{00049   strncpy(httpRequestMethod, \textcolor{stringliteral}{"{}"{}}, strlen(\textcolor{stringliteral}{"{}"{}}));}
+\DoxyCodeLine{00050   strncpy(httpRequestPath, \textcolor{stringliteral}{"{}"{}}, strlen(\textcolor{stringliteral}{"{}"{}}));}
+\DoxyCodeLine{00051   strncpy(httpRequestVersion, \textcolor{stringliteral}{"{}"{}}, strlen(\textcolor{stringliteral}{"{}"{}}));}
+\DoxyCodeLine{00052   \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00053 \};}
+
+\end{DoxyCode}

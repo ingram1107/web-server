@@ -1,4 +1,4 @@
-.TH "/home/clover/Projects/web-server/src/main.c" 3 "Thu Sep 8 2022" "web-server" \" -*- nroff -*-
+.TH "/home/clover/Projects/web-server/src/main.c" 3 "Sat Sep 10 2022" "web-server" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -11,6 +11,8 @@
 \fC#include <asm\-generic/errno\&.h>\fP
 .br
 \fC#include <errno\&.h>\fP
+.br
+\fC#include <http\-handler\&.h>\fP
 .br
 \fC#include <netinet/in\&.h>\fP
 .br
@@ -27,13 +29,6 @@
 \fC#include <unistd\&.h>\fP
 .br
 
-.SS "Macros"
-
-.in +1c
-.ti -1c
-.RI "#define \fBHTTP_HEADER_LEN\fP   8192"
-.br
-.in -1c
 .SS "Functions"
 
 .in +1c
@@ -46,25 +41,6 @@
 .br
 .RI "main function "
 .in -1c
-.SS "Variables"
-
-.in +1c
-.ti -1c
-.RI "const char \fBhttpGET\fP [] = 'GET'"
-.br
-.ti -1c
-.RI "const char \fBhttpPOST\fP [] = 'POST'"
-.br
-.ti -1c
-.RI "const char \fBhttpPUT\fP [] = 'PUT'"
-.br
-.in -1c
-.SH "Macro Definition Documentation"
-.PP 
-.SS "#define HTTP_HEADER_LEN   8192"
-Accepted HTTP header length 
-.PP
-Definition at line \fB16\fP of file \fBmain\&.c\fP\&.
 .SH "Function Documentation"
 .PP 
 .SS "int main (void)"
@@ -77,102 +53,61 @@ main function
 int 
 .RE
 .PP
-TODO: Might need to design a filter that do the same job as strtok do but much resilient to buffer overflow and able to treat all space character as the same\&.
+
 .PP
-Definition at line \fB54\fP of file \fBmain\&.c\fP\&.
+Definition at line \fB32\fP of file \fBmain\&.c\fP\&.
 .PP
 .nf
-54                {
-55   int errnum;
-56   char receiveBuffer[HTTP_HEADER_LEN] = { 0 };
-57   char serverData[HTTP_HEADER_LEN] = { 0 };
-58   int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-59   if (serverSocket == -1) printErrorAndExit("web-server");
+32                {
+33   int errnum;
+34   char receiveBuffer[HTTP_HEADER_LEN] = { 0 };
+35   char serverData[HTTP_HEADER_LEN] = { 0 };
+36   int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+37   if (serverSocket == -1) printErrorAndExit("web-server");
+38 
+39   struct sockaddr_in serverAddress = {
+40     \&.sin_family = AF_INET,
+41     \&.sin_port = htons(80),          /* connect with HTTP protocol */
+42     \&.sin_addr\&.s_addr = INADDR_ANY,
+43   };
+44 
+45   int bindStatus = bind(serverSocket,
+46                         (struct sockaddr *) &serverAddress,
+47                         sizeof(serverAddress));
+48   if (bindStatus == -1) printErrorAndExit("web-server");
+49 
+50 
+51   int listenStatus = listen(serverSocket, 5);
+52   if (listenStatus == -1) printErrorAndExit("web-server");
+53 
+54   while (1) {
+55     int clientSocket;
+56     clientSocket = accept(serverSocket,
+57         (struct sockaddr *) NULL,
+58         NULL);
+59     if (clientSocket == -1) printErrorAndExit("web-server");
 60 
-61   struct sockaddr_in serverAddress = {
-62     \&.sin_family = AF_INET,
-63     \&.sin_port = htons(80),          /* connect with HTTP protocol */
-64     \&.sin_addr\&.s_addr = INADDR_ANY,
-65   };
-66 
-67   int bindStatus = bind(serverSocket,
-68                         (struct sockaddr *) &serverAddress,
-69                         sizeof(serverAddress));
-70   if (bindStatus == -1) printErrorAndExit("web-server");
-71 
+61     int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
+62     if (messageSize < 0) printErrorAndExit("web-server");
+63     receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
+64 
+65     char responseMessage[HTTP_HEADER_LEN] = { 0 };
+66     int handler = handleHTTPClientRequest(messageSize-1, receiveBuffer, HTTP_HEADER_LEN, responseMessage);
+67     if (handler == -1) printErrorAndExit("web-server");
+68 
+69     snprintf(serverData, sizeof(serverData), "%s", responseMessage);
+70     int responseStatus = write(clientSocket, &serverData, strlen(serverData));
+71     if (responseStatus == -1) printErrorAndExit("web-server");
 72 
-73   int listenStatus = listen(serverSocket, 5);
-74   if (listenStatus == -1) printErrorAndExit("web-server");
-75 
-76   while (1) {
-77     int clientSocket;
-78     clientSocket = accept(serverSocket,
-79         (struct sockaddr *) NULL,
-80         NULL);
-81     if (clientSocket == -1) printErrorAndExit("web-server");
-82 
-83     int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
-84     if (messageSize < 0) printErrorAndExit("web-server");
-85     receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
-86 
-87     char httpMethod[8] = { 0 };
-88     char httpPath[1024] = { 0 };
-89     char httpVersion[10] = { 0 };
-90     char* httpToken;
-91 
-97     /* Get HTTP method type */
-98     httpToken = strtok(receiveBuffer, " ");
-99     if (httpToken != NULL) {
-100       strncpy(httpMethod, httpToken, strlen(httpToken));
-101       printf("web-server: HTTP Method: %s\n", httpMethod);
-102     }
-103 
-104     /* Get HTTP request path */
-105     httpToken = strtok(NULL, " ");
-106     if (httpToken != NULL) {
-107       strncpy(httpPath, httpToken, strlen(httpToken));
-108       printf("web-server: HTTP Request Path: %s\n", httpPath);
-109     }
-110 
-111     /* Get HTTP version */
-112     httpToken = strtok(NULL, "\n");
-113     if (httpToken != NULL) {
-114       strncpy(httpVersion, httpToken, strlen(httpToken));
-115       printf("web-server: HTTP Version: %s\n", httpVersion);
-116     }
-117 
-118     fflush(stdout);
-119 
-120     if (strcmp(httpMethod, httpGET) == 0) {
-121       if (strcmp(httpPath, "/") == 0) {
-122         char httpResponse[HTTP_HEADER_LEN] = "HTTP/1\&.1 200 OK\r\n\r\n";
-123         char htmlFileName[] = "\&.\&./tests/index\&.html";
-124         FILE* htmlPage = fopen(htmlFileName, "r");
-125         if (!htmlPage) printErrorAndExit("web-server");
-126         char readBuffer[] = { 0 };
-127         fread(readBuffer, sizeof(char), 4096, htmlPage);
-128         strcat(httpResponse, readBuffer);
-129 
-130         snprintf(serverData, sizeof(serverData), "%s", httpResponse);
-131       } else
-132         snprintf(serverData, sizeof(serverData), "HTTP/1\&.1 404 Not Found\r\n\r\n");
-133 
-134       int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-135       if (responseStatus == -1) printErrorAndExit("web-server");
-136     } else {
-137       snprintf(serverData, sizeof(serverData), "HTTP/1\&.1 405 Method Not Allowed\r\n\r\n");
-138       int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-139       if (responseStatus == -1) printErrorAndExit("web-server");
-140     }
-141     close(clientSocket);
-142   }
-143   close(serverSocket);
-144 
-145   return EXIT_SUCCESS;
-146 }
+73     close(clientSocket);
+74   }
+75   close(serverSocket);
+76 
+77   return EXIT_SUCCESS;
+78 }
 .fi
 .PP
-References \fBHTTP_HEADER_LEN\fP, \fBhttpGET\fP, and \fBprintErrorAndExit()\fP\&.
+References \fBhandleHTTPClientRequest()\fP, \fBHTTP_HEADER_LEN\fP, and \fBprintErrorAndExit()\fP\&.
 .SS "void printErrorAndExit (char * prompt)"
 
 .PP
@@ -185,32 +120,16 @@ print error and terminate the process Print error status of the process based on
 .PP
 
 .PP
-Definition at line \fB45\fP of file \fBmain\&.c\fP\&.
+Definition at line \fB23\fP of file \fBmain\&.c\fP\&.
 .PP
 .nf
-45                                      {
-46   perror(prompt);
-47   exit(EXIT_FAILURE);
-48 }
+23                                      {
+24   perror(prompt);
+25   exit(EXIT_FAILURE);
+26 }
 .fi
 .PP
 Referenced by \fBmain()\fP\&.
-.SH "Variable Documentation"
-.PP 
-.SS "const char httpGET[] = 'GET'"
-TODO: implement other HTTP method: HEAD, DELETE, CONNECT, OPTIONS, TRACE, PATCH HTTP GET method pattern 
-.PP
-Definition at line \fB26\fP of file \fBmain\&.c\fP\&.
-.PP
-Referenced by \fBmain()\fP\&.
-.SS "const char httpPOST[] = 'POST'"
-HTTP POST method pattern 
-.PP
-Definition at line \fB30\fP of file \fBmain\&.c\fP\&.
-.SS "const char httpPUT[] = 'PUT'"
-HTTP PUT method pattern 
-.PP
-Definition at line \fB34\fP of file \fBmain\&.c\fP\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for web-server from the source code\&.

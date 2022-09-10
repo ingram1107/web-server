@@ -1,9 +1,4 @@
-#include "http-handler.h"
 
-#include <asm-generic/errno.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
 
 static int parseHTTPRequest(int receiveMessageSize,
                             char receiveMessage[receiveMessageSize],

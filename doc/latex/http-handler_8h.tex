@@ -1,0 +1,388 @@
+\hypertarget{http-handler_8h}{}\doxysection{/home/clover/\+Projects/web-\/server/lib/http-\/handler.h File Reference}
+\label{http-handler_8h}\index{/home/clover/Projects/web-\/server/lib/http-\/handler.h@{/home/clover/Projects/web-\/server/lib/http-\/handler.h}}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}{HTTP\+\_\+\+HEADER\+\_\+\+LEN}}~8192
+\item 
+\#define \mbox{\hyperlink{http-handler_8h_a49180fdd018be2adfe4df3a59482ab0c}{HTTP\+\_\+\+REQUEST\+\_\+\+METHOD\+\_\+\+LEN}}~8
+\item 
+\#define \mbox{\hyperlink{http-handler_8h_a7d0073152dc4351d8b645031b83093d0}{HTTP\+\_\+\+REQUEST\+\_\+\+PATH\+\_\+\+LEN}}~1024
+\item 
+\#define \mbox{\hyperlink{http-handler_8h_a158d838bff67042768ab941e496265c5}{HTTP\+\_\+\+REQUEST\+\_\+\+VERSION\+\_\+\+LEN}}~10
+\item 
+\#define \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}}~\char`\"{}\textbackslash{}r\textbackslash{}n\textbackslash{}r\textbackslash{}n\char`\"{}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{http-handler_8h_a2e2c772c713591600f7bee7d9bf3f3fe}{http\+Method}} \{ \newline
+{\bfseries GET}
+, {\bfseries HEAD}
+, {\bfseries POST}
+, {\bfseries PUT}
+, \newline
+{\bfseries DELETE}
+, {\bfseries CONNECT}
+, {\bfseries OPTIONS}
+, {\bfseries TRACE}
+, \newline
+{\bfseries PATCH}
+ \}
+\item 
+enum \mbox{\hyperlink{http-handler_8h_abd1605a1ce8475ed58ef3759e0547776}{http\+Status}} \{ \newline
+{\bfseries CONTINUE} = 100
+, {\bfseries SWITCHING\+\_\+\+PROTOCOLS}
+, {\bfseries PROCESSING}
+, {\bfseries EARLY\+\_\+\+HINTS}
+, \newline
+{\bfseries OK} = 200
+, {\bfseries CREATED}
+, {\bfseries ACCEPTED}
+, {\bfseries NON\+\_\+\+AUTHORITATIVE\+\_\+\+INFORMATION}
+, \newline
+{\bfseries NO\+\_\+\+CONTENT}
+, {\bfseries RESET\+\_\+\+CONTENT}
+, {\bfseries PARTIAL\+\_\+\+CONTENT}
+, {\bfseries MULTI\+\_\+\+STATUS}
+, \newline
+{\bfseries ALREADY\+\_\+\+REPORTED}
+, {\bfseries IM\+\_\+\+USED} = 226
+, {\bfseries MULTIPLE\+\_\+\+CHOICE} = 300
+, {\bfseries MOVED\+\_\+\+PERMANENTLY}
+, \newline
+{\bfseries FOUND}
+, {\bfseries SEE\+\_\+\+OTHER}
+, {\bfseries NOT\+\_\+\+MODIFIED}
+, {\bfseries USE\+\_\+\+PROXY}
+, \newline
+{\bfseries UNUSED}
+, {\bfseries TEMPORARY\+\_\+\+REDIRECT}
+, {\bfseries PERMANENT\+\_\+\+REDIRECT}
+, {\bfseries BAD\+\_\+\+REQUEST} = 400
+, \newline
+{\bfseries UNAUTHORIZED}
+, {\bfseries PAYMENT\+\_\+\+REQUIRED}
+, {\bfseries FORBIDDEN}
+, {\bfseries NOT\+\_\+\+FOUND}
+, \newline
+{\bfseries METHOD\+\_\+\+NOT\+\_\+\+ALLOWED}
+, {\bfseries NOT\+\_\+\+ACCEPTABLE}
+, {\bfseries PROXY\+\_\+\+AUTHENTICATION\+\_\+\+REQUIRED}
+, {\bfseries REQUEST\+\_\+\+TIMEOUT}
+, \newline
+{\bfseries CONFLICT}
+, {\bfseries GONE}
+, {\bfseries LENGTH\+\_\+\+REQUIRED}
+, {\bfseries PRECONDITION\+\_\+\+FAILED}
+, \newline
+{\bfseries PAYLOAD\+\_\+\+TOO\+\_\+\+LARGE}
+, {\bfseries URI\+\_\+\+TOO\+\_\+\+LONG}
+, {\bfseries UNSUPPORTED\+\_\+\+MEDIA\+\_\+\+TYPE}
+, {\bfseries RANGE\+\_\+\+NOT\+\_\+\+SATISFIABLE}
+, \newline
+{\bfseries EXPECTATION\+\_\+\+FAILED}
+, {\bfseries IM\+\_\+\+A\+\_\+\+TEAPOT}
+, {\bfseries MISDIRECTED\+\_\+\+REQUEST} = 421
+, {\bfseries UNPROCESSABLE\+\_\+\+ENTITY}
+, \newline
+{\bfseries LOCKED}
+, {\bfseries FAILED\+\_\+\+DEPENDENCY}
+, {\bfseries TOO\+\_\+\+EARLY}
+, {\bfseries UPGRADE\+\_\+\+REQUIRED}
+, \newline
+{\bfseries PRECONDITION\+\_\+\+REQUIRED} = 428
+, {\bfseries TOO\+\_\+\+MANY\+\_\+\+REQUESTS}
+, {\bfseries REQUEST\+\_\+\+HEADER\+\_\+\+FIELDS\+\_\+\+TOO\+\_\+\+LARGE} = 431
+, {\bfseries UNAVAILABLE\+\_\+\+FOR\+\_\+\+LEGAL\+\_\+\+REASONS} = 451
+, \newline
+{\bfseries INTERNAL\+\_\+\+SERVER\+\_\+\+ERROR} = 500
+, {\bfseries NOT\+\_\+\+IMPLEMENTED}
+, {\bfseries BAD\+\_\+\+GATEWAY}
+, {\bfseries SERVICE\+\_\+\+UNAVAILABLE}
+, \newline
+{\bfseries GATEWAY\+\_\+\+TIMEOUT}
+, {\bfseries HTTP\+\_\+\+VERSION\+\_\+\+NOT\+\_\+\+SUPPORTED}
+, {\bfseries VARIANT\+\_\+\+ALSO\+\_\+\+NEGOTIATES}
+, {\bfseries INSUFFICIENT\+\_\+\+STORAGE}
+, \newline
+{\bfseries LOOP\+\_\+\+DETECTED}
+, {\bfseries NOT\+\_\+\+EXTENDED} = 510
+, {\bfseries NETWORK\+\_\+\+AUTHENTICATION\+\_\+\+REQURIED}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}{handle\+HTTPClient\+Request}} (int receive\+Message\+Size, char receive\+Message\mbox{[}receive\+Message\+Size\mbox{]}, int response\+Message\+Size, char response\+Message\mbox{[}response\+Message\+Size\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Little Clover 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2022-\/09-\/10 18\+:13\+:09 PM +0800 
+\end{DoxyDate}
+
+
+Definition in file \mbox{\hyperlink{http-handler_8h_source}{http-\/handler.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}\label{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}} 
+\index{http-\/handler.h@{http-\/handler.h}!CTRLF@{CTRLF}}
+\index{CTRLF@{CTRLF}!http-\/handler.h@{http-\/handler.h}}
+\doxysubsubsection{\texorpdfstring{CTRLF}{CTRLF}}
+{\footnotesize\ttfamily \#define CTRLF~\char`\"{}\textbackslash{}r\textbackslash{}n\textbackslash{}r\textbackslash{}n\char`\"{}}
+
+CTRLF character 
+
+Definition at line \mbox{\hyperlink{http-handler_8h_source_l00028}{28}} of file \mbox{\hyperlink{http-handler_8h_source}{http-\/handler.\+h}}.
+
+\mbox{\Hypertarget{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}\label{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}} 
+\index{http-\/handler.h@{http-\/handler.h}!HTTP\_HEADER\_LEN@{HTTP\_HEADER\_LEN}}
+\index{HTTP\_HEADER\_LEN@{HTTP\_HEADER\_LEN}!http-\/handler.h@{http-\/handler.h}}
+\doxysubsubsection{\texorpdfstring{HTTP\_HEADER\_LEN}{HTTP\_HEADER\_LEN}}
+{\footnotesize\ttfamily \#define HTTP\+\_\+\+HEADER\+\_\+\+LEN~8192}
+
+Supported maximum HTTP header size 
+
+Definition at line \mbox{\hyperlink{http-handler_8h_source_l00012}{12}} of file \mbox{\hyperlink{http-handler_8h_source}{http-\/handler.\+h}}.
+
+\mbox{\Hypertarget{http-handler_8h_a49180fdd018be2adfe4df3a59482ab0c}\label{http-handler_8h_a49180fdd018be2adfe4df3a59482ab0c}} 
+\index{http-\/handler.h@{http-\/handler.h}!HTTP\_REQUEST\_METHOD\_LEN@{HTTP\_REQUEST\_METHOD\_LEN}}
+\index{HTTP\_REQUEST\_METHOD\_LEN@{HTTP\_REQUEST\_METHOD\_LEN}!http-\/handler.h@{http-\/handler.h}}
+\doxysubsubsection{\texorpdfstring{HTTP\_REQUEST\_METHOD\_LEN}{HTTP\_REQUEST\_METHOD\_LEN}}
+{\footnotesize\ttfamily \#define HTTP\+\_\+\+REQUEST\+\_\+\+METHOD\+\_\+\+LEN~8}
+
+Maximum string length of HTTP request method 
+
+Definition at line \mbox{\hyperlink{http-handler_8h_source_l00016}{16}} of file \mbox{\hyperlink{http-handler_8h_source}{http-\/handler.\+h}}.
+
+\mbox{\Hypertarget{http-handler_8h_a7d0073152dc4351d8b645031b83093d0}\label{http-handler_8h_a7d0073152dc4351d8b645031b83093d0}} 
+\index{http-\/handler.h@{http-\/handler.h}!HTTP\_REQUEST\_PATH\_LEN@{HTTP\_REQUEST\_PATH\_LEN}}
+\index{HTTP\_REQUEST\_PATH\_LEN@{HTTP\_REQUEST\_PATH\_LEN}!http-\/handler.h@{http-\/handler.h}}
+\doxysubsubsection{\texorpdfstring{HTTP\_REQUEST\_PATH\_LEN}{HTTP\_REQUEST\_PATH\_LEN}}
+{\footnotesize\ttfamily \#define HTTP\+\_\+\+REQUEST\+\_\+\+PATH\+\_\+\+LEN~1024}
+
+Maximum string length of HTTP request path 
+
+Definition at line \mbox{\hyperlink{http-handler_8h_source_l00020}{20}} of file \mbox{\hyperlink{http-handler_8h_source}{http-\/handler.\+h}}.
+
+\mbox{\Hypertarget{http-handler_8h_a158d838bff67042768ab941e496265c5}\label{http-handler_8h_a158d838bff67042768ab941e496265c5}} 
+\index{http-\/handler.h@{http-\/handler.h}!HTTP\_REQUEST\_VERSION\_LEN@{HTTP\_REQUEST\_VERSION\_LEN}}
+\index{HTTP\_REQUEST\_VERSION\_LEN@{HTTP\_REQUEST\_VERSION\_LEN}!http-\/handler.h@{http-\/handler.h}}
+\doxysubsubsection{\texorpdfstring{HTTP\_REQUEST\_VERSION\_LEN}{HTTP\_REQUEST\_VERSION\_LEN}}
+{\footnotesize\ttfamily \#define HTTP\+\_\+\+REQUEST\+\_\+\+VERSION\+\_\+\+LEN~10}
+
+Maximum string length of HTTP request version 
+
+Definition at line \mbox{\hyperlink{http-handler_8h_source_l00024}{24}} of file \mbox{\hyperlink{http-handler_8h_source}{http-\/handler.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{http-handler_8h_a2e2c772c713591600f7bee7d9bf3f3fe}\label{http-handler_8h_a2e2c772c713591600f7bee7d9bf3f3fe}} 
+\index{http-\/handler.h@{http-\/handler.h}!httpMethod@{httpMethod}}
+\index{httpMethod@{httpMethod}!http-\/handler.h@{http-\/handler.h}}
+\doxysubsubsection{\texorpdfstring{httpMethod}{httpMethod}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{http-handler_8h_a2e2c772c713591600f7bee7d9bf3f3fe}{http\+Method}}}
+
+Supported HTTP request method adhered to the standard.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods}{\texttt{ https\+://developer.\+mozilla.\+org/en-\/\+US/docs/\+Web/\+HTTP/\+Methods}} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{http-handler_8h_source_l00035}{35}} of file \mbox{\hyperlink{http-handler_8h_source}{http-\/handler.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035 \{ GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH \};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{http-handler_8h_abd1605a1ce8475ed58ef3759e0547776}\label{http-handler_8h_abd1605a1ce8475ed58ef3759e0547776}} 
+\index{http-\/handler.h@{http-\/handler.h}!httpStatus@{httpStatus}}
+\index{httpStatus@{httpStatus}!http-\/handler.h@{http-\/handler.h}}
+\doxysubsubsection{\texorpdfstring{httpStatus}{httpStatus}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{http-handler_8h_abd1605a1ce8475ed58ef3759e0547776}{http\+Status}}}
+
+Supported HTTP response status code adhered to the standard.
+
+\begin{DoxySeeAlso}{See also}
+\href{https://developer.mozilla.org/en-US/docs/Web/HTTP/Status}{\texttt{ https\+://developer.\+mozilla.\+org/en-\/\+US/docs/\+Web/\+HTTP/\+Status}} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{http-handler_8h_source_l00061}{61}} of file \mbox{\hyperlink{http-handler_8h_source}{http-\/handler.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061                 \{}
+\DoxyCodeLine{00062   CONTINUE = 100,}
+\DoxyCodeLine{00063   SWITCHING\_PROTOCOLS,}
+\DoxyCodeLine{00064   PROCESSING,}
+\DoxyCodeLine{00065   EARLY\_HINTS,}
+\DoxyCodeLine{00066   OK = 200,}
+\DoxyCodeLine{00067   CREATED,}
+\DoxyCodeLine{00068   ACCEPTED,}
+\DoxyCodeLine{00069   NON\_AUTHORITATIVE\_INFORMATION,}
+\DoxyCodeLine{00070   NO\_CONTENT,}
+\DoxyCodeLine{00071   RESET\_CONTENT,}
+\DoxyCodeLine{00072   PARTIAL\_CONTENT,}
+\DoxyCodeLine{00073   MULTI\_STATUS,}
+\DoxyCodeLine{00074   ALREADY\_REPORTED,}
+\DoxyCodeLine{00075   IM\_USED = 226,}
+\DoxyCodeLine{00076   MULTIPLE\_CHOICE = 300,}
+\DoxyCodeLine{00077   MOVED\_PERMANENTLY,}
+\DoxyCodeLine{00078   FOUND,}
+\DoxyCodeLine{00079   SEE\_OTHER,}
+\DoxyCodeLine{00080   NOT\_MODIFIED,}
+\DoxyCodeLine{00081   USE\_PROXY,}
+\DoxyCodeLine{00082   UNUSED,}
+\DoxyCodeLine{00083   TEMPORARY\_REDIRECT,}
+\DoxyCodeLine{00084   PERMANENT\_REDIRECT,}
+\DoxyCodeLine{00085   BAD\_REQUEST = 400,}
+\DoxyCodeLine{00086   UNAUTHORIZED,}
+\DoxyCodeLine{00087   PAYMENT\_REQUIRED,}
+\DoxyCodeLine{00088   FORBIDDEN,}
+\DoxyCodeLine{00089   NOT\_FOUND,}
+\DoxyCodeLine{00090   METHOD\_NOT\_ALLOWED,}
+\DoxyCodeLine{00091   NOT\_ACCEPTABLE,}
+\DoxyCodeLine{00092   PROXY\_AUTHENTICATION\_REQUIRED,}
+\DoxyCodeLine{00093   REQUEST\_TIMEOUT,}
+\DoxyCodeLine{00094   CONFLICT,}
+\DoxyCodeLine{00095   GONE,}
+\DoxyCodeLine{00096   LENGTH\_REQUIRED,}
+\DoxyCodeLine{00097   PRECONDITION\_FAILED,}
+\DoxyCodeLine{00098   PAYLOAD\_TOO\_LARGE,}
+\DoxyCodeLine{00099   URI\_TOO\_LONG,}
+\DoxyCodeLine{00100   UNSUPPORTED\_MEDIA\_TYPE,}
+\DoxyCodeLine{00101   RANGE\_NOT\_SATISFIABLE,}
+\DoxyCodeLine{00102   EXPECTATION\_FAILED,}
+\DoxyCodeLine{00103   IM\_A\_TEAPOT,}
+\DoxyCodeLine{00104   MISDIRECTED\_REQUEST = 421,}
+\DoxyCodeLine{00105   UNPROCESSABLE\_ENTITY,}
+\DoxyCodeLine{00106   LOCKED,}
+\DoxyCodeLine{00107   FAILED\_DEPENDENCY,}
+\DoxyCodeLine{00108   TOO\_EARLY,}
+\DoxyCodeLine{00109   UPGRADE\_REQUIRED,}
+\DoxyCodeLine{00110   PRECONDITION\_REQUIRED = 428,}
+\DoxyCodeLine{00111   TOO\_MANY\_REQUESTS,}
+\DoxyCodeLine{00112   REQUEST\_HEADER\_FIELDS\_TOO\_LARGE = 431,}
+\DoxyCodeLine{00113   UNAVAILABLE\_FOR\_LEGAL\_REASONS = 451,}
+\DoxyCodeLine{00114   INTERNAL\_SERVER\_ERROR = 500,}
+\DoxyCodeLine{00115   NOT\_IMPLEMENTED,}
+\DoxyCodeLine{00116   BAD\_GATEWAY,}
+\DoxyCodeLine{00117   SERVICE\_UNAVAILABLE,}
+\DoxyCodeLine{00118   GATEWAY\_TIMEOUT,}
+\DoxyCodeLine{00119   HTTP\_VERSION\_NOT\_SUPPORTED,}
+\DoxyCodeLine{00120   VARIANT\_ALSO\_NEGOTIATES,}
+\DoxyCodeLine{00121   INSUFFICIENT\_STORAGE,}
+\DoxyCodeLine{00122   LOOP\_DETECTED,}
+\DoxyCodeLine{00123   NOT\_EXTENDED = 510,}
+\DoxyCodeLine{00124   NETWORK\_AUTHENTICATION\_REQURIED}
+\DoxyCodeLine{00125 \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}\label{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}} 
+\index{http-\/handler.h@{http-\/handler.h}!handleHTTPClientRequest@{handleHTTPClientRequest}}
+\index{handleHTTPClientRequest@{handleHTTPClientRequest}!http-\/handler.h@{http-\/handler.h}}
+\doxysubsubsection{\texorpdfstring{handleHTTPClientRequest()}{handleHTTPClientRequest()}}
+{\footnotesize\ttfamily int handle\+HTTPClient\+Request (\begin{DoxyParamCaption}\item[{int}]{receive\+Message\+Size,  }\item[{char}]{receive\+Message\mbox{[}receive\+Message\+Size\mbox{]},  }\item[{int}]{response\+Message\+Size,  }\item[{char}]{response\+Message\mbox{[}response\+Message\+Size\mbox{]} }\end{DoxyParamCaption})}
+
+handle a HTTP client request message and then create an HTTP response status code based its request method.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em receive\+Message\+Size} & The size of the {\itshape receive\+Message} \\
+\hline
+\mbox{\texttt{ in}}  & {\em receive\+Message} & The HTTP client request message received with a size of {\itshape receive\+Message\+Size} \\
+\hline
+\mbox{\texttt{ in}}  & {\em response\+Message\+Size} & The size of the {\itshape response\+Message} \\
+\hline
+\mbox{\texttt{ out}}  & {\em response\+Message} & The HTTP response status code formatted as a string with a size of {\itshape response\+Message\+Size} \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em 0} & {\itshape response\+Message} has been successfully created. \\
+\hline
+{\em -\/1} & Failure in either parsing the {\itshape receive\+Message} or creating a {\itshape response\+Message} \\
+\hline
+\end{DoxyRetVals}
+\begin{DoxySeeAlso}{See also}
+parse\+HTTPRequest() 
+
+create\+HTTPResponse\+Message() 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00072}{72}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00076 \{}
+\DoxyCodeLine{00077   \textcolor{keywordtype}{char} httpRequestMethod[\mbox{\hyperlink{http-handler_8h_a49180fdd018be2adfe4df3a59482ab0c}{HTTP\_REQUEST\_METHOD\_LEN}}] = \{ 0 \};}
+\DoxyCodeLine{00078   \textcolor{keywordtype}{char} httpRequestPath[\mbox{\hyperlink{http-handler_8h_a7d0073152dc4351d8b645031b83093d0}{HTTP\_REQUEST\_PATH\_LEN}}] = \{ 0 \};}
+\DoxyCodeLine{00079   \textcolor{keywordtype}{char} httpRequestVersion[\mbox{\hyperlink{http-handler_8h_a158d838bff67042768ab941e496265c5}{HTTP\_REQUEST\_VERSION\_LEN}}] = \{ 0 \};}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081   \textcolor{keywordtype}{int} httpParseStatus = parseHTTPRequest(receiveMessageSize,}
+\DoxyCodeLine{00082                                          receiveMessage,}
+\DoxyCodeLine{00083                                          httpRequestMethod,}
+\DoxyCodeLine{00084                                          httpRequestPath,}
+\DoxyCodeLine{00085                                          httpRequestVersion,}
+\DoxyCodeLine{00086                                          \textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{00087   \textcolor{keywordflow}{if} (httpParseStatus == -\/1 ) \{}
+\DoxyCodeLine{00088     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Failed to parse HTTP request header\(\backslash\)n"{}});}
+\DoxyCodeLine{00089     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Received HTTP request as follows:\(\backslash\)n\%s"{}},}
+\DoxyCodeLine{00090             receiveMessage);}
+\DoxyCodeLine{00091     \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00092   \}}
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094   \textcolor{keywordtype}{int} httpRequestMethodHandler = -\/1;}
+\DoxyCodeLine{00095   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= PATCH; i++)}
+\DoxyCodeLine{00096     \textcolor{keywordflow}{if} (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)}
+\DoxyCodeLine{00097       httpRequestMethodHandler = i;}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099   \textcolor{keywordflow}{switch} (httpRequestMethodHandler) \{}
+\DoxyCodeLine{00100     \textcolor{keywordflow}{case} GET:}
+\DoxyCodeLine{00101       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -\/1)}
+\DoxyCodeLine{00102         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00103       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00104     \textcolor{keywordflow}{case} HEAD:}
+\DoxyCodeLine{00105     \textcolor{keywordflow}{case} POST:}
+\DoxyCodeLine{00106     \textcolor{keywordflow}{case} PUT:}
+\DoxyCodeLine{00107     \textcolor{keywordflow}{case} DELETE:}
+\DoxyCodeLine{00108     \textcolor{keywordflow}{case} CONNECT:}
+\DoxyCodeLine{00109     \textcolor{keywordflow}{case} OPTIONS:}
+\DoxyCodeLine{00110     \textcolor{keywordflow}{case} TRACE:}
+\DoxyCodeLine{00111     \textcolor{keywordflow}{case} PATCH:}
+\DoxyCodeLine{00112       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD\_NOT\_ALLOWED) == -\/1)}
+\DoxyCodeLine{00113         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00114       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00115     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00116       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT\_IMPLEMENTED) == -\/1)}
+\DoxyCodeLine{00117         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00118       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00119   \};}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
+\DoxyCodeLine{00122 \};}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{http-handler_8h_source_l00016}{HTTP\+\_\+\+REQUEST\+\_\+\+METHOD\+\_\+\+LEN}}, \mbox{\hyperlink{http-handler_8h_source_l00020}{HTTP\+\_\+\+REQUEST\+\_\+\+PATH\+\_\+\+LEN}}, and \mbox{\hyperlink{http-handler_8h_source_l00024}{HTTP\+\_\+\+REQUEST\+\_\+\+VERSION\+\_\+\+LEN}}.
+
+
+
+Referenced by \mbox{\hyperlink{main_8c_source_l00032}{main()}}.
+

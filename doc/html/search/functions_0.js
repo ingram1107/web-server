@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['main_0',['main',['../main_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main.c']]]
+  ['handlehttpclientrequest_0',['handleHTTPClientRequest',['../http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63',1,'http-handler.c']]]
 ];

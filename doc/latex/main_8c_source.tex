@@ -6,112 +6,66 @@
 \DoxyCodeLine{\Hypertarget{main_8c_source_l00002}00002 \textcolor{preprocessor}{\#include <arpa/inet.h>}}
 \DoxyCodeLine{\Hypertarget{main_8c_source_l00003}00003 \textcolor{preprocessor}{\#include <asm-\/generic/errno.h>}}
 \DoxyCodeLine{\Hypertarget{main_8c_source_l00004}00004 \textcolor{preprocessor}{\#include <errno.h>}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00005}00005 \textcolor{preprocessor}{\#include <netinet/in.h>}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00006}00006 \textcolor{preprocessor}{\#include <stdio.h>}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00007}00007 \textcolor{preprocessor}{\#include <stdlib.h>}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00008}00008 \textcolor{preprocessor}{\#include <string.h>}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00009}00009 \textcolor{preprocessor}{\#include <sys/socket.h>}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00010}00010 \textcolor{preprocessor}{\#include <sys/types.h>}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00011}00011 \textcolor{preprocessor}{\#include <unistd.h>}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00012}00012 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00016}\mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{00016}} \textcolor{preprocessor}{\#define HTTP\_HEADER\_LEN 8192}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00017}00017 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00026}\mbox{\hyperlink{main_8c_ae782847b32dd682dcb0218d9facf3aa0}{00026}} \textcolor{keyword}{const} \textcolor{keywordtype}{char} \mbox{\hyperlink{main_8c_ae782847b32dd682dcb0218d9facf3aa0}{httpGET}}[] = \textcolor{stringliteral}{"{}GET"{}};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00030}\mbox{\hyperlink{main_8c_a7cbfa0f543df080710e95850bb97428a}{00030}} \textcolor{keyword}{const} \textcolor{keywordtype}{char} \mbox{\hyperlink{main_8c_a7cbfa0f543df080710e95850bb97428a}{httpPOST}}[] = \textcolor{stringliteral}{"{}POST"{}};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00034}\mbox{\hyperlink{main_8c_abad6a5a30f6b81eca71cc7c8e69adb78}{00034}} \textcolor{keyword}{const} \textcolor{keywordtype}{char} \mbox{\hyperlink{main_8c_abad6a5a30f6b81eca71cc7c8e69adb78}{httpPUT}}[] = \textcolor{stringliteral}{"{}PUT"{}};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00035}00035 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00045}\mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{00045}} \textcolor{keywordtype}{void} \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{keywordtype}{char}* prompt) \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00046}00046   perror(prompt);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00047}00047   exit(EXIT\_FAILURE);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00048}00048 \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00005}00005 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{http-handler_8h}{http-\/handler.h}}>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00006}00006 \textcolor{preprocessor}{\#include <netinet/in.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00007}00007 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00008}00008 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00009}00009 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00010}00010 \textcolor{preprocessor}{\#include <sys/socket.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00011}00011 \textcolor{preprocessor}{\#include <sys/types.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00012}00012 \textcolor{preprocessor}{\#include <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00023}\mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{00023}} \textcolor{keywordtype}{void} \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{keywordtype}{char}* prompt) \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00024}00024   perror(prompt);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00025}00025   exit(EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00026}00026 \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00032}\mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{00032}} \textcolor{keywordtype}{int} \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00033}00033   \textcolor{keywordtype}{int} errnum;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00034}00034   \textcolor{keywordtype}{char} receiveBuffer[\mbox{\hyperlink{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \{ 0 \};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00035}00035   \textcolor{keywordtype}{char} serverData[\mbox{\hyperlink{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \{ 0 \};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00036}00036   \textcolor{keywordtype}{int} serverSocket = socket(AF\_INET, SOCK\_STREAM, 0);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00037}00037   \textcolor{keywordflow}{if} (serverSocket == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00039}00039   \textcolor{keyword}{struct }sockaddr\_in serverAddress = \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00040}00040     .sin\_family = AF\_INET,}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00041}00041     .sin\_port = htons(80),          \textcolor{comment}{/* connect with HTTP protocol */}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00042}00042     .sin\_addr.s\_addr = INADDR\_ANY,}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00043}00043   \};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00045}00045   \textcolor{keywordtype}{int} bindStatus = bind(serverSocket,}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00046}00046                         (\textcolor{keyword}{struct} sockaddr *) \&serverAddress,}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00047}00047                         \textcolor{keyword}{sizeof}(serverAddress));}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00048}00048   \textcolor{keywordflow}{if} (bindStatus == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
 \DoxyCodeLine{\Hypertarget{main_8c_source_l00049}00049 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00054}\mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{00054}} \textcolor{keywordtype}{int} \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{void}) \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00055}00055   \textcolor{keywordtype}{int} errnum;}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00056}00056   \textcolor{keywordtype}{char} receiveBuffer[\mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00057}00057   \textcolor{keywordtype}{char} serverData[\mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00058}00058   \textcolor{keywordtype}{int} serverSocket = socket(AF\_INET, SOCK\_STREAM, 0);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00059}00059   \textcolor{keywordflow}{if} (serverSocket == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00051}00051   \textcolor{keywordtype}{int} listenStatus = listen(serverSocket, 5);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00052}00052   \textcolor{keywordflow}{if} (listenStatus == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00054}00054   \textcolor{keywordflow}{while} (1) \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00055}00055     \textcolor{keywordtype}{int} clientSocket;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00056}00056     clientSocket = accept(serverSocket,}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00057}00057         (\textcolor{keyword}{struct} sockaddr *) NULL,}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00058}00058         NULL);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00059}00059     \textcolor{keywordflow}{if} (clientSocket == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
 \DoxyCodeLine{\Hypertarget{main_8c_source_l00060}00060 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00061}00061   \textcolor{keyword}{struct }sockaddr\_in serverAddress = \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00062}00062     .sin\_family = AF\_INET,}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00063}00063     .sin\_port = htons(80),          \textcolor{comment}{/* connect with HTTP protocol */}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00064}00064     .sin\_addr.s\_addr = INADDR\_ANY,}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00065}00065   \};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00066}00066 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00067}00067   \textcolor{keywordtype}{int} bindStatus = bind(serverSocket,}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00068}00068                         (\textcolor{keyword}{struct} sockaddr *) \&serverAddress,}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00069}00069                         \textcolor{keyword}{sizeof}(serverAddress));}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00070}00070   \textcolor{keywordflow}{if} (bindStatus == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00061}00061     \textcolor{keywordtype}{int} messageSize = read(clientSocket, receiveBuffer, \mbox{\hyperlink{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}-\/1);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00062}00062     \textcolor{keywordflow}{if} (messageSize < 0) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00063}00063     receiveBuffer[messageSize-\/1] = \textcolor{charliteral}{'\(\backslash\)0'};  \textcolor{comment}{/* Null terminate the received string */}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00065}00065     \textcolor{keywordtype}{char} responseMessage[\mbox{\hyperlink{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \{ 0 \};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00066}00066     \textcolor{keywordtype}{int} handler = \mbox{\hyperlink{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}{handleHTTPClientRequest}}(messageSize-\/1, receiveBuffer, \mbox{\hyperlink{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}, responseMessage);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00067}00067     \textcolor{keywordflow}{if} (handler == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00069}00069     snprintf(serverData, \textcolor{keyword}{sizeof}(serverData), \textcolor{stringliteral}{"{}\%s"{}}, responseMessage);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00070}00070     \textcolor{keywordtype}{int} responseStatus = write(clientSocket, \&serverData, strlen(serverData));}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00071}00071     \textcolor{keywordflow}{if} (responseStatus == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
 \DoxyCodeLine{\Hypertarget{main_8c_source_l00072}00072 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00073}00073   \textcolor{keywordtype}{int} listenStatus = listen(serverSocket, 5);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00074}00074   \textcolor{keywordflow}{if} (listenStatus == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00075}00075 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00076}00076   \textcolor{keywordflow}{while} (1) \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00077}00077     \textcolor{keywordtype}{int} clientSocket;}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00078}00078     clientSocket = accept(serverSocket,}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00079}00079         (\textcolor{keyword}{struct} sockaddr *) NULL,}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00080}00080         NULL);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00081}00081     \textcolor{keywordflow}{if} (clientSocket == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00082}00082 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00083}00083     \textcolor{keywordtype}{int} messageSize = read(clientSocket, receiveBuffer, \mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}-\/1);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00084}00084     \textcolor{keywordflow}{if} (messageSize < 0) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00085}00085     receiveBuffer[messageSize-\/1] = \textcolor{charliteral}{'\(\backslash\)0'};  \textcolor{comment}{/* Null terminate the received string */}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00086}00086 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00087}00087     \textcolor{keywordtype}{char} httpMethod[8] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00088}00088     \textcolor{keywordtype}{char} httpPath[1024] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00089}00089     \textcolor{keywordtype}{char} httpVersion[10] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00090}00090     \textcolor{keywordtype}{char}* httpToken;}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00091}00091 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00097}00097     \textcolor{comment}{/* Get HTTP method type */}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00098}00098     httpToken = strtok(receiveBuffer, \textcolor{stringliteral}{"{} "{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00099}00099     \textcolor{keywordflow}{if} (httpToken != NULL) \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00100}00100       strncpy(httpMethod, httpToken, strlen(httpToken));}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00101}00101       printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Method: \%s\(\backslash\)n"{}}, httpMethod);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00102}00102     \}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00103}00103 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00104}00104     \textcolor{comment}{/* Get HTTP request path */}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00105}00105     httpToken = strtok(NULL, \textcolor{stringliteral}{"{} "{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00106}00106     \textcolor{keywordflow}{if} (httpToken != NULL) \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00107}00107       strncpy(httpPath, httpToken, strlen(httpToken));}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00108}00108       printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Request Path: \%s\(\backslash\)n"{}}, httpPath);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00109}00109     \}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00110}00110 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00111}00111     \textcolor{comment}{/* Get HTTP version */}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00112}00112     httpToken = strtok(NULL, \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00113}00113     \textcolor{keywordflow}{if} (httpToken != NULL) \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00114}00114       strncpy(httpVersion, httpToken, strlen(httpToken));}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00115}00115       printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Version: \%s\(\backslash\)n"{}}, httpVersion);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00116}00116     \}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00117}00117 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00118}00118     fflush(stdout);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00119}00119 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00120}00120     \textcolor{keywordflow}{if} (strcmp(httpMethod, \mbox{\hyperlink{main_8c_ae782847b32dd682dcb0218d9facf3aa0}{httpGET}}) == 0) \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00121}00121       \textcolor{keywordflow}{if} (strcmp(httpPath, \textcolor{stringliteral}{"{}/"{}}) == 0) \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00122}00122         \textcolor{keywordtype}{char} httpResponse[\mbox{\hyperlink{main_8c_aadf9bf10be789e7bd38610742e76be4c}{HTTP\_HEADER\_LEN}}] = \textcolor{stringliteral}{"{}HTTP/1.1 200 OK\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)n"{}};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00123}00123         \textcolor{keywordtype}{char} htmlFileName[] = \textcolor{stringliteral}{"{}../tests/index.html"{}};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00124}00124         FILE* htmlPage = fopen(htmlFileName, \textcolor{stringliteral}{"{}r"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00125}00125         \textcolor{keywordflow}{if} (!htmlPage) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00126}00126         \textcolor{keywordtype}{char} readBuffer[] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00127}00127         fread(readBuffer, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}), 4096, htmlPage);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00128}00128         strcat(httpResponse, readBuffer);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00129}00129 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00130}00130         snprintf(serverData, \textcolor{keyword}{sizeof}(serverData), \textcolor{stringliteral}{"{}\%s"{}}, httpResponse);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00131}00131       \} \textcolor{keywordflow}{else}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00132}00132         snprintf(serverData, \textcolor{keyword}{sizeof}(serverData), \textcolor{stringliteral}{"{}HTTP/1.1 404 Not Found\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)n"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00133}00133 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00134}00134       \textcolor{keywordtype}{int} responseStatus = write(clientSocket, \&serverData, strlen(serverData));}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00135}00135       \textcolor{keywordflow}{if} (responseStatus == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00136}00136     \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00137}00137       snprintf(serverData, \textcolor{keyword}{sizeof}(serverData), \textcolor{stringliteral}{"{}HTTP/1.1 405 Method Not Allowed\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)n"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00138}00138       \textcolor{keywordtype}{int} responseStatus = write(clientSocket, \&serverData, strlen(serverData));}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00139}00139       \textcolor{keywordflow}{if} (responseStatus == -\/1) \mbox{\hyperlink{main_8c_adcdaf28c5d70f00a5be4385cd85fb3a0}{printErrorAndExit}}(\textcolor{stringliteral}{"{}web-\/server"{}});}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00140}00140     \}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00141}00141     close(clientSocket);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00142}00142   \}}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00143}00143   close(serverSocket);}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00144}00144 }
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00145}00145   \textcolor{keywordflow}{return} EXIT\_SUCCESS;}
-\DoxyCodeLine{\Hypertarget{main_8c_source_l00146}00146 \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00073}00073     close(clientSocket);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00074}00074   \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00075}00075   close(serverSocket);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00077}00077   \textcolor{keywordflow}{return} EXIT\_SUCCESS;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00078}00078 \}}
 
 \end{DoxyCode}

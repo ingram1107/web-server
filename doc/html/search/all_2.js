@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['printerrorandexit_0',['printErrorAndExit',['../main_8c.html#adcdaf28c5d70f00a5be4385cd85fb3a0',1,'main.c']]]
+  ['main_0',['main',['../main_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main.c']]],
+  ['main_2ec_1',['main.c',['../main_8c.html',1,'']]]
 ];

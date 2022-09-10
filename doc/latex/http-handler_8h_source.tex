@@ -1,0 +1,178 @@
+\hypertarget{http-handler_8h_source}{}\doxysection{http-\/handler.h}
+\label{http-handler_8h_source}\index{/home/clover/Projects/web-\/server/lib/http-\/handler.h@{/home/clover/Projects/web-\/server/lib/http-\/handler.h}}
+\mbox{\hyperlink{http-handler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00001}00001 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00006}00006 \textcolor{preprocessor}{\#ifndef HTTP\_HANDLER\_H}}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00007}00007 \textcolor{preprocessor}{\#define HTTP\_HANDLER\_H}}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00012}\mbox{\hyperlink{http-handler_8h_aadf9bf10be789e7bd38610742e76be4c}{00012}} \textcolor{preprocessor}{\#define HTTP\_HEADER\_LEN 8192}}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00016}\mbox{\hyperlink{http-handler_8h_a49180fdd018be2adfe4df3a59482ab0c}{00016}} \textcolor{preprocessor}{\#define HTTP\_REQUEST\_METHOD\_LEN 8}}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00020}\mbox{\hyperlink{http-handler_8h_a7d0073152dc4351d8b645031b83093d0}{00020}} \textcolor{preprocessor}{\#define HTTP\_REQUEST\_PATH\_LEN 1024}}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00024}\mbox{\hyperlink{http-handler_8h_a158d838bff67042768ab941e496265c5}{00024}} \textcolor{preprocessor}{\#define HTTP\_REQUEST\_VERSION\_LEN 10}}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00028}\mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{00028}} \textcolor{preprocessor}{\#define CTRLF "{}\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00035}\mbox{\hyperlink{http-handler_8h_a2e2c772c713591600f7bee7d9bf3f3fe}{00035}} \textcolor{keyword}{enum} \mbox{\hyperlink{http-handler_8h_a2e2c772c713591600f7bee7d9bf3f3fe}{httpMethod}} \{ GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00044}00044 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \textcolor{keyword}{const} httpMethodStr[] = \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00045}00045   [GET] = \textcolor{stringliteral}{"{}GET"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00046}00046   [HEAD] = \textcolor{stringliteral}{"{}HEAD"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00047}00047   [POST] = \textcolor{stringliteral}{"{}POST"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00048}00048   [PUT] = \textcolor{stringliteral}{"{}PUT"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00049}00049   [DELETE] = \textcolor{stringliteral}{"{}DELETE"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00050}00050   [CONNECT] = \textcolor{stringliteral}{"{}CONNECT"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00051}00051   [OPTIONS] = \textcolor{stringliteral}{"{}OPTIONS"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00052}00052   [TRACE] = \textcolor{stringliteral}{"{}TRACE"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00053}00053   [PATCH] = \textcolor{stringliteral}{"{}PATCH"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00054}00054 \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00061}\mbox{\hyperlink{http-handler_8h_abd1605a1ce8475ed58ef3759e0547776}{00061}} \textcolor{keyword}{enum} \mbox{\hyperlink{http-handler_8h_abd1605a1ce8475ed58ef3759e0547776}{httpStatus}} \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00062}00062   CONTINUE = 100,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00063}00063   SWITCHING\_PROTOCOLS,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00064}00064   PROCESSING,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00065}00065   EARLY\_HINTS,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00066}00066   OK = 200,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00067}00067   CREATED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00068}00068   ACCEPTED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00069}00069   NON\_AUTHORITATIVE\_INFORMATION,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00070}00070   NO\_CONTENT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00071}00071   RESET\_CONTENT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00072}00072   PARTIAL\_CONTENT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00073}00073   MULTI\_STATUS,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00074}00074   ALREADY\_REPORTED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00075}00075   IM\_USED = 226,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00076}00076   MULTIPLE\_CHOICE = 300,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00077}00077   MOVED\_PERMANENTLY,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00078}00078   FOUND,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00079}00079   SEE\_OTHER,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00080}00080   NOT\_MODIFIED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00081}00081   USE\_PROXY,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00082}00082   UNUSED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00083}00083   TEMPORARY\_REDIRECT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00084}00084   PERMANENT\_REDIRECT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00085}00085   BAD\_REQUEST = 400,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00086}00086   UNAUTHORIZED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00087}00087   PAYMENT\_REQUIRED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00088}00088   FORBIDDEN,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00089}00089   NOT\_FOUND,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00090}00090   METHOD\_NOT\_ALLOWED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00091}00091   NOT\_ACCEPTABLE,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00092}00092   PROXY\_AUTHENTICATION\_REQUIRED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00093}00093   REQUEST\_TIMEOUT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00094}00094   CONFLICT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00095}00095   GONE,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00096}00096   LENGTH\_REQUIRED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00097}00097   PRECONDITION\_FAILED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00098}00098   PAYLOAD\_TOO\_LARGE,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00099}00099   URI\_TOO\_LONG,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00100}00100   UNSUPPORTED\_MEDIA\_TYPE,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00101}00101   RANGE\_NOT\_SATISFIABLE,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00102}00102   EXPECTATION\_FAILED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00103}00103   IM\_A\_TEAPOT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00104}00104   MISDIRECTED\_REQUEST = 421,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00105}00105   UNPROCESSABLE\_ENTITY,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00106}00106   LOCKED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00107}00107   FAILED\_DEPENDENCY,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00108}00108   TOO\_EARLY,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00109}00109   UPGRADE\_REQUIRED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00110}00110   PRECONDITION\_REQUIRED = 428,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00111}00111   TOO\_MANY\_REQUESTS,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00112}00112   REQUEST\_HEADER\_FIELDS\_TOO\_LARGE = 431,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00113}00113   UNAVAILABLE\_FOR\_LEGAL\_REASONS = 451,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00114}00114   INTERNAL\_SERVER\_ERROR = 500,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00115}00115   NOT\_IMPLEMENTED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00116}00116   BAD\_GATEWAY,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00117}00117   SERVICE\_UNAVAILABLE,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00118}00118   GATEWAY\_TIMEOUT,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00119}00119   HTTP\_VERSION\_NOT\_SUPPORTED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00120}00120   VARIANT\_ALSO\_NEGOTIATES,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00121}00121   INSUFFICIENT\_STORAGE,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00122}00122   LOOP\_DETECTED,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00123}00123   NOT\_EXTENDED = 510,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00124}00124   NETWORK\_AUTHENTICATION\_REQURIED}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00125}00125 \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00126}00126 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00134}00134 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \textcolor{keyword}{const} httpStatusStr[] = \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00135}00135   [CONTINUE] = \textcolor{stringliteral}{"{}100 OK"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00136}00136   [SWITCHING\_PROTOCOLS] = \textcolor{stringliteral}{"{}101 Switching Protocols"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00137}00137   [PROCESSING] = \textcolor{stringliteral}{"{}102 Processing"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00138}00138   [EARLY\_HINTS] = \textcolor{stringliteral}{"{}103 Early Hints"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00139}00139   [OK] = \textcolor{stringliteral}{"{}200 OK"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00140}00140   [CREATED] = \textcolor{stringliteral}{"{}201 Created"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00141}00141   [ACCEPTED] = \textcolor{stringliteral}{"{}202 Accepted"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00142}00142   [NON\_AUTHORITATIVE\_INFORMATION] = \textcolor{stringliteral}{"{}203 Non-\/Authoritative Information"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00143}00143   [NO\_CONTENT] = \textcolor{stringliteral}{"{}204 No Content"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00144}00144   [RESET\_CONTENT] = \textcolor{stringliteral}{"{}205 Reset Content"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00145}00145   [PARTIAL\_CONTENT] = \textcolor{stringliteral}{"{}206 Partial Content"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00146}00146   [MULTI\_STATUS] = \textcolor{stringliteral}{"{}207 Multi-\/Status"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00147}00147   [ALREADY\_REPORTED] = \textcolor{stringliteral}{"{}208 Already Reported"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00148}00148   [IM\_USED] = \textcolor{stringliteral}{"{}226 IM Used"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00149}00149   [MULTIPLE\_CHOICE] = \textcolor{stringliteral}{"{}300 Multiple Choice"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00150}00150   [MOVED\_PERMANENTLY] = \textcolor{stringliteral}{"{}301 Moved Permanently"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00151}00151   [FOUND] = \textcolor{stringliteral}{"{}302 Found"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00152}00152   [SEE\_OTHER] = \textcolor{stringliteral}{"{}303 See Other"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00153}00153   [NOT\_MODIFIED] = \textcolor{stringliteral}{"{}304 Not Modified"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00154}00154   [USE\_PROXY] = \textcolor{stringliteral}{"{}305 Use Proxy"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00155}00155   [TEMPORARY\_REDIRECT] = \textcolor{stringliteral}{"{}306 Temporary Redirect"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00156}00156   [PERMANENT\_REDIRECT] = \textcolor{stringliteral}{"{}307 Permanent Redirect"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00157}00157   [BAD\_REQUEST] = \textcolor{stringliteral}{"{}400 Bad Request"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00158}00158   [UNAUTHORIZED] = \textcolor{stringliteral}{"{}401 Unauthorized"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00159}00159   [PAYMENT\_REQUIRED] = \textcolor{stringliteral}{"{}402 Payment Required"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00160}00160   [FORBIDDEN] = \textcolor{stringliteral}{"{}403 Forbidden"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00161}00161   [NOT\_FOUND] = \textcolor{stringliteral}{"{}404 Not Found"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00162}00162   [METHOD\_NOT\_ALLOWED] = \textcolor{stringliteral}{"{}405 Method Not Allowed"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00163}00163   [NOT\_ACCEPTABLE] = \textcolor{stringliteral}{"{}406 Not Acceptable"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00164}00164   [PROXY\_AUTHENTICATION\_REQUIRED] = \textcolor{stringliteral}{"{}407 Proxy Authentication Required"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00165}00165   [REQUEST\_TIMEOUT] = \textcolor{stringliteral}{"{}408 Request Timeout"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00166}00166   [CONFLICT] = \textcolor{stringliteral}{"{}409 Conflict"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00167}00167   [GONE] = \textcolor{stringliteral}{"{}410 Gone"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00168}00168   [LENGTH\_REQUIRED] = \textcolor{stringliteral}{"{}411 Length Required"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00169}00169   [PRECONDITION\_FAILED] = \textcolor{stringliteral}{"{}412 Precondition Failed"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00170}00170   [PAYLOAD\_TOO\_LARGE] = \textcolor{stringliteral}{"{}413 Payload Too Large"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00171}00171   [URI\_TOO\_LONG] = \textcolor{stringliteral}{"{}414 URI Too Long"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00172}00172   [UNSUPPORTED\_MEDIA\_TYPE] = \textcolor{stringliteral}{"{}415 Unsupported Media Type"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00173}00173   [RANGE\_NOT\_SATISFIABLE] = \textcolor{stringliteral}{"{}416 Range Not Satisfiable"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00174}00174   [EXPECTATION\_FAILED] = \textcolor{stringliteral}{"{}417 Expectation Failed"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00175}00175   [IM\_A\_TEAPOT] = \textcolor{stringliteral}{"{}418 I'm a teapot"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00176}00176   [MISDIRECTED\_REQUEST] = \textcolor{stringliteral}{"{}421 Misdirected Request"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00177}00177   [UNPROCESSABLE\_ENTITY] = \textcolor{stringliteral}{"{}422 Unprocessable Entity"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00178}00178   [LOCKED] = \textcolor{stringliteral}{"{}423 Locked"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00179}00179   [FAILED\_DEPENDENCY] = \textcolor{stringliteral}{"{}424 Failed Dependency"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00180}00180   [TOO\_EARLY] = \textcolor{stringliteral}{"{}425 Too Early"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00181}00181   [UPGRADE\_REQUIRED] = \textcolor{stringliteral}{"{}426 Upgrade Required"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00182}00182   [PRECONDITION\_REQUIRED] = \textcolor{stringliteral}{"{}428 Precondition Required"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00183}00183   [TOO\_MANY\_REQUESTS] = \textcolor{stringliteral}{"{}429 Too Many Requests"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00184}00184   [REQUEST\_HEADER\_FIELDS\_TOO\_LARGE] = \textcolor{stringliteral}{"{}431 Request Header Fields Too Large"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00185}00185   [UNAVAILABLE\_FOR\_LEGAL\_REASONS] = \textcolor{stringliteral}{"{}451 Unavailable For Legal Reasons"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00186}00186   [INTERNAL\_SERVER\_ERROR] = \textcolor{stringliteral}{"{}500 Internal Server Error"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00187}00187   [NOT\_IMPLEMENTED] = \textcolor{stringliteral}{"{}501 Not Implemented"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00188}00188   [BAD\_GATEWAY] = \textcolor{stringliteral}{"{}502 Bad Gateway"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00189}00189   [SERVICE\_UNAVAILABLE] = \textcolor{stringliteral}{"{}503 Service Unavailable"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00190}00190   [GATEWAY\_TIMEOUT] = \textcolor{stringliteral}{"{}504 Gateway Timeout"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00191}00191   [HTTP\_VERSION\_NOT\_SUPPORTED] = \textcolor{stringliteral}{"{}505 Http Version Not Supported"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00192}00192   [VARIANT\_ALSO\_NEGOTIATES] = \textcolor{stringliteral}{"{}506 Variant Also Negotiates"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00193}00193   [INSUFFICIENT\_STORAGE] = \textcolor{stringliteral}{"{}507 Insufficient Storage"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00194}00194   [LOOP\_DETECTED] = \textcolor{stringliteral}{"{}508 Loop Detected"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00195}00195   [NOT\_EXTENDED] = \textcolor{stringliteral}{"{}510 Not Extended"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00196}00196   [NETWORK\_AUTHENTICATION\_REQURIED] = \textcolor{stringliteral}{"{}511 Network Authentication Requried"{}} \mbox{\hyperlink{http-handler_8h_a6e2836e71b237d7f411e6753b18324cd}{CTRLF}}}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00197}00197 \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00222}00222 \textcolor{keyword}{static} \textcolor{keywordtype}{int} parseHTTPRequest(\textcolor{keywordtype}{int} receiveMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00223}00223                             \textcolor{keywordtype}{char} receiveMessage[receiveMessageSize],}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00224}00224                             \textcolor{keywordtype}{char}* httpRequestMethod,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00225}00225                             \textcolor{keywordtype}{char}* httpRequestPath,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00226}00226                             \textcolor{keywordtype}{char}* httpRequestVersion,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00227}00227                             \textcolor{keywordtype}{char}* delimeter);}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00228}00228 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00246}00246 \textcolor{keyword}{static} \textcolor{keywordtype}{int} createHTTPResponseMessage(\textcolor{keywordtype}{int} httpResponseMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00247}00247                                      \textcolor{keywordtype}{char} httpResponseMessage[httpResponseMessageSize],}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00248}00248                                      \textcolor{keywordtype}{int} httpResponseStatus);}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00249}00249 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00268}00268 \textcolor{keywordtype}{int} \mbox{\hyperlink{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}{handleHTTPClientRequest}}(\textcolor{keywordtype}{int} receiveMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00269}00269                             \textcolor{keywordtype}{char} receiveMessage[receiveMessageSize],}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00270}00270                             \textcolor{keywordtype}{int} responseMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00271}00271                             \textcolor{keywordtype}{char} responseMessage[responseMessageSize]);}
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00272}00272 }
+\DoxyCodeLine{\Hypertarget{http-handler_8h_source_l00273}00273 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
