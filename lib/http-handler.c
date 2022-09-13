@@ -12,33 +12,58 @@ static int parseHTTPRequest(int receiveMessageSize,
                             char* httpRequestVersion,
                             char* delimeter)
 {
-  char* httpRequestToken;
-  
-  /**
-   * TODO: Might need to design a filter that do the same job as strtok do but
-   * much resilient to buffer overflow and able to treat all space character as
-   * the same.
-   */
-  /* Get HTTP request method type */
-  httpRequestToken = strtok(receiveMessage, delimeter);
-  if (httpRequestToken != NULL) {
-    strncpy(httpRequestMethod, httpRequestToken, strlen(httpRequestToken));
-    printf("web-server: HTTP Method:       %s\n", httpRequestMethod);
-  } else goto cleanup;
+  printf("%s", receiveMessage);
 
-  /* Get HTTP request path */
-  httpRequestToken = strtok(NULL, delimeter);
-  if (httpRequestToken != NULL) {
-    strncpy(httpRequestPath, httpRequestToken, strlen(httpRequestToken));
-    printf("web-server: HTTP Request Path: %s\n", httpRequestPath);
-  } else goto cleanup;
+  char httpStatusLine[HTTP_REQUEST_STATUS_LINE_LEN] = { 0 };
+  char* readBuffer = receiveMessage;
+  int lineLen = 0;
 
-  /* Get HTTP request version */
-  httpRequestToken = strtok(NULL, "\n");  /* TODO: replace this as delimeter so that it is generic */
-  if (httpRequestToken != NULL) {
-    strncpy(httpRequestVersion, httpRequestToken, strlen(httpRequestToken));
-    printf("web-server: HTTP Version:      %s\n", httpRequestVersion);
-  } else goto cleanup;
+  lineLen = strcspn(readBuffer, "\r\n");
+  strncpy(httpStatusLine, readBuffer, lineLen);
+  readBuffer += lineLen + 2; /* Skip through the read line and CRLF */
+  httpStatusLine[lineLen] = '\0';
+
+  printf("web-server: HTTP Status Line: %s\n", httpStatusLine);
+
+  char httpHeaderLines[256][HTTP_REQUEST_STATUS_LINE_LEN] = { 0 };
+  for (int i = 0; readBuffer[0] != '\r' && readBuffer[1] != '\n'; i++, readBuffer += lineLen + 2) {
+    lineLen = strcspn(readBuffer, "\r\n");
+    strncpy(httpHeaderLines[i], readBuffer, lineLen);
+    httpHeaderLines[i][lineLen] = '\0';
+    printf("web-server: HTTP Header Line: %s\n", httpHeaderLines[i]);
+  }
+
+  readBuffer = httpStatusLine;
+  lineLen = strcspn(readBuffer, " ");
+  strncpy(httpRequestMethod, readBuffer, lineLen);
+  readBuffer += lineLen + 1;
+  httpRequestMethod[lineLen] = '\0';
+  printf("web-server: HTTP Method: %s\n", httpRequestMethod);
+
+  lineLen = strcspn(readBuffer, " ");
+  strncpy(httpRequestPath, readBuffer, lineLen);
+  readBuffer += lineLen + 1;
+  httpRequestPath[lineLen] = '\0';
+  printf("web-server: HTTP Path: %s\n", httpRequestPath);
+
+  lineLen = strcspn(readBuffer, " ");
+  strncpy(httpRequestVersion, readBuffer, lineLen);
+  httpRequestVersion[lineLen] = '\0';
+  printf("web-server: HTTP Version: %s\n", httpRequestVersion);
+
+  char httpHeaders[256][32] = { 0 };
+  char httpHeaderValues[256][HTTP_REQUEST_STATUS_LINE_LEN - 32] = { 0 };
+  for (int i = 0; i < 256; i++) {
+    readBuffer = httpHeaderLines[i];
+    lineLen = strcspn(readBuffer, ":");
+    strncpy(httpHeaders[i], readBuffer, lineLen);
+    readBuffer += lineLen + 1;
+    httpHeaders[i][lineLen] = '\0';
+    while (*readBuffer == ' ') readBuffer++;
+    strncpy(httpHeaderValues[i], readBuffer, strlen(readBuffer));
+    httpHeaderValues[i][strlen(readBuffer)] = '\0';
+    printf("web-server: %s: %s\n", httpHeaders[i], httpHeaderValues[i]);
+  }
 
   fflush(stdout);
   return 0; /* Success */

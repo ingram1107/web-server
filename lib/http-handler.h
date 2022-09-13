@@ -23,6 +23,10 @@
  */
 #define HTTP_REQUEST_VERSION_LEN 10
 /**
+ * Maximum size of HTTP status line
+ */
+#define HTTP_REQUEST_STATUS_LINE_LEN (HTTP_REQUEST_METHOD_LEN) + (HTTP_REQUEST_PATH_LEN) + (HTTP_REQUEST_VERSION_LEN)
+/**
  * CRLF character
  */
 #define CRLF "\r\n\r\n"
