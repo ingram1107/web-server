@@ -124,7 +124,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   38</span> </div>
 <div class="line"><span class="lineno">   39</span>  <span class="keyword">struct </span>sockaddr_in serverAddress = {</div>
 <div class="line"><span class="lineno">   40</span>    .sin_family = AF_INET,</div>
-<div class="line"><span class="lineno">   41</span>    .sin_port = htons(80),          <span class="comment">/* connect with HTTP protocol */</span></div>
+<div class="line"><span class="lineno">   41</span>    .sin_port = htons(3240),          <span class="comment">/* connect with HTTP protocol */</span></div>
 <div class="line"><span class="lineno">   42</span>    .sin_addr.s_addr = INADDR_ANY,</div>
 <div class="line"><span class="lineno">   43</span>  };</div>
 <div class="line"><span class="lineno">   44</span> </div>
@@ -162,11 +162,11 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   76</span> </div>
 <div class="line"><span class="lineno">   77</span>  <span class="keywordflow">return</span> EXIT_SUCCESS;</div>
 <div class="line"><span class="lineno">   78</span>}</div>
-<div class="ttc" id="ahttp-handler_8h_html_aa58d558d7d605fab6edecc64c34c0f63"><div class="ttname"><a href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a></div><div class="ttdeci">int handleHTTPClientRequest(int receiveMessageSize, char receiveMessage[receiveMessageSize], int responseMessageSize, char responseMessage[responseMessageSize])</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8c_source.html#l00072">http-handler.c:72</a></div></div>
+<div class="ttc" id="ahttp-handler_8h_html_aa58d558d7d605fab6edecc64c34c0f63"><div class="ttname"><a href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a></div><div class="ttdeci">int handleHTTPClientRequest(int receiveMessageSize, char receiveMessage[receiveMessageSize], int responseMessageSize, char responseMessage[responseMessageSize])</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8c_source.html#l00097">http-handler.c:97</a></div></div>
 <div class="ttc" id="ahttp-handler_8h_html_aadf9bf10be789e7bd38610742e76be4c"><div class="ttname"><a href="http-handler_8h.html#aadf9bf10be789e7bd38610742e76be4c">HTTP_HEADER_LEN</a></div><div class="ttdeci">#define HTTP_HEADER_LEN</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00012">http-handler.h:12</a></div></div>
 <div class="ttc" id="amain_8c_html_adcdaf28c5d70f00a5be4385cd85fb3a0"><div class="ttname"><a href="main_8c.html#adcdaf28c5d70f00a5be4385cd85fb3a0">printErrorAndExit</a></div><div class="ttdeci">void printErrorAndExit(char *prompt)</div><div class="ttdoc">print error and terminate the process</div><div class="ttdef"><b>Definition:</b> <a href="main_8c_source.html#l00023">main.c:23</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="http-handler_8c_source.html#l00072">handleHTTPClientRequest()</a>, <a class="el" href="http-handler_8h_source.html#l00012">HTTP_HEADER_LEN</a>, and <a class="el" href="main_8c_source.html#l00023">printErrorAndExit()</a>.</p>
+<p class="reference">References <a class="el" href="http-handler_8c_source.html#l00097">handleHTTPClientRequest()</a>, <a class="el" href="http-handler_8h_source.html#l00012">HTTP_HEADER_LEN</a>, and <a class="el" href="main_8c_source.html#l00023">printErrorAndExit()</a>.</p>
 
 </div>
 </div>

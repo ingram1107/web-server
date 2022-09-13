@@ -1,4 +1,4 @@
-.TH "/home/clover/Projects/web-server/lib/http-handler.h" 3 "Sat Sep 10 2022" "web-server" \" -*- nroff -*-
+.TH "/home/clover/Projects/web-server/lib/http-handler.h" 3 "Tue Sep 13 2022" "web-server" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -20,6 +20,9 @@
 .br
 .ti -1c
 .RI "#define \fBHTTP_REQUEST_VERSION_LEN\fP   10"
+.br
+.ti -1c
+.RI "#define \fBHTTP_REQUEST_STATUS_LINE_LEN\fP   (\fBHTTP_REQUEST_METHOD_LEN\fP) + (\fBHTTP_REQUEST_PATH_LEN\fP) + (\fBHTTP_REQUEST_VERSION_LEN\fP)"
 .br
 .ti -1c
 .RI "#define \fBCRLF\fP   '\\r\\n\\r\\n'"
@@ -64,7 +67,7 @@ Definition in file \fBhttp\-handler\&.h\fP\&.
 .SS "#define CRLF   '\\r\\n\\r\\n'"
 CRLF character 
 .PP
-Definition at line \fB28\fP of file \fBhttp\-handler\&.h\fP\&.
+Definition at line \fB32\fP of file \fBhttp\-handler\&.h\fP\&.
 .SS "#define HTTP_HEADER_LEN   8192"
 Supported maximum HTTP header size 
 .PP
@@ -77,6 +80,10 @@ Definition at line \fB16\fP of file \fBhttp\-handler\&.h\fP\&.
 Maximum string length of HTTP request path 
 .PP
 Definition at line \fB20\fP of file \fBhttp\-handler\&.h\fP\&.
+.SS "#define HTTP_REQUEST_STATUS_LINE_LEN   (\fBHTTP_REQUEST_METHOD_LEN\fP) + (\fBHTTP_REQUEST_PATH_LEN\fP) + (\fBHTTP_REQUEST_VERSION_LEN\fP)"
+Maximum size of HTTP status line 
+.PP
+Definition at line \fB28\fP of file \fBhttp\-handler\&.h\fP\&.
 .SS "#define HTTP_REQUEST_VERSION_LEN   10"
 Maximum string length of HTTP request version 
 .PP
@@ -93,10 +100,10 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 .PP
 
 .PP
-Definition at line \fB35\fP of file \fBhttp\-handler\&.h\fP\&.
+Definition at line \fB39\fP of file \fBhttp\-handler\&.h\fP\&.
 .PP
 .nf
-35 { GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH };
+39 { GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH };
 .fi
 .SS "enum \fBhttpStatus\fP"
 Supported HTTP response status code adhered to the standard\&.
@@ -108,74 +115,74 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 .PP
 
 .PP
-Definition at line \fB61\fP of file \fBhttp\-handler\&.h\fP\&.
+Definition at line \fB65\fP of file \fBhttp\-handler\&.h\fP\&.
 .PP
 .nf
-61                 {
-62   CONTINUE = 100,
-63   SWITCHING_PROTOCOLS,
-64   PROCESSING,
-65   EARLY_HINTS,
-66   OK = 200,
-67   CREATED,
-68   ACCEPTED,
-69   NON_AUTHORITATIVE_INFORMATION,
-70   NO_CONTENT,
-71   RESET_CONTENT,
-72   PARTIAL_CONTENT,
-73   MULTI_STATUS,
-74   ALREADY_REPORTED,
-75   IM_USED = 226,
-76   MULTIPLE_CHOICE = 300,
-77   MOVED_PERMANENTLY,
-78   FOUND,
-79   SEE_OTHER,
-80   NOT_MODIFIED,
-81   USE_PROXY,
-82   UNUSED,
-83   TEMPORARY_REDIRECT,
-84   PERMANENT_REDIRECT,
-85   BAD_REQUEST = 400,
-86   UNAUTHORIZED,
-87   PAYMENT_REQUIRED,
-88   FORBIDDEN,
-89   NOT_FOUND,
-90   METHOD_NOT_ALLOWED,
-91   NOT_ACCEPTABLE,
-92   PROXY_AUTHENTICATION_REQUIRED,
-93   REQUEST_TIMEOUT,
-94   CONFLICT,
-95   GONE,
-96   LENGTH_REQUIRED,
-97   PRECONDITION_FAILED,
-98   PAYLOAD_TOO_LARGE,
-99   URI_TOO_LONG,
-100   UNSUPPORTED_MEDIA_TYPE,
-101   RANGE_NOT_SATISFIABLE,
-102   EXPECTATION_FAILED,
-103   IM_A_TEAPOT,
-104   MISDIRECTED_REQUEST = 421,
-105   UNPROCESSABLE_ENTITY,
-106   LOCKED,
-107   FAILED_DEPENDENCY,
-108   TOO_EARLY,
-109   UPGRADE_REQUIRED,
-110   PRECONDITION_REQUIRED = 428,
-111   TOO_MANY_REQUESTS,
-112   REQUEST_HEADER_FIELDS_TOO_LARGE = 431,
-113   UNAVAILABLE_FOR_LEGAL_REASONS = 451,
-114   INTERNAL_SERVER_ERROR = 500,
-115   NOT_IMPLEMENTED,
-116   BAD_GATEWAY,
-117   SERVICE_UNAVAILABLE,
-118   GATEWAY_TIMEOUT,
-119   HTTP_VERSION_NOT_SUPPORTED,
-120   VARIANT_ALSO_NEGOTIATES,
-121   INSUFFICIENT_STORAGE,
-122   LOOP_DETECTED,
-123   NOT_EXTENDED = 510,
-124   NETWORK_AUTHENTICATION_REQURIED
-125 };
+65                 {
+66   CONTINUE = 100,
+67   SWITCHING_PROTOCOLS,
+68   PROCESSING,
+69   EARLY_HINTS,
+70   OK = 200,
+71   CREATED,
+72   ACCEPTED,
+73   NON_AUTHORITATIVE_INFORMATION,
+74   NO_CONTENT,
+75   RESET_CONTENT,
+76   PARTIAL_CONTENT,
+77   MULTI_STATUS,
+78   ALREADY_REPORTED,
+79   IM_USED = 226,
+80   MULTIPLE_CHOICE = 300,
+81   MOVED_PERMANENTLY,
+82   FOUND,
+83   SEE_OTHER,
+84   NOT_MODIFIED,
+85   USE_PROXY,
+86   UNUSED,
+87   TEMPORARY_REDIRECT,
+88   PERMANENT_REDIRECT,
+89   BAD_REQUEST = 400,
+90   UNAUTHORIZED,
+91   PAYMENT_REQUIRED,
+92   FORBIDDEN,
+93   NOT_FOUND,
+94   METHOD_NOT_ALLOWED,
+95   NOT_ACCEPTABLE,
+96   PROXY_AUTHENTICATION_REQUIRED,
+97   REQUEST_TIMEOUT,
+98   CONFLICT,
+99   GONE,
+100   LENGTH_REQUIRED,
+101   PRECONDITION_FAILED,
+102   PAYLOAD_TOO_LARGE,
+103   URI_TOO_LONG,
+104   UNSUPPORTED_MEDIA_TYPE,
+105   RANGE_NOT_SATISFIABLE,
+106   EXPECTATION_FAILED,
+107   IM_A_TEAPOT,
+108   MISDIRECTED_REQUEST = 421,
+109   UNPROCESSABLE_ENTITY,
+110   LOCKED,
+111   FAILED_DEPENDENCY,
+112   TOO_EARLY,
+113   UPGRADE_REQUIRED,
+114   PRECONDITION_REQUIRED = 428,
+115   TOO_MANY_REQUESTS,
+116   REQUEST_HEADER_FIELDS_TOO_LARGE = 431,
+117   UNAVAILABLE_FOR_LEGAL_REASONS = 451,
+118   INTERNAL_SERVER_ERROR = 500,
+119   NOT_IMPLEMENTED,
+120   BAD_GATEWAY,
+121   SERVICE_UNAVAILABLE,
+122   GATEWAY_TIMEOUT,
+123   HTTP_VERSION_NOT_SUPPORTED,
+124   VARIANT_ALSO_NEGOTIATES,
+125   INSUFFICIENT_STORAGE,
+126   LOOP_DETECTED,
+127   NOT_EXTENDED = 510,
+128   NETWORK_AUTHENTICATION_REQURIED
+129 };
 .fi
 .SH "Function Documentation"
 .PP 
@@ -209,56 +216,56 @@ createHTTPResponseMessage()
 .PP
 
 .PP
-Definition at line \fB72\fP of file \fBhttp\-handler\&.c\fP\&.
+Definition at line \fB97\fP of file \fBhttp\-handler\&.c\fP\&.
 .PP
 .nf
-76 {
-77   char httpRequestMethod[HTTP_REQUEST_METHOD_LEN] = { 0 };
-78   char httpRequestPath[HTTP_REQUEST_PATH_LEN] = { 0 };
-79   char httpRequestVersion[HTTP_REQUEST_VERSION_LEN] = { 0 };
-80 
-81   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
-82                                          receiveMessage,
-83                                          httpRequestMethod,
-84                                          httpRequestPath,
-85                                          httpRequestVersion,
-86                                          " ");
-87   if (httpParseStatus == -1 ) {
-88     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
-89     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
-90             receiveMessage);
-91     return -1;  /* Failure */
-92   }
-93 
-94   int httpRequestMethodHandler = -1;
-95   for (int i = 0; i <= PATCH; i++)
-96     if (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)
-97       httpRequestMethodHandler = i;
-98 
-99   switch (httpRequestMethodHandler) {
-100     case GET:
-101       if (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -1)
-102         return -1;  /* Failure */
-103       break;
-104     case HEAD:
-105     case POST:
-106     case PUT:
-107     case DELETE:
-108     case CONNECT:
-109     case OPTIONS:
-110     case TRACE:
-111     case PATCH:
-112       if (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD_NOT_ALLOWED) == -1)
-113         return -1;  /* Failure */
-114       break;
-115     default:
-116       if (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT_IMPLEMENTED) == -1)
-117         return -1;  /* Failure */
-118       break;
-119   };
-120 
-121   return 0; /* Success */
-122 };
+101 {
+102   char httpRequestMethod[HTTP_REQUEST_METHOD_LEN] = { 0 };
+103   char httpRequestPath[HTTP_REQUEST_PATH_LEN] = { 0 };
+104   char httpRequestVersion[HTTP_REQUEST_VERSION_LEN] = { 0 };
+105 
+106   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
+107                                          receiveMessage,
+108                                          httpRequestMethod,
+109                                          httpRequestPath,
+110                                          httpRequestVersion,
+111                                          " ");
+112   if (httpParseStatus == -1 ) {
+113     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
+114     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
+115             receiveMessage);
+116     return -1;  /* Failure */
+117   }
+118 
+119   int httpRequestMethodHandler = -1;
+120   for (int i = 0; i <= PATCH; i++)
+121     if (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)
+122       httpRequestMethodHandler = i;
+123 
+124   switch (httpRequestMethodHandler) {
+125     case GET:
+126       if (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -1)
+127         return -1;  /* Failure */
+128       break;
+129     case HEAD:
+130     case POST:
+131     case PUT:
+132     case DELETE:
+133     case CONNECT:
+134     case OPTIONS:
+135     case TRACE:
+136     case PATCH:
+137       if (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD_NOT_ALLOWED) == -1)
+138         return -1;  /* Failure */
+139       break;
+140     default:
+141       if (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT_IMPLEMENTED) == -1)
+142         return -1;  /* Failure */
+143       break;
+144   };
+145 
+146   return 0; /* Success */
+147 };
 .fi
 .PP
 References \fBHTTP_REQUEST_METHOD_LEN\fP, \fBHTTP_REQUEST_PATH_LEN\fP, and \fBHTTP_REQUEST_VERSION_LEN\fP\&.

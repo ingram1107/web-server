@@ -77,174 +77,175 @@ $(function() {
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="http-handler_8h.html#a49180fdd018be2adfe4df3a59482ab0c">   16</a></span><span class="preprocessor">#define HTTP_REQUEST_METHOD_LEN 8</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="http-handler_8h.html#a7d0073152dc4351d8b645031b83093d0">   20</a></span><span class="preprocessor">#define HTTP_REQUEST_PATH_LEN 1024</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="http-handler_8h.html#a158d838bff67042768ab941e496265c5">   24</a></span><span class="preprocessor">#define HTTP_REQUEST_VERSION_LEN 10</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">   28</a></span><span class="preprocessor">#define CRLF &quot;\r\n\r\n&quot;</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="http-handler_8h.html#a2e2c772c713591600f7bee7d9bf3f3fe">   35</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="http-handler_8h.html#a2e2c772c713591600f7bee7d9bf3f3fe">httpMethod</a> { GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH };</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> httpMethodStr[] = {</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  [GET] = <span class="stringliteral">&quot;GET&quot;</span>,</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  [HEAD] = <span class="stringliteral">&quot;HEAD&quot;</span>,</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  [POST] = <span class="stringliteral">&quot;POST&quot;</span>,</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  [PUT] = <span class="stringliteral">&quot;PUT&quot;</span>,</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  [DELETE] = <span class="stringliteral">&quot;DELETE&quot;</span>,</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  [CONNECT] = <span class="stringliteral">&quot;CONNECT&quot;</span>,</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  [OPTIONS] = <span class="stringliteral">&quot;OPTIONS&quot;</span>,</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  [TRACE] = <span class="stringliteral">&quot;TRACE&quot;</span>,</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  [PATCH] = <span class="stringliteral">&quot;PATCH&quot;</span>,</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>};</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="http-handler_8h.html#abd1605a1ce8475ed58ef3759e0547776">   61</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="http-handler_8h.html#abd1605a1ce8475ed58ef3759e0547776">httpStatus</a> {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  CONTINUE = 100,</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  SWITCHING_PROTOCOLS,</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  PROCESSING,</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  EARLY_HINTS,</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  OK = 200,</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  CREATED,</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  ACCEPTED,</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  NON_AUTHORITATIVE_INFORMATION,</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  NO_CONTENT,</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  RESET_CONTENT,</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  PARTIAL_CONTENT,</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  MULTI_STATUS,</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  ALREADY_REPORTED,</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  IM_USED = 226,</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  MULTIPLE_CHOICE = 300,</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  MOVED_PERMANENTLY,</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  FOUND,</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  SEE_OTHER,</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  NOT_MODIFIED,</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  USE_PROXY,</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  UNUSED,</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  TEMPORARY_REDIRECT,</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  PERMANENT_REDIRECT,</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  BAD_REQUEST = 400,</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  UNAUTHORIZED,</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  PAYMENT_REQUIRED,</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  FORBIDDEN,</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  NOT_FOUND,</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  METHOD_NOT_ALLOWED,</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  NOT_ACCEPTABLE,</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  PROXY_AUTHENTICATION_REQUIRED,</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  REQUEST_TIMEOUT,</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  CONFLICT,</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  GONE,</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  LENGTH_REQUIRED,</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  PRECONDITION_FAILED,</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  PAYLOAD_TOO_LARGE,</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  URI_TOO_LONG,</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  UNSUPPORTED_MEDIA_TYPE,</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  RANGE_NOT_SATISFIABLE,</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  EXPECTATION_FAILED,</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  IM_A_TEAPOT,</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  MISDIRECTED_REQUEST = 421,</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  UNPROCESSABLE_ENTITY,</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  LOCKED,</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  FAILED_DEPENDENCY,</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  TOO_EARLY,</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  UPGRADE_REQUIRED,</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  PRECONDITION_REQUIRED = 428,</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  TOO_MANY_REQUESTS,</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  REQUEST_HEADER_FIELDS_TOO_LARGE = 431,</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  UNAVAILABLE_FOR_LEGAL_REASONS = 451,</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  INTERNAL_SERVER_ERROR = 500,</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  NOT_IMPLEMENTED,</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  BAD_GATEWAY,</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  SERVICE_UNAVAILABLE,</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  GATEWAY_TIMEOUT,</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  HTTP_VERSION_NOT_SUPPORTED,</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  VARIANT_ALSO_NEGOTIATES,</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  INSUFFICIENT_STORAGE,</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  LOOP_DETECTED,</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  NOT_EXTENDED = 510,</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  NETWORK_AUTHENTICATION_REQURIED</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>};</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> httpStatusStr[] = {</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  [CONTINUE] = <span class="stringliteral">&quot;100 OK&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>  [SWITCHING_PROTOCOLS] = <span class="stringliteral">&quot;101 Switching Protocols&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  [PROCESSING] = <span class="stringliteral">&quot;102 Processing&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  [EARLY_HINTS] = <span class="stringliteral">&quot;103 Early Hints&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  [OK] = <span class="stringliteral">&quot;200 OK&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  [CREATED] = <span class="stringliteral">&quot;201 Created&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  [ACCEPTED] = <span class="stringliteral">&quot;202 Accepted&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>  [NON_AUTHORITATIVE_INFORMATION] = <span class="stringliteral">&quot;203 Non-Authoritative Information&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  [NO_CONTENT] = <span class="stringliteral">&quot;204 No Content&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  [RESET_CONTENT] = <span class="stringliteral">&quot;205 Reset Content&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  [PARTIAL_CONTENT] = <span class="stringliteral">&quot;206 Partial Content&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  [MULTI_STATUS] = <span class="stringliteral">&quot;207 Multi-Status&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  [ALREADY_REPORTED] = <span class="stringliteral">&quot;208 Already Reported&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  [IM_USED] = <span class="stringliteral">&quot;226 IM Used&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  [MULTIPLE_CHOICE] = <span class="stringliteral">&quot;300 Multiple Choice&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  [MOVED_PERMANENTLY] = <span class="stringliteral">&quot;301 Moved Permanently&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  [FOUND] = <span class="stringliteral">&quot;302 Found&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  [SEE_OTHER] = <span class="stringliteral">&quot;303 See Other&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  [NOT_MODIFIED] = <span class="stringliteral">&quot;304 Not Modified&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  [USE_PROXY] = <span class="stringliteral">&quot;305 Use Proxy&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  [TEMPORARY_REDIRECT] = <span class="stringliteral">&quot;306 Temporary Redirect&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  [PERMANENT_REDIRECT] = <span class="stringliteral">&quot;307 Permanent Redirect&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  [BAD_REQUEST] = <span class="stringliteral">&quot;400 Bad Request&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  [UNAUTHORIZED] = <span class="stringliteral">&quot;401 Unauthorized&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  [PAYMENT_REQUIRED] = <span class="stringliteral">&quot;402 Payment Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  [FORBIDDEN] = <span class="stringliteral">&quot;403 Forbidden&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  [NOT_FOUND] = <span class="stringliteral">&quot;404 Not Found&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  [METHOD_NOT_ALLOWED] = <span class="stringliteral">&quot;405 Method Not Allowed&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>  [NOT_ACCEPTABLE] = <span class="stringliteral">&quot;406 Not Acceptable&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  [PROXY_AUTHENTICATION_REQUIRED] = <span class="stringliteral">&quot;407 Proxy Authentication Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  [REQUEST_TIMEOUT] = <span class="stringliteral">&quot;408 Request Timeout&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>  [CONFLICT] = <span class="stringliteral">&quot;409 Conflict&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  [GONE] = <span class="stringliteral">&quot;410 Gone&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>  [LENGTH_REQUIRED] = <span class="stringliteral">&quot;411 Length Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>  [PRECONDITION_FAILED] = <span class="stringliteral">&quot;412 Precondition Failed&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>  [PAYLOAD_TOO_LARGE] = <span class="stringliteral">&quot;413 Payload Too Large&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>  [URI_TOO_LONG] = <span class="stringliteral">&quot;414 URI Too Long&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>  [UNSUPPORTED_MEDIA_TYPE] = <span class="stringliteral">&quot;415 Unsupported Media Type&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  [RANGE_NOT_SATISFIABLE] = <span class="stringliteral">&quot;416 Range Not Satisfiable&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>  [EXPECTATION_FAILED] = <span class="stringliteral">&quot;417 Expectation Failed&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>  [IM_A_TEAPOT] = <span class="stringliteral">&quot;418 I&#39;m a teapot&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  [MISDIRECTED_REQUEST] = <span class="stringliteral">&quot;421 Misdirected Request&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  [UNPROCESSABLE_ENTITY] = <span class="stringliteral">&quot;422 Unprocessable Entity&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>  [LOCKED] = <span class="stringliteral">&quot;423 Locked&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  [FAILED_DEPENDENCY] = <span class="stringliteral">&quot;424 Failed Dependency&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>  [TOO_EARLY] = <span class="stringliteral">&quot;425 Too Early&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  [UPGRADE_REQUIRED] = <span class="stringliteral">&quot;426 Upgrade Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>  [PRECONDITION_REQUIRED] = <span class="stringliteral">&quot;428 Precondition Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>  [TOO_MANY_REQUESTS] = <span class="stringliteral">&quot;429 Too Many Requests&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  [REQUEST_HEADER_FIELDS_TOO_LARGE] = <span class="stringliteral">&quot;431 Request Header Fields Too Large&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  [UNAVAILABLE_FOR_LEGAL_REASONS] = <span class="stringliteral">&quot;451 Unavailable For Legal Reasons&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>  [INTERNAL_SERVER_ERROR] = <span class="stringliteral">&quot;500 Internal Server Error&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  [NOT_IMPLEMENTED] = <span class="stringliteral">&quot;501 Not Implemented&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>  [BAD_GATEWAY] = <span class="stringliteral">&quot;502 Bad Gateway&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>  [SERVICE_UNAVAILABLE] = <span class="stringliteral">&quot;503 Service Unavailable&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>  [GATEWAY_TIMEOUT] = <span class="stringliteral">&quot;504 Gateway Timeout&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>  [HTTP_VERSION_NOT_SUPPORTED] = <span class="stringliteral">&quot;505 Http Version Not Supported&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  [VARIANT_ALSO_NEGOTIATES] = <span class="stringliteral">&quot;506 Variant Also Negotiates&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>  [INSUFFICIENT_STORAGE] = <span class="stringliteral">&quot;507 Insufficient Storage&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>  [LOOP_DETECTED] = <span class="stringliteral">&quot;508 Loop Detected&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>  [NOT_EXTENDED] = <span class="stringliteral">&quot;510 Not Extended&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>  [NETWORK_AUTHENTICATION_REQURIED] = <span class="stringliteral">&quot;511 Network Authentication Requried&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>};</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="keyword">static</span> <span class="keywordtype">int</span> parseHTTPRequest(<span class="keywordtype">int</span> receiveMessageSize,</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                            <span class="keywordtype">char</span> receiveMessage[receiveMessageSize],</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                            <span class="keywordtype">char</span>* httpRequestMethod,</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                            <span class="keywordtype">char</span>* httpRequestPath,</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                            <span class="keywordtype">char</span>* httpRequestVersion,</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                            <span class="keywordtype">char</span>* delimeter);</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span><span class="keyword">static</span> <span class="keywordtype">int</span> createHTTPResponseMessage(<span class="keywordtype">int</span> httpResponseMessageSize,</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                                     <span class="keywordtype">char</span> httpResponseMessage[httpResponseMessageSize],</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                                     <span class="keywordtype">int</span> httpResponseStatus);</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span><span class="keywordtype">int</span> <a class="code hl_function" href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a>(<span class="keywordtype">int</span> receiveMessageSize,</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                            <span class="keywordtype">char</span> receiveMessage[receiveMessageSize],</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                            <span class="keywordtype">int</span> responseMessageSize,</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                            <span class="keywordtype">char</span> responseMessage[responseMessageSize]);</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="ahttp-handler_8h_html_a2e2c772c713591600f7bee7d9bf3f3fe"><div class="ttname"><a href="http-handler_8h.html#a2e2c772c713591600f7bee7d9bf3f3fe">httpMethod</a></div><div class="ttdeci">httpMethod</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00035">http-handler.h:35</a></div></div>
-<div class="ttc" id="ahttp-handler_8h_html_a6cb23a858b0a21bdaa644b9181dc415f"><div class="ttname"><a href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a></div><div class="ttdeci">#define CRLF</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00028">http-handler.h:28</a></div></div>
-<div class="ttc" id="ahttp-handler_8h_html_aa58d558d7d605fab6edecc64c34c0f63"><div class="ttname"><a href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a></div><div class="ttdeci">int handleHTTPClientRequest(int receiveMessageSize, char receiveMessage[receiveMessageSize], int responseMessageSize, char responseMessage[responseMessageSize])</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8c_source.html#l00072">http-handler.c:72</a></div></div>
-<div class="ttc" id="ahttp-handler_8h_html_abd1605a1ce8475ed58ef3759e0547776"><div class="ttname"><a href="http-handler_8h.html#abd1605a1ce8475ed58ef3759e0547776">httpStatus</a></div><div class="ttdeci">httpStatus</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00061">http-handler.h:61</a></div></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="http-handler_8h.html#a3a45a28f0d29979383f09278aad2ee57">   28</a></span><span class="preprocessor">#define HTTP_REQUEST_STATUS_LINE_LEN (HTTP_REQUEST_METHOD_LEN) + (HTTP_REQUEST_PATH_LEN) + (HTTP_REQUEST_VERSION_LEN)</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">   32</a></span><span class="preprocessor">#define CRLF &quot;\r\n\r\n&quot;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="http-handler_8h.html#a2e2c772c713591600f7bee7d9bf3f3fe">   39</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="http-handler_8h.html#a2e2c772c713591600f7bee7d9bf3f3fe">httpMethod</a> { GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH };</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> httpMethodStr[] = {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  [GET] = <span class="stringliteral">&quot;GET&quot;</span>,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  [HEAD] = <span class="stringliteral">&quot;HEAD&quot;</span>,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  [POST] = <span class="stringliteral">&quot;POST&quot;</span>,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  [PUT] = <span class="stringliteral">&quot;PUT&quot;</span>,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  [DELETE] = <span class="stringliteral">&quot;DELETE&quot;</span>,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  [CONNECT] = <span class="stringliteral">&quot;CONNECT&quot;</span>,</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  [OPTIONS] = <span class="stringliteral">&quot;OPTIONS&quot;</span>,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  [TRACE] = <span class="stringliteral">&quot;TRACE&quot;</span>,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  [PATCH] = <span class="stringliteral">&quot;PATCH&quot;</span>,</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>};</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="http-handler_8h.html#abd1605a1ce8475ed58ef3759e0547776">   65</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="http-handler_8h.html#abd1605a1ce8475ed58ef3759e0547776">httpStatus</a> {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  CONTINUE = 100,</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  SWITCHING_PROTOCOLS,</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  PROCESSING,</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  EARLY_HINTS,</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  OK = 200,</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  CREATED,</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  ACCEPTED,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  NON_AUTHORITATIVE_INFORMATION,</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  NO_CONTENT,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  RESET_CONTENT,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  PARTIAL_CONTENT,</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  MULTI_STATUS,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  ALREADY_REPORTED,</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  IM_USED = 226,</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  MULTIPLE_CHOICE = 300,</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  MOVED_PERMANENTLY,</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  FOUND,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  SEE_OTHER,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  NOT_MODIFIED,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  USE_PROXY,</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  UNUSED,</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  TEMPORARY_REDIRECT,</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  PERMANENT_REDIRECT,</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  BAD_REQUEST = 400,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  UNAUTHORIZED,</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  PAYMENT_REQUIRED,</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  FORBIDDEN,</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  NOT_FOUND,</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  METHOD_NOT_ALLOWED,</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  NOT_ACCEPTABLE,</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  PROXY_AUTHENTICATION_REQUIRED,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  REQUEST_TIMEOUT,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  CONFLICT,</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  GONE,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  LENGTH_REQUIRED,</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  PRECONDITION_FAILED,</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  PAYLOAD_TOO_LARGE,</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  URI_TOO_LONG,</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  UNSUPPORTED_MEDIA_TYPE,</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  RANGE_NOT_SATISFIABLE,</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  EXPECTATION_FAILED,</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  IM_A_TEAPOT,</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  MISDIRECTED_REQUEST = 421,</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  UNPROCESSABLE_ENTITY,</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  LOCKED,</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  FAILED_DEPENDENCY,</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  TOO_EARLY,</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  UPGRADE_REQUIRED,</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  PRECONDITION_REQUIRED = 428,</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  TOO_MANY_REQUESTS,</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  REQUEST_HEADER_FIELDS_TOO_LARGE = 431,</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  UNAVAILABLE_FOR_LEGAL_REASONS = 451,</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  INTERNAL_SERVER_ERROR = 500,</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  NOT_IMPLEMENTED,</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  BAD_GATEWAY,</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  SERVICE_UNAVAILABLE,</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  GATEWAY_TIMEOUT,</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  HTTP_VERSION_NOT_SUPPORTED,</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  VARIANT_ALSO_NEGOTIATES,</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  INSUFFICIENT_STORAGE,</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  LOOP_DETECTED,</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>  NOT_EXTENDED = 510,</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  NETWORK_AUTHENTICATION_REQURIED</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>};</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> httpStatusStr[] = {</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  [CONTINUE] = <span class="stringliteral">&quot;100 OK&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  [SWITCHING_PROTOCOLS] = <span class="stringliteral">&quot;101 Switching Protocols&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  [PROCESSING] = <span class="stringliteral">&quot;102 Processing&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>  [EARLY_HINTS] = <span class="stringliteral">&quot;103 Early Hints&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  [OK] = <span class="stringliteral">&quot;200 OK&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  [CREATED] = <span class="stringliteral">&quot;201 Created&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  [ACCEPTED] = <span class="stringliteral">&quot;202 Accepted&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  [NON_AUTHORITATIVE_INFORMATION] = <span class="stringliteral">&quot;203 Non-Authoritative Information&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  [NO_CONTENT] = <span class="stringliteral">&quot;204 No Content&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>  [RESET_CONTENT] = <span class="stringliteral">&quot;205 Reset Content&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  [PARTIAL_CONTENT] = <span class="stringliteral">&quot;206 Partial Content&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  [MULTI_STATUS] = <span class="stringliteral">&quot;207 Multi-Status&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  [ALREADY_REPORTED] = <span class="stringliteral">&quot;208 Already Reported&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  [IM_USED] = <span class="stringliteral">&quot;226 IM Used&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>  [MULTIPLE_CHOICE] = <span class="stringliteral">&quot;300 Multiple Choice&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  [MOVED_PERMANENTLY] = <span class="stringliteral">&quot;301 Moved Permanently&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  [FOUND] = <span class="stringliteral">&quot;302 Found&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  [SEE_OTHER] = <span class="stringliteral">&quot;303 See Other&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>  [NOT_MODIFIED] = <span class="stringliteral">&quot;304 Not Modified&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  [USE_PROXY] = <span class="stringliteral">&quot;305 Use Proxy&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  [TEMPORARY_REDIRECT] = <span class="stringliteral">&quot;306 Temporary Redirect&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  [PERMANENT_REDIRECT] = <span class="stringliteral">&quot;307 Permanent Redirect&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  [BAD_REQUEST] = <span class="stringliteral">&quot;400 Bad Request&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  [UNAUTHORIZED] = <span class="stringliteral">&quot;401 Unauthorized&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>  [PAYMENT_REQUIRED] = <span class="stringliteral">&quot;402 Payment Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  [FORBIDDEN] = <span class="stringliteral">&quot;403 Forbidden&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  [NOT_FOUND] = <span class="stringliteral">&quot;404 Not Found&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>  [METHOD_NOT_ALLOWED] = <span class="stringliteral">&quot;405 Method Not Allowed&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  [NOT_ACCEPTABLE] = <span class="stringliteral">&quot;406 Not Acceptable&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>  [PROXY_AUTHENTICATION_REQUIRED] = <span class="stringliteral">&quot;407 Proxy Authentication Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>  [REQUEST_TIMEOUT] = <span class="stringliteral">&quot;408 Request Timeout&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>  [CONFLICT] = <span class="stringliteral">&quot;409 Conflict&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>  [GONE] = <span class="stringliteral">&quot;410 Gone&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>  [LENGTH_REQUIRED] = <span class="stringliteral">&quot;411 Length Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  [PRECONDITION_FAILED] = <span class="stringliteral">&quot;412 Precondition Failed&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>  [PAYLOAD_TOO_LARGE] = <span class="stringliteral">&quot;413 Payload Too Large&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>  [URI_TOO_LONG] = <span class="stringliteral">&quot;414 URI Too Long&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  [UNSUPPORTED_MEDIA_TYPE] = <span class="stringliteral">&quot;415 Unsupported Media Type&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  [RANGE_NOT_SATISFIABLE] = <span class="stringliteral">&quot;416 Range Not Satisfiable&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>  [EXPECTATION_FAILED] = <span class="stringliteral">&quot;417 Expectation Failed&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  [IM_A_TEAPOT] = <span class="stringliteral">&quot;418 I&#39;m a teapot&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>  [MISDIRECTED_REQUEST] = <span class="stringliteral">&quot;421 Misdirected Request&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  [UNPROCESSABLE_ENTITY] = <span class="stringliteral">&quot;422 Unprocessable Entity&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>  [LOCKED] = <span class="stringliteral">&quot;423 Locked&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>  [FAILED_DEPENDENCY] = <span class="stringliteral">&quot;424 Failed Dependency&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  [TOO_EARLY] = <span class="stringliteral">&quot;425 Too Early&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  [UPGRADE_REQUIRED] = <span class="stringliteral">&quot;426 Upgrade Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>  [PRECONDITION_REQUIRED] = <span class="stringliteral">&quot;428 Precondition Required&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  [TOO_MANY_REQUESTS] = <span class="stringliteral">&quot;429 Too Many Requests&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>  [REQUEST_HEADER_FIELDS_TOO_LARGE] = <span class="stringliteral">&quot;431 Request Header Fields Too Large&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>  [UNAVAILABLE_FOR_LEGAL_REASONS] = <span class="stringliteral">&quot;451 Unavailable For Legal Reasons&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>  [INTERNAL_SERVER_ERROR] = <span class="stringliteral">&quot;500 Internal Server Error&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>  [NOT_IMPLEMENTED] = <span class="stringliteral">&quot;501 Not Implemented&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  [BAD_GATEWAY] = <span class="stringliteral">&quot;502 Bad Gateway&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>  [SERVICE_UNAVAILABLE] = <span class="stringliteral">&quot;503 Service Unavailable&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>  [GATEWAY_TIMEOUT] = <span class="stringliteral">&quot;504 Gateway Timeout&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>  [HTTP_VERSION_NOT_SUPPORTED] = <span class="stringliteral">&quot;505 Http Version Not Supported&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>  [VARIANT_ALSO_NEGOTIATES] = <span class="stringliteral">&quot;506 Variant Also Negotiates&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>  [INSUFFICIENT_STORAGE] = <span class="stringliteral">&quot;507 Insufficient Storage&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>  [LOOP_DETECTED] = <span class="stringliteral">&quot;508 Loop Detected&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>  [NOT_EXTENDED] = <span class="stringliteral">&quot;510 Not Extended&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a>,</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>  [NETWORK_AUTHENTICATION_REQURIED] = <span class="stringliteral">&quot;511 Network Authentication Requried&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>};</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="keyword">static</span> <span class="keywordtype">int</span> parseHTTPRequest(<span class="keywordtype">int</span> receiveMessageSize,</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                            <span class="keywordtype">char</span> receiveMessage[receiveMessageSize],</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                            <span class="keywordtype">char</span>* httpRequestMethod,</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                            <span class="keywordtype">char</span>* httpRequestPath,</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                            <span class="keywordtype">char</span>* httpRequestVersion,</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                            <span class="keywordtype">char</span>* delimeter);</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span><span class="keyword">static</span> <span class="keywordtype">int</span> createHTTPResponseMessage(<span class="keywordtype">int</span> httpResponseMessageSize,</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                                     <span class="keywordtype">char</span> httpResponseMessage[httpResponseMessageSize],</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                                     <span class="keywordtype">int</span> httpResponseStatus);</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="keywordtype">int</span> <a class="code hl_function" href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a>(<span class="keywordtype">int</span> receiveMessageSize,</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                            <span class="keywordtype">char</span> receiveMessage[receiveMessageSize],</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                            <span class="keywordtype">int</span> responseMessageSize,</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                            <span class="keywordtype">char</span> responseMessage[responseMessageSize]);</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="ahttp-handler_8h_html_a2e2c772c713591600f7bee7d9bf3f3fe"><div class="ttname"><a href="http-handler_8h.html#a2e2c772c713591600f7bee7d9bf3f3fe">httpMethod</a></div><div class="ttdeci">httpMethod</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00039">http-handler.h:39</a></div></div>
+<div class="ttc" id="ahttp-handler_8h_html_a6cb23a858b0a21bdaa644b9181dc415f"><div class="ttname"><a href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a></div><div class="ttdeci">#define CRLF</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00032">http-handler.h:32</a></div></div>
+<div class="ttc" id="ahttp-handler_8h_html_aa58d558d7d605fab6edecc64c34c0f63"><div class="ttname"><a href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a></div><div class="ttdeci">int handleHTTPClientRequest(int receiveMessageSize, char receiveMessage[receiveMessageSize], int responseMessageSize, char responseMessage[responseMessageSize])</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8c_source.html#l00097">http-handler.c:97</a></div></div>
+<div class="ttc" id="ahttp-handler_8h_html_abd1605a1ce8475ed58ef3759e0547776"><div class="ttname"><a href="http-handler_8h.html#abd1605a1ce8475ed58ef3759e0547776">httpStatus</a></div><div class="ttdeci">httpStatus</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00065">http-handler.h:65</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
