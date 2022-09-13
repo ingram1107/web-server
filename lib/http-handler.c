@@ -44,6 +44,7 @@ static int parseHTTPRequest(int receiveMessageSize,
   return 0; /* Success */
 
 cleanup:
+  perror("web-server");
   fflush(stdout);
   strncpy(httpRequestMethod, "", strlen(""));
   strncpy(httpRequestPath, "", strlen(""));
