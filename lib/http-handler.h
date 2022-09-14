@@ -29,7 +29,7 @@
 /**
  * CRLF character
  */
-#define CRLF "\r\n\r\n"
+#define CRLF "\r\n"
 
 /**
  * Supported HTTP request method adhered to the standard.
