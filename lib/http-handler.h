@@ -213,8 +213,6 @@ static const char* const httpStatusStr[] = {
  *                                @a receiveMessage
  * @param[out] httpRequestVersion The parsed HTTP request version from
  *                                @a receiveMessage
- * @param[in] delimeter           The delimeter for the parser to parse
- *                                @a receiveMessage
  *
  * @retval 0  @a httpRequestMethod, @a httpRequestPath and
  *            @a httpRequestVersion is parsed successfully from
@@ -223,12 +221,11 @@ static const char* const httpStatusStr[] = {
  *            or @a httpRequestVersion.
  * @private
  */
-static int parseHTTPRequest(int receiveMessageSize,
-                            char receiveMessage[receiveMessageSize],
-                            char* httpRequestMethod,
-                            char* httpRequestPath,
-                            char* httpRequestVersion,
-                            char* delimeter);
+// static int parseHTTPRequest(int receiveMessageSize,
+//                             char receiveMessage[receiveMessageSize],
+//                             char* httpRequestMethod,
+//                             char* httpRequestPath,
+//                             char* httpRequestVersion);
 
 /**
  * create a HTTP response message based on the status code.

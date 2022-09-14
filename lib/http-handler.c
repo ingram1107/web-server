@@ -3,66 +3,89 @@
 #include <asm-generic/errno.h>
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+typedef struct HTTPRequest HTTPRequest;
+typedef struct HTTPHeaders HTTPHeaders;
+
+/**
+ * A struct represents a typical HTTP Request parsed from a web client
+ */
+struct HTTPRequest {
+  /** The requested HTTP method */
+  char* method;
+  /** The requested HTTP URI */
+  char* uri;
+  /** The version of the HTTP from the web client */
+  char* version;
+  /** The additional headers requested from the web client */
+  HTTPHeaders* headers;
+};
+
+/**
+ * A recursive struct represents a typical HTTP header with a linked list
+ * approach
+ */
+struct HTTPHeaders {
+  /** The current header name */
+  char* name;
+  /** The value of the current header */
+  char* value;
+  /** The next header */
+  HTTPHeaders* next;
+};
 
 static int parseHTTPRequest(int receiveMessageSize,
                             char receiveMessage[receiveMessageSize],
-                            char* httpRequestMethod,
-                            char* httpRequestPath,
-                            char* httpRequestVersion,
-                            char* delimeter)
+                            HTTPRequest* httpRequest)
 {
   printf("%s", receiveMessage);
 
-  char httpStatusLine[HTTP_REQUEST_STATUS_LINE_LEN] = { 0 };
   char* readBuffer = receiveMessage;
   int lineLen = 0;
 
+  lineLen = strcspn(readBuffer, " ");
+  httpRequest->method = calloc(lineLen, sizeof(char));
+  strncpy(httpRequest->method, readBuffer, lineLen);
+  readBuffer += lineLen + 1;
+  httpRequest->method[lineLen] = '\0';
+
+  lineLen = strcspn(readBuffer, " ");
+  httpRequest->uri = calloc(lineLen, sizeof(char));
+  strncpy(httpRequest->uri, readBuffer, lineLen);
+  readBuffer += lineLen + 1;
+  httpRequest->uri[lineLen] = '\0';
+
   lineLen = strcspn(readBuffer, "\r\n");
-  strncpy(httpStatusLine, readBuffer, lineLen);
+  httpRequest->version = calloc(lineLen, sizeof(char));
+  strncpy(httpRequest->version, readBuffer, lineLen);
   readBuffer += lineLen + 2; /* Skip through the read line and CRLF */
-  httpStatusLine[lineLen] = '\0';
+  httpRequest->version[lineLen] = '\0';
 
-  printf("web-server: HTTP Status Line: %s\n", httpStatusLine);
-
-  char httpHeaderLines[256][HTTP_REQUEST_STATUS_LINE_LEN] = { 0 };
-  for (int i = 0; readBuffer[0] != '\r' && readBuffer[1] != '\n'; i++, readBuffer += lineLen + 2) {
-    lineLen = strcspn(readBuffer, "\r\n");
-    strncpy(httpHeaderLines[i], readBuffer, lineLen);
-    httpHeaderLines[i][lineLen] = '\0';
-    printf("web-server: HTTP Header Line: %s\n", httpHeaderLines[i]);
-  }
-
-  readBuffer = httpStatusLine;
-  lineLen = strcspn(readBuffer, " ");
-  strncpy(httpRequestMethod, readBuffer, lineLen);
-  readBuffer += lineLen + 1;
-  httpRequestMethod[lineLen] = '\0';
-  printf("web-server: HTTP Method: %s\n", httpRequestMethod);
-
-  lineLen = strcspn(readBuffer, " ");
-  strncpy(httpRequestPath, readBuffer, lineLen);
-  readBuffer += lineLen + 1;
-  httpRequestPath[lineLen] = '\0';
-  printf("web-server: HTTP Path: %s\n", httpRequestPath);
-
-  lineLen = strcspn(readBuffer, " ");
-  strncpy(httpRequestVersion, readBuffer, lineLen);
-  httpRequestVersion[lineLen] = '\0';
-  printf("web-server: HTTP Version: %s\n", httpRequestVersion);
-
-  char httpHeaders[256][32] = { 0 };
-  char httpHeaderValues[256][HTTP_REQUEST_STATUS_LINE_LEN - 32] = { 0 };
-  for (int i = 0; i < 256; i++) {
-    readBuffer = httpHeaderLines[i];
+  HTTPHeaders* headers = NULL;
+  HTTPHeaders* currentHeader = NULL;
+  for (; readBuffer[0] != '\r' && readBuffer[1] != '\n'; readBuffer += lineLen + 2) {
+    currentHeader = headers;
+    headers = malloc(sizeof(HTTPHeaders));
+    if (!headers) goto cleanup;
     lineLen = strcspn(readBuffer, ":");
-    strncpy(httpHeaders[i], readBuffer, lineLen);
+    headers->name = calloc(lineLen, sizeof(char));
+    strncpy(headers->name, readBuffer, lineLen);
     readBuffer += lineLen + 1;
-    httpHeaders[i][lineLen] = '\0';
+    headers->name[lineLen] = '\0';
     while (*readBuffer == ' ') readBuffer++;
-    strncpy(httpHeaderValues[i], readBuffer, strlen(readBuffer));
-    httpHeaderValues[i][strlen(readBuffer)] = '\0';
-    printf("web-server: %s: %s\n", httpHeaders[i], httpHeaderValues[i]);
+    lineLen = strcspn(readBuffer, "\r\n");
+    headers->value = calloc(lineLen, sizeof(char));
+    strncpy(headers->value, readBuffer, lineLen);
+    headers->value[lineLen] = '\0';
+    headers->next = currentHeader;
+    printf("web-server: Inside: HTTP header: %s: %s\n", headers->name, headers->value);
+  }
+  httpRequest->headers = headers;
+
+  for (HTTPHeaders* cur = httpRequest->headers; cur != NULL; cur = cur->next) {
+    printf("web-server: Result: HTTP header: %s: %s\n", cur->name, cur->value);
   }
 
   fflush(stdout);
@@ -71,9 +94,6 @@ static int parseHTTPRequest(int receiveMessageSize,
 cleanup:
   perror("web-server");
   fflush(stdout);
-  strncpy(httpRequestMethod, "", strlen(""));
-  strncpy(httpRequestPath, "", strlen(""));
-  strncpy(httpRequestVersion, "", strlen(""));
   return -1;  /* Failure */
 };
 
@@ -100,16 +120,11 @@ int handleHTTPClientRequest(int receiveMessageSize,
                             int responseMessageSize,
                             char responseMessage[responseMessageSize])
 {
-  char httpRequestMethod[HTTP_REQUEST_METHOD_LEN] = { 0 };
-  char httpRequestPath[HTTP_REQUEST_PATH_LEN] = { 0 };
-  char httpRequestVersion[HTTP_REQUEST_VERSION_LEN] = { 0 };
+  HTTPRequest httpRequest;
 
   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
                                          receiveMessage,
-                                         httpRequestMethod,
-                                         httpRequestPath,
-                                         httpRequestVersion,
-                                         " ");
+                                         &httpRequest);
   if (httpParseStatus == -1 ) {
     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
@@ -117,9 +132,17 @@ int handleHTTPClientRequest(int receiveMessageSize,
     return -1;  /* Failure */
   }
 
+  printf("web-server: HTTP request method: %s\n", httpRequest.method);
+  printf("web-server: HTTP request uri: %s\n", httpRequest.uri);
+  printf("web-server: HTTP request version: %s\n", httpRequest.version);
+
+  for (HTTPHeaders* currentHeader = httpRequest.headers; currentHeader != NULL; currentHeader = currentHeader->next) {
+    printf("web-server: HTTP header: %s: %s\n", currentHeader->name, currentHeader->value);
+  }
+
   int httpRequestMethodHandler = -1;
   for (int i = 0; i <= PATCH; i++)
-    if (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)
+    if (strcmp(httpRequest.method, httpMethodStr[i]) == 0)
       httpRequestMethodHandler = i;
 
   switch (httpRequestMethodHandler) {
