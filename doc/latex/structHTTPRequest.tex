@@ -1,0 +1,84 @@
+\hypertarget{structHTTPRequest}{}\doxysection{HTTPRequest Struct Reference}
+\label{structHTTPRequest}\index{HTTPRequest@{HTTPRequest}}
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}}
+\item 
+char $\ast$ \mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}}
+\item 
+char $\ast$ \mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}}
+\item 
+\mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}} $\ast$ \mbox{\hyperlink{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}{headers}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A struct represents a typical HTTP Request parsed from a web client 
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00015}{15}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}\label{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}} 
+\index{HTTPRequest@{HTTPRequest}!headers@{headers}}
+\index{headers@{headers}!HTTPRequest@{HTTPRequest}}
+\doxysubsubsection{\texorpdfstring{headers}{headers}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}$\ast$ HTTPRequest\+::headers}
+
+The additional headers requested from the web client 
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00023}{23}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+
+Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient\+Request()}}.
+
+\mbox{\Hypertarget{structHTTPRequest_a0a56419f687fbe217f99746136676963}\label{structHTTPRequest_a0a56419f687fbe217f99746136676963}} 
+\index{HTTPRequest@{HTTPRequest}!method@{method}}
+\index{method@{method}!HTTPRequest@{HTTPRequest}}
+\doxysubsubsection{\texorpdfstring{method}{method}}
+{\footnotesize\ttfamily char$\ast$ HTTPRequest\+::method}
+
+The requested HTTP method 
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00017}{17}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+
+Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient\+Request()}}.
+
+\mbox{\Hypertarget{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}\label{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}} 
+\index{HTTPRequest@{HTTPRequest}!uri@{uri}}
+\index{uri@{uri}!HTTPRequest@{HTTPRequest}}
+\doxysubsubsection{\texorpdfstring{uri}{uri}}
+{\footnotesize\ttfamily char$\ast$ HTTPRequest\+::uri}
+
+The requested HTTP URI 
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00019}{19}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+
+Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient\+Request()}}.
+
+\mbox{\Hypertarget{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}\label{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}} 
+\index{HTTPRequest@{HTTPRequest}!version@{version}}
+\index{version@{version}!HTTPRequest@{HTTPRequest}}
+\doxysubsubsection{\texorpdfstring{version}{version}}
+{\footnotesize\ttfamily char$\ast$ HTTPRequest\+::version}
+
+The version of the HTTP from the web client 
+
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00021}{21}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+
+
+
+Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient\+Request()}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/clover/\+Projects/web-\/server/lib/http-\/handler.\+c\end{DoxyCompactItemize}

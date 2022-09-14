@@ -337,62 +337,65 @@ create\+HTTPResponse\+Message()
 \end{DoxySeeAlso}
 
 
-Definition at line \mbox{\hyperlink{http-handler_8c_source_l00097}{97}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+Definition at line \mbox{\hyperlink{http-handler_8c_source_l00118}{118}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00101 \{}
-\DoxyCodeLine{00102   \textcolor{keywordtype}{char} httpRequestMethod[\mbox{\hyperlink{http-handler_8h_a49180fdd018be2adfe4df3a59482ab0c}{HTTP\_REQUEST\_METHOD\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{00103   \textcolor{keywordtype}{char} httpRequestPath[\mbox{\hyperlink{http-handler_8h_a7d0073152dc4351d8b645031b83093d0}{HTTP\_REQUEST\_PATH\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{00104   \textcolor{keywordtype}{char} httpRequestVersion[\mbox{\hyperlink{http-handler_8h_a158d838bff67042768ab941e496265c5}{HTTP\_REQUEST\_VERSION\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{00105 }
-\DoxyCodeLine{00106   \textcolor{keywordtype}{int} httpParseStatus = parseHTTPRequest(receiveMessageSize,}
-\DoxyCodeLine{00107                                          receiveMessage,}
-\DoxyCodeLine{00108                                          httpRequestMethod,}
-\DoxyCodeLine{00109                                          httpRequestPath,}
-\DoxyCodeLine{00110                                          httpRequestVersion,}
-\DoxyCodeLine{00111                                          \textcolor{stringliteral}{"{} "{}});}
-\DoxyCodeLine{00112   \textcolor{keywordflow}{if} (httpParseStatus == -\/1 ) \{}
-\DoxyCodeLine{00113     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Failed to parse HTTP request header\(\backslash\)n"{}});}
-\DoxyCodeLine{00114     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Received HTTP request as follows:\(\backslash\)n\%s"{}},}
-\DoxyCodeLine{00115             receiveMessage);}
-\DoxyCodeLine{00116     \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{00117   \}}
-\DoxyCodeLine{00118 }
-\DoxyCodeLine{00119   \textcolor{keywordtype}{int} httpRequestMethodHandler = -\/1;}
-\DoxyCodeLine{00120   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= PATCH; i++)}
-\DoxyCodeLine{00121     \textcolor{keywordflow}{if} (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)}
-\DoxyCodeLine{00122       httpRequestMethodHandler = i;}
-\DoxyCodeLine{00123 }
-\DoxyCodeLine{00124   \textcolor{keywordflow}{switch} (httpRequestMethodHandler) \{}
-\DoxyCodeLine{00125     \textcolor{keywordflow}{case} GET:}
-\DoxyCodeLine{00126       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -\/1)}
-\DoxyCodeLine{00127         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{00128       \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00129     \textcolor{keywordflow}{case} HEAD:}
-\DoxyCodeLine{00130     \textcolor{keywordflow}{case} POST:}
-\DoxyCodeLine{00131     \textcolor{keywordflow}{case} PUT:}
-\DoxyCodeLine{00132     \textcolor{keywordflow}{case} DELETE:}
-\DoxyCodeLine{00133     \textcolor{keywordflow}{case} CONNECT:}
-\DoxyCodeLine{00134     \textcolor{keywordflow}{case} OPTIONS:}
-\DoxyCodeLine{00135     \textcolor{keywordflow}{case} TRACE:}
-\DoxyCodeLine{00136     \textcolor{keywordflow}{case} PATCH:}
-\DoxyCodeLine{00137       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD\_NOT\_ALLOWED) == -\/1)}
-\DoxyCodeLine{00138         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{00139       \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00140     \textcolor{keywordflow}{default}:}
-\DoxyCodeLine{00141       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT\_IMPLEMENTED) == -\/1)}
-\DoxyCodeLine{00142         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{00143       \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00144   \};}
-\DoxyCodeLine{00145 }
-\DoxyCodeLine{00146   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
-\DoxyCodeLine{00147 \};}
+\DoxyCodeLine{00122 \{}
+\DoxyCodeLine{00123   \mbox{\hyperlink{structHTTPRequest}{HTTPRequest}} httpRequest;}
+\DoxyCodeLine{00124 }
+\DoxyCodeLine{00125   \textcolor{keywordtype}{int} httpParseStatus = parseHTTPRequest(receiveMessageSize,}
+\DoxyCodeLine{00126                                          receiveMessage,}
+\DoxyCodeLine{00127                                          \&httpRequest);}
+\DoxyCodeLine{00128   \textcolor{keywordflow}{if} (httpParseStatus == -\/1 ) \{}
+\DoxyCodeLine{00129     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Failed to parse HTTP request header\(\backslash\)n"{}});}
+\DoxyCodeLine{00130     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Received HTTP request as follows:\(\backslash\)n\%s"{}},}
+\DoxyCodeLine{00131             receiveMessage);}
+\DoxyCodeLine{00132     \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00133   \}}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP request method: \%s\(\backslash\)n"{}}, httpRequest.\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}});}
+\DoxyCodeLine{00136   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP request uri: \%s\(\backslash\)n"{}}, httpRequest.\mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}});}
+\DoxyCodeLine{00137   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP request version: \%s\(\backslash\)n"{}}, httpRequest.\mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}});}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139   \textcolor{keywordflow}{for} (\mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}* currentHeader = httpRequest.\mbox{\hyperlink{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}{headers}}; currentHeader != NULL; currentHeader = currentHeader-\/>\mbox{\hyperlink{structHTTPHeaders_a553734dec55a26f57c6ef4af1b15ebc7}{next}}) \{}
+\DoxyCodeLine{00140     printf(\textcolor{stringliteral}{"{}web-\/server: HTTP header: \%s: \%s\(\backslash\)n"{}}, currentHeader-\/>name, currentHeader-\/>value);}
+\DoxyCodeLine{00141   \}}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143   \textcolor{keywordtype}{int} httpRequestMethodHandler = -\/1;}
+\DoxyCodeLine{00144   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= PATCH; i++)}
+\DoxyCodeLine{00145     \textcolor{keywordflow}{if} (strcmp(httpRequest.\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}}, httpMethodStr[i]) == 0)}
+\DoxyCodeLine{00146       httpRequestMethodHandler = i;}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148   \textcolor{keywordflow}{switch} (httpRequestMethodHandler) \{}
+\DoxyCodeLine{00149     \textcolor{keywordflow}{case} GET:}
+\DoxyCodeLine{00150       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -\/1)}
+\DoxyCodeLine{00151         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00152       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00153     \textcolor{keywordflow}{case} HEAD:}
+\DoxyCodeLine{00154     \textcolor{keywordflow}{case} POST:}
+\DoxyCodeLine{00155     \textcolor{keywordflow}{case} PUT:}
+\DoxyCodeLine{00156     \textcolor{keywordflow}{case} DELETE:}
+\DoxyCodeLine{00157     \textcolor{keywordflow}{case} CONNECT:}
+\DoxyCodeLine{00158     \textcolor{keywordflow}{case} OPTIONS:}
+\DoxyCodeLine{00159     \textcolor{keywordflow}{case} TRACE:}
+\DoxyCodeLine{00160     \textcolor{keywordflow}{case} PATCH:}
+\DoxyCodeLine{00161       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD\_NOT\_ALLOWED) == -\/1)}
+\DoxyCodeLine{00162         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00163       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00164     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00165       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT\_IMPLEMENTED) == -\/1)}
+\DoxyCodeLine{00166         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{00167       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00168   \};}
+\DoxyCodeLine{00169 }
+\DoxyCodeLine{00170   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
+\DoxyCodeLine{00171 \};}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{http-handler_8h_source_l00016}{HTTP\+\_\+\+REQUEST\+\_\+\+METHOD\+\_\+\+LEN}}, \mbox{\hyperlink{http-handler_8h_source_l00020}{HTTP\+\_\+\+REQUEST\+\_\+\+PATH\+\_\+\+LEN}}, and \mbox{\hyperlink{http-handler_8h_source_l00024}{HTTP\+\_\+\+REQUEST\+\_\+\+VERSION\+\_\+\+LEN}}.
+References \mbox{\hyperlink{http-handler_8c_source_l00023}{HTTPRequest\+::headers}}, \mbox{\hyperlink{http-handler_8c_source_l00017}{HTTPRequest\+::method}}, \mbox{\hyperlink{http-handler_8c_source_l00032}{HTTPHeaders\+::name}}, \mbox{\hyperlink{http-handler_8c_source_l00036}{HTTPHeaders\+::next}}, \mbox{\hyperlink{http-handler_8c_source_l00019}{HTTPRequest\+::uri}}, \mbox{\hyperlink{http-handler_8c_source_l00034}{HTTPHeaders\+::value}}, and \mbox{\hyperlink{http-handler_8c_source_l00021}{HTTPRequest\+::version}}.
 
 
 

@@ -225,26 +225,25 @@ $(function() {
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>  [NETWORK_AUTHENTICATION_REQURIED] = <span class="stringliteral">&quot;511 Network Authentication Requried&quot;</span> <a class="code hl_define" href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a></div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>};</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="keyword">static</span> <span class="keywordtype">int</span> parseHTTPRequest(<span class="keywordtype">int</span> receiveMessageSize,</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                            <span class="keywordtype">char</span> receiveMessage[receiveMessageSize],</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                            <span class="keywordtype">char</span>* httpRequestMethod,</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                            <span class="keywordtype">char</span>* httpRequestPath,</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                            <span class="keywordtype">char</span>* httpRequestVersion,</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                            <span class="keywordtype">char</span>* delimeter);</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span><span class="keyword">static</span> <span class="keywordtype">int</span> createHTTPResponseMessage(<span class="keywordtype">int</span> httpResponseMessageSize,</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                                     <span class="keywordtype">char</span> httpResponseMessage[httpResponseMessageSize],</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                                     <span class="keywordtype">int</span> httpResponseStatus);</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="keywordtype">int</span> <a class="code hl_function" href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a>(<span class="keywordtype">int</span> receiveMessageSize,</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                            <span class="keywordtype">char</span> receiveMessage[receiveMessageSize],</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                            <span class="keywordtype">int</span> responseMessageSize,</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                            <span class="keywordtype">char</span> responseMessage[responseMessageSize]);</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="comment">// static int parseHTTPRequest(int receiveMessageSize,</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="comment">//                             char receiveMessage[receiveMessageSize],</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="comment">//                             char* httpRequestMethod,</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="comment">//                             char* httpRequestPath,</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="comment">//                             char* httpRequestVersion);</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span><span class="keyword">static</span> <span class="keywordtype">int</span> createHTTPResponseMessage(<span class="keywordtype">int</span> httpResponseMessageSize,</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                                     <span class="keywordtype">char</span> httpResponseMessage[httpResponseMessageSize],</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                                     <span class="keywordtype">int</span> httpResponseStatus);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="keywordtype">int</span> <a class="code hl_function" href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a>(<span class="keywordtype">int</span> receiveMessageSize,</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                            <span class="keywordtype">char</span> receiveMessage[receiveMessageSize],</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                            <span class="keywordtype">int</span> responseMessageSize,</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                            <span class="keywordtype">char</span> responseMessage[responseMessageSize]);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="ahttp-handler_8h_html_a2e2c772c713591600f7bee7d9bf3f3fe"><div class="ttname"><a href="http-handler_8h.html#a2e2c772c713591600f7bee7d9bf3f3fe">httpMethod</a></div><div class="ttdeci">httpMethod</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00039">http-handler.h:39</a></div></div>
 <div class="ttc" id="ahttp-handler_8h_html_a6cb23a858b0a21bdaa644b9181dc415f"><div class="ttname"><a href="http-handler_8h.html#a6cb23a858b0a21bdaa644b9181dc415f">CRLF</a></div><div class="ttdeci">#define CRLF</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00032">http-handler.h:32</a></div></div>
-<div class="ttc" id="ahttp-handler_8h_html_aa58d558d7d605fab6edecc64c34c0f63"><div class="ttname"><a href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a></div><div class="ttdeci">int handleHTTPClientRequest(int receiveMessageSize, char receiveMessage[receiveMessageSize], int responseMessageSize, char responseMessage[responseMessageSize])</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8c_source.html#l00097">http-handler.c:97</a></div></div>
+<div class="ttc" id="ahttp-handler_8h_html_aa58d558d7d605fab6edecc64c34c0f63"><div class="ttname"><a href="http-handler_8h.html#aa58d558d7d605fab6edecc64c34c0f63">handleHTTPClientRequest</a></div><div class="ttdeci">int handleHTTPClientRequest(int receiveMessageSize, char receiveMessage[receiveMessageSize], int responseMessageSize, char responseMessage[responseMessageSize])</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8c_source.html#l00118">http-handler.c:118</a></div></div>
 <div class="ttc" id="ahttp-handler_8h_html_abd1605a1ce8475ed58ef3759e0547776"><div class="ttname"><a href="http-handler_8h.html#abd1605a1ce8475ed58ef3759e0547776">httpStatus</a></div><div class="ttdeci">httpStatus</div><div class="ttdef"><b>Definition:</b> <a href="http-handler_8h_source.html#l00065">http-handler.h:65</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

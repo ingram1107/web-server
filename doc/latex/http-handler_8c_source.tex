@@ -7,147 +7,157 @@
 \DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00003}00003 \textcolor{preprocessor}{\#include <asm-\/generic/errno.h>}}
 \DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00004}00004 \textcolor{preprocessor}{\#include <errno.h>}}
 \DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00005}00005 \textcolor{preprocessor}{\#include <stdio.h>}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00006}00006 \textcolor{preprocessor}{\#include <string.h>}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00007}00007 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00008}00008 \textcolor{keyword}{static} \textcolor{keywordtype}{int} parseHTTPRequest(\textcolor{keywordtype}{int} receiveMessageSize,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00009}00009                             \textcolor{keywordtype}{char} receiveMessage[receiveMessageSize],}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00010}00010                             \textcolor{keywordtype}{char}* httpRequestMethod,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00011}00011                             \textcolor{keywordtype}{char}* httpRequestPath,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00012}00012                             \textcolor{keywordtype}{char}* httpRequestVersion,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00013}00013                             \textcolor{keywordtype}{char}* delimeter)}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00014}00014 \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00015}00015   printf(\textcolor{stringliteral}{"{}\%s"{}}, receiveMessage);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00016}00016 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00017}00017   \textcolor{keywordtype}{char} httpStatusLine[\mbox{\hyperlink{http-handler_8h_a3a45a28f0d29979383f09278aad2ee57}{HTTP\_REQUEST\_STATUS\_LINE\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00018}00018   \textcolor{keywordtype}{char}* readBuffer = receiveMessage;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00019}00019   \textcolor{keywordtype}{int} lineLen = 0;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00020}00020 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00021}00021   lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00022}00022   strncpy(httpStatusLine, readBuffer, lineLen);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00023}00023   readBuffer += lineLen + 2; \textcolor{comment}{/* Skip through the read line and CRLF */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00024}00024   httpStatusLine[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00006}00006 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00007}00007 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00009}00009 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structHTTPRequest}{HTTPRequest}} \mbox{\hyperlink{structHTTPRequest}{HTTPRequest}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00010}00010 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}} \mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00015}\mbox{\hyperlink{structHTTPRequest}{00015}} \textcolor{keyword}{struct }\mbox{\hyperlink{structHTTPRequest}{HTTPRequest}} \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00017}\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{00017}}   \textcolor{keywordtype}{char}* \mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00019}\mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{00019}}   \textcolor{keywordtype}{char}* \mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00021}\mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{00021}}   \textcolor{keywordtype}{char}* \mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00023}\mbox{\hyperlink{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}{00023}}   \mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}* \mbox{\hyperlink{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}{headers}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00024}00024 \};}
 \DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00025}00025 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00026}00026   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Status Line: \%s\(\backslash\)n"{}}, httpStatusLine);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00027}00027 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00028}00028   \textcolor{keywordtype}{char} httpHeaderLines[256][\mbox{\hyperlink{http-handler_8h_a3a45a28f0d29979383f09278aad2ee57}{HTTP\_REQUEST\_STATUS\_LINE\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00029}00029   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; readBuffer[0] != \textcolor{charliteral}{'\(\backslash\)r'} \&\& readBuffer[1] != \textcolor{charliteral}{'\(\backslash\)n'}; i++, readBuffer += lineLen + 2) \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00030}00030     lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00031}00031     strncpy(httpHeaderLines[i], readBuffer, lineLen);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00032}00032     httpHeaderLines[i][lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00033}00033     printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Header Line: \%s\(\backslash\)n"{}}, httpHeaderLines[i]);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00034}00034   \}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00035}00035 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00036}00036   readBuffer = httpStatusLine;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00037}00037   lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{} "{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00038}00038   strncpy(httpRequestMethod, readBuffer, lineLen);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00039}00039   readBuffer += lineLen + 1;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00040}00040   httpRequestMethod[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00041}00041   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Method: \%s\(\backslash\)n"{}}, httpRequestMethod);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00042}00042 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00043}00043   lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{} "{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00044}00044   strncpy(httpRequestPath, readBuffer, lineLen);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00045}00045   readBuffer += lineLen + 1;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00046}00046   httpRequestPath[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00047}00047   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Path: \%s\(\backslash\)n"{}}, httpRequestPath);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00048}00048 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00049}00049   lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{} "{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00050}00050   strncpy(httpRequestVersion, readBuffer, lineLen);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00051}00051   httpRequestVersion[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00052}00052   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP Version: \%s\(\backslash\)n"{}}, httpRequestVersion);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00030}\mbox{\hyperlink{structHTTPHeaders}{00030}} \textcolor{keyword}{struct }\mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}} \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00032}\mbox{\hyperlink{structHTTPHeaders_a99c7a9f0294a8542072e8e77a7efc095}{00032}}   \textcolor{keywordtype}{char}* \mbox{\hyperlink{structHTTPHeaders_a99c7a9f0294a8542072e8e77a7efc095}{name}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00034}\mbox{\hyperlink{structHTTPHeaders_a5ecb902b2a7e63b833a3c1fc67db2d59}{00034}}   \textcolor{keywordtype}{char}* \mbox{\hyperlink{structHTTPHeaders_a5ecb902b2a7e63b833a3c1fc67db2d59}{value}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00036}\mbox{\hyperlink{structHTTPHeaders_a553734dec55a26f57c6ef4af1b15ebc7}{00036}}   \mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}* \mbox{\hyperlink{structHTTPHeaders_a553734dec55a26f57c6ef4af1b15ebc7}{next}};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00037}00037 \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00039}00039 \textcolor{keyword}{static} \textcolor{keywordtype}{int} parseHTTPRequest(\textcolor{keywordtype}{int} receiveMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00040}00040                             \textcolor{keywordtype}{char} receiveMessage[receiveMessageSize],}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00041}00041                             \mbox{\hyperlink{structHTTPRequest}{HTTPRequest}}* httpRequest)}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00042}00042 \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00043}00043   printf(\textcolor{stringliteral}{"{}\%s"{}}, receiveMessage);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00045}00045   \textcolor{keywordtype}{char}* readBuffer = receiveMessage;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00046}00046   \textcolor{keywordtype}{int} lineLen = 0;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00048}00048   lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00049}00049   httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}} = calloc(lineLen, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00050}00050   strncpy(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}}, readBuffer, lineLen);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00051}00051   readBuffer += lineLen + 1;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00052}00052   httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}}[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
 \DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00053}00053 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00054}00054   \textcolor{keywordtype}{char} httpHeaders[256][32] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00055}00055   \textcolor{keywordtype}{char} httpHeaderValues[256][\mbox{\hyperlink{http-handler_8h_a3a45a28f0d29979383f09278aad2ee57}{HTTP\_REQUEST\_STATUS\_LINE\_LEN}} -\/ 32] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00056}00056   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 256; i++) \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00057}00057     readBuffer = httpHeaderLines[i];}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00058}00058     lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{}:"{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00059}00059     strncpy(httpHeaders[i], readBuffer, lineLen);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00060}00060     readBuffer += lineLen + 1;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00061}00061     httpHeaders[i][lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00062}00062     \textcolor{keywordflow}{while} (*readBuffer == \textcolor{charliteral}{' '}) readBuffer++;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00063}00063     strncpy(httpHeaderValues[i], readBuffer, strlen(readBuffer));}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00064}00064     httpHeaderValues[i][strlen(readBuffer)] = \textcolor{charliteral}{'\(\backslash\)0'};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00065}00065     printf(\textcolor{stringliteral}{"{}web-\/server: \%s: \%s\(\backslash\)n"{}}, httpHeaders[i], httpHeaderValues[i]);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00066}00066   \}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00067}00067 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00068}00068   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00069}00069 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00070}00070 cleanup:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00071}00071   perror(\textcolor{stringliteral}{"{}web-\/server"{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00072}00072   fflush(stdout);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00073}00073   strncpy(httpRequestMethod, \textcolor{stringliteral}{"{}"{}}, strlen(\textcolor{stringliteral}{"{}"{}}));}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00074}00074   strncpy(httpRequestPath, \textcolor{stringliteral}{"{}"{}}, strlen(\textcolor{stringliteral}{"{}"{}}));}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00075}00075   strncpy(httpRequestVersion, \textcolor{stringliteral}{"{}"{}}, strlen(\textcolor{stringliteral}{"{}"{}}));}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00076}00076   \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00077}00077 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00078}00078 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00079}00079 \textcolor{keyword}{static} \textcolor{keywordtype}{int} createHTTPResponseMessage(\textcolor{keywordtype}{int} httpResponseMessageSize,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00080}00080                                      \textcolor{keywordtype}{char} httpResponseMessage[httpResponseMessageSize],}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00081}00081                                      \textcolor{keywordtype}{int} httpResponseStatus)}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00082}00082 \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00083}00083   \textcolor{keywordtype}{int} returnStatus = snprintf(httpResponseMessage,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00084}00084                               httpResponseMessageSize,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00085}00085                               \textcolor{stringliteral}{"{}HTTP/1.1 \%s"{}},}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00086}00086                               httpStatusStr[httpResponseStatus]);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00087}00087   \textcolor{keywordflow}{if} (returnStatus < 0) \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00088}00088     errno = EILSEQ;     \textcolor{comment}{/* Encoding Error */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00089}00089     \textcolor{keywordflow}{return} -\/1;          \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00090}00090   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (returnStatus > httpResponseMessageSize) \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00091}00091     errno = EOVERFLOW;  \textcolor{comment}{/* String Too Large */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00092}00092     \textcolor{keywordflow}{return} -\/1;          \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00093}00093   \}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00094}00094   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00095}00095 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00096}00096 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00097}\mbox{\hyperlink{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}{00097}} \textcolor{keywordtype}{int} \mbox{\hyperlink{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}{handleHTTPClientRequest}}(\textcolor{keywordtype}{int} receiveMessageSize,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00098}00098                             \textcolor{keywordtype}{char} receiveMessage[receiveMessageSize],}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00099}00099                             \textcolor{keywordtype}{int} responseMessageSize,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00100}00100                             \textcolor{keywordtype}{char} responseMessage[responseMessageSize])}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00101}00101 \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00102}00102   \textcolor{keywordtype}{char} httpRequestMethod[\mbox{\hyperlink{http-handler_8h_a49180fdd018be2adfe4df3a59482ab0c}{HTTP\_REQUEST\_METHOD\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00103}00103   \textcolor{keywordtype}{char} httpRequestPath[\mbox{\hyperlink{http-handler_8h_a7d0073152dc4351d8b645031b83093d0}{HTTP\_REQUEST\_PATH\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00104}00104   \textcolor{keywordtype}{char} httpRequestVersion[\mbox{\hyperlink{http-handler_8h_a158d838bff67042768ab941e496265c5}{HTTP\_REQUEST\_VERSION\_LEN}}] = \{ 0 \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00105}00105 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00106}00106   \textcolor{keywordtype}{int} httpParseStatus = parseHTTPRequest(receiveMessageSize,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00107}00107                                          receiveMessage,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00108}00108                                          httpRequestMethod,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00109}00109                                          httpRequestPath,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00110}00110                                          httpRequestVersion,}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00111}00111                                          \textcolor{stringliteral}{"{} "{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00112}00112   \textcolor{keywordflow}{if} (httpParseStatus == -\/1 ) \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00113}00113     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Failed to parse HTTP request header\(\backslash\)n"{}});}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00114}00114     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Received HTTP request as follows:\(\backslash\)n\%s"{}},}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00115}00115             receiveMessage);}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00116}00116     \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00117}00117   \}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00118}00118 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00119}00119   \textcolor{keywordtype}{int} httpRequestMethodHandler = -\/1;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00120}00120   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= PATCH; i++)}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00121}00121     \textcolor{keywordflow}{if} (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00122}00122       httpRequestMethodHandler = i;}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00123}00123 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00124}00124   \textcolor{keywordflow}{switch} (httpRequestMethodHandler) \{}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00125}00125     \textcolor{keywordflow}{case} GET:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00126}00126       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -\/1)}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00127}00127         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00128}00128       \textcolor{keywordflow}{break};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00129}00129     \textcolor{keywordflow}{case} HEAD:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00130}00130     \textcolor{keywordflow}{case} POST:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00131}00131     \textcolor{keywordflow}{case} PUT:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00132}00132     \textcolor{keywordflow}{case} DELETE:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00133}00133     \textcolor{keywordflow}{case} CONNECT:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00134}00134     \textcolor{keywordflow}{case} OPTIONS:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00135}00135     \textcolor{keywordflow}{case} TRACE:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00136}00136     \textcolor{keywordflow}{case} PATCH:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00137}00137       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD\_NOT\_ALLOWED) == -\/1)}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00138}00138         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00139}00139       \textcolor{keywordflow}{break};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00140}00140     \textcolor{keywordflow}{default}:}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00141}00141       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT\_IMPLEMENTED) == -\/1)}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00142}00142         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00143}00143       \textcolor{keywordflow}{break};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00144}00144   \};}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00145}00145 }
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00146}00146   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
-\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00147}00147 \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00054}00054   lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00055}00055   httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}} = calloc(lineLen, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00056}00056   strncpy(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}}, readBuffer, lineLen);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00057}00057   readBuffer += lineLen + 1;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00058}00058   httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}}[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00060}00060   lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00061}00061   httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}} = calloc(lineLen, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00062}00062   strncpy(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}}, readBuffer, lineLen);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00063}00063   readBuffer += lineLen + 2; \textcolor{comment}{/* Skip through the read line and CRLF */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00064}00064   httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}}[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00066}00066   \mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}* headers = NULL;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00067}00067   \mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}* currentHeader = NULL;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00068}00068   \textcolor{keywordflow}{for} (; readBuffer[0] != \textcolor{charliteral}{'\(\backslash\)r'} \&\& readBuffer[1] != \textcolor{charliteral}{'\(\backslash\)n'}; readBuffer += lineLen + 2) \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00069}00069     currentHeader = headers;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00070}00070     headers = malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}));}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00071}00071     \textcolor{keywordflow}{if} (!headers) \textcolor{keywordflow}{goto} cleanup;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00072}00072     lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00073}00073     headers-\/>\mbox{\hyperlink{structHTTPHeaders_a99c7a9f0294a8542072e8e77a7efc095}{name}} = calloc(lineLen, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00074}00074     strncpy(headers-\/>\mbox{\hyperlink{structHTTPHeaders_a99c7a9f0294a8542072e8e77a7efc095}{name}}, readBuffer, lineLen);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00075}00075     readBuffer += lineLen + 1;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00076}00076     headers-\/>\mbox{\hyperlink{structHTTPHeaders_a99c7a9f0294a8542072e8e77a7efc095}{name}}[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00077}00077     \textcolor{keywordflow}{while} (*readBuffer == \textcolor{charliteral}{' '}) readBuffer++;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00078}00078     lineLen = strcspn(readBuffer, \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00079}00079     headers-\/>\mbox{\hyperlink{structHTTPHeaders_a5ecb902b2a7e63b833a3c1fc67db2d59}{value}} = calloc(lineLen, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00080}00080     strncpy(headers-\/>\mbox{\hyperlink{structHTTPHeaders_a5ecb902b2a7e63b833a3c1fc67db2d59}{value}}, readBuffer, lineLen);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00081}00081     headers-\/>\mbox{\hyperlink{structHTTPHeaders_a5ecb902b2a7e63b833a3c1fc67db2d59}{value}}[lineLen] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00082}00082     headers-\/>\mbox{\hyperlink{structHTTPHeaders_a553734dec55a26f57c6ef4af1b15ebc7}{next}} = currentHeader;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00083}00083     printf(\textcolor{stringliteral}{"{}web-\/server: Inside: HTTP header: \%s: \%s\(\backslash\)n"{}}, headers-\/>\mbox{\hyperlink{structHTTPHeaders_a99c7a9f0294a8542072e8e77a7efc095}{name}}, headers-\/>\mbox{\hyperlink{structHTTPHeaders_a5ecb902b2a7e63b833a3c1fc67db2d59}{value}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00084}00084   \}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00085}00085   httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}{headers}} = headers;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00087}00087   \textcolor{keywordflow}{for} (\mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}* cur = httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}{headers}}; cur != NULL; cur = cur-\/>\mbox{\hyperlink{structHTTPHeaders_a553734dec55a26f57c6ef4af1b15ebc7}{next}}) \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00088}00088     printf(\textcolor{stringliteral}{"{}web-\/server: Result: HTTP header: \%s: \%s\(\backslash\)n"{}}, cur-\/>name, cur-\/>value);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00089}00089   \}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00091}00091   fflush(stdout);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00092}00092   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00094}00094 cleanup:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00095}00095   perror(\textcolor{stringliteral}{"{}web-\/server"{}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00096}00096   fflush(stdout);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00097}00097   \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00098}00098 \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00100}00100 \textcolor{keyword}{static} \textcolor{keywordtype}{int} createHTTPResponseMessage(\textcolor{keywordtype}{int} httpResponseMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00101}00101                                      \textcolor{keywordtype}{char} httpResponseMessage[httpResponseMessageSize],}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00102}00102                                      \textcolor{keywordtype}{int} httpResponseStatus)}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00103}00103 \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00104}00104   \textcolor{keywordtype}{int} returnStatus = snprintf(httpResponseMessage,}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00105}00105                               httpResponseMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00106}00106                               \textcolor{stringliteral}{"{}HTTP/1.1 \%s"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00107}00107                               httpStatusStr[httpResponseStatus]);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00108}00108   \textcolor{keywordflow}{if} (returnStatus < 0) \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00109}00109     errno = EILSEQ;     \textcolor{comment}{/* Encoding Error */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00110}00110     \textcolor{keywordflow}{return} -\/1;          \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00111}00111   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (returnStatus > httpResponseMessageSize) \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00112}00112     errno = EOVERFLOW;  \textcolor{comment}{/* String Too Large */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00113}00113     \textcolor{keywordflow}{return} -\/1;          \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00114}00114   \}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00115}00115   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00116}00116 \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00118}\mbox{\hyperlink{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}{00118}} \textcolor{keywordtype}{int} \mbox{\hyperlink{http-handler_8h_aa58d558d7d605fab6edecc64c34c0f63}{handleHTTPClientRequest}}(\textcolor{keywordtype}{int} receiveMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00119}00119                             \textcolor{keywordtype}{char} receiveMessage[receiveMessageSize],}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00120}00120                             \textcolor{keywordtype}{int} responseMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00121}00121                             \textcolor{keywordtype}{char} responseMessage[responseMessageSize])}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00122}00122 \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00123}00123   \mbox{\hyperlink{structHTTPRequest}{HTTPRequest}} httpRequest;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00125}00125   \textcolor{keywordtype}{int} httpParseStatus = parseHTTPRequest(receiveMessageSize,}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00126}00126                                          receiveMessage,}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00127}00127                                          \&httpRequest);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00128}00128   \textcolor{keywordflow}{if} (httpParseStatus == -\/1 ) \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00129}00129     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Failed to parse HTTP request header\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00130}00130     fprintf(stderr, \textcolor{stringliteral}{"{}web-\/server: Received HTTP request as follows:\(\backslash\)n\%s"{}},}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00131}00131             receiveMessage);}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00132}00132     \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00133}00133   \}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00135}00135   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP request method: \%s\(\backslash\)n"{}}, httpRequest.\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00136}00136   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP request uri: \%s\(\backslash\)n"{}}, httpRequest.\mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00137}00137   printf(\textcolor{stringliteral}{"{}web-\/server: HTTP request version: \%s\(\backslash\)n"{}}, httpRequest.\mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00139}00139   \textcolor{keywordflow}{for} (\mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}* currentHeader = httpRequest.\mbox{\hyperlink{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}{headers}}; currentHeader != NULL; currentHeader = currentHeader-\/>\mbox{\hyperlink{structHTTPHeaders_a553734dec55a26f57c6ef4af1b15ebc7}{next}}) \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00140}00140     printf(\textcolor{stringliteral}{"{}web-\/server: HTTP header: \%s: \%s\(\backslash\)n"{}}, currentHeader-\/>\mbox{\hyperlink{structHTTPHeaders_a99c7a9f0294a8542072e8e77a7efc095}{name}}, currentHeader-\/>\mbox{\hyperlink{structHTTPHeaders_a5ecb902b2a7e63b833a3c1fc67db2d59}{value}});}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00141}00141   \}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00142}00142 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00143}00143   \textcolor{keywordtype}{int} httpRequestMethodHandler = -\/1;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00144}00144   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= PATCH; i++)}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00145}00145     \textcolor{keywordflow}{if} (strcmp(httpRequest.\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}}, httpMethodStr[i]) == 0)}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00146}00146       httpRequestMethodHandler = i;}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00147}00147 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00148}00148   \textcolor{keywordflow}{switch} (httpRequestMethodHandler) \{}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00149}00149     \textcolor{keywordflow}{case} GET:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00150}00150       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -\/1)}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00151}00151         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00152}00152       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00153}00153     \textcolor{keywordflow}{case} HEAD:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00154}00154     \textcolor{keywordflow}{case} POST:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00155}00155     \textcolor{keywordflow}{case} PUT:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00156}00156     \textcolor{keywordflow}{case} DELETE:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00157}00157     \textcolor{keywordflow}{case} CONNECT:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00158}00158     \textcolor{keywordflow}{case} OPTIONS:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00159}00159     \textcolor{keywordflow}{case} TRACE:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00160}00160     \textcolor{keywordflow}{case} PATCH:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00161}00161       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD\_NOT\_ALLOWED) == -\/1)}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00162}00162         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00163}00163       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00164}00164     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00165}00165       \textcolor{keywordflow}{if} (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT\_IMPLEMENTED) == -\/1)}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00166}00166         \textcolor{keywordflow}{return} -\/1;  \textcolor{comment}{/* Failure */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00167}00167       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00168}00168   \};}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00170}00170   \textcolor{keywordflow}{return} 0; \textcolor{comment}{/* Success */}}
+\DoxyCodeLine{\Hypertarget{http-handler_8c_source_l00171}00171 \};}
 
 \end{DoxyCode}

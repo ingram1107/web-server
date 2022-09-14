@@ -1,4 +1,4 @@
-.TH "/home/clover/Projects/web-server/lib/http-handler.h" 3 "Tue Sep 13 2022" "web-server" \" -*- nroff -*-
+.TH "/home/clover/Projects/web-server/lib/http-handler.h" 3 "Wed Sep 14 2022" "web-server" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -216,59 +216,62 @@ createHTTPResponseMessage()
 .PP
 
 .PP
-Definition at line \fB97\fP of file \fBhttp\-handler\&.c\fP\&.
+Definition at line \fB118\fP of file \fBhttp\-handler\&.c\fP\&.
 .PP
 .nf
-101 {
-102   char httpRequestMethod[HTTP_REQUEST_METHOD_LEN] = { 0 };
-103   char httpRequestPath[HTTP_REQUEST_PATH_LEN] = { 0 };
-104   char httpRequestVersion[HTTP_REQUEST_VERSION_LEN] = { 0 };
-105 
-106   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
-107                                          receiveMessage,
-108                                          httpRequestMethod,
-109                                          httpRequestPath,
-110                                          httpRequestVersion,
-111                                          " ");
-112   if (httpParseStatus == -1 ) {
-113     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
-114     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
-115             receiveMessage);
-116     return -1;  /* Failure */
-117   }
-118 
-119   int httpRequestMethodHandler = -1;
-120   for (int i = 0; i <= PATCH; i++)
-121     if (strcmp(httpRequestMethod, httpMethodStr[i]) == 0)
-122       httpRequestMethodHandler = i;
-123 
-124   switch (httpRequestMethodHandler) {
-125     case GET:
-126       if (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -1)
-127         return -1;  /* Failure */
-128       break;
-129     case HEAD:
-130     case POST:
-131     case PUT:
-132     case DELETE:
-133     case CONNECT:
-134     case OPTIONS:
-135     case TRACE:
-136     case PATCH:
-137       if (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD_NOT_ALLOWED) == -1)
-138         return -1;  /* Failure */
-139       break;
-140     default:
-141       if (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT_IMPLEMENTED) == -1)
-142         return -1;  /* Failure */
-143       break;
-144   };
-145 
-146   return 0; /* Success */
-147 };
+122 {
+123   HTTPRequest httpRequest;
+124 
+125   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
+126                                          receiveMessage,
+127                                          &httpRequest);
+128   if (httpParseStatus == -1 ) {
+129     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
+130     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
+131             receiveMessage);
+132     return -1;  /* Failure */
+133   }
+134 
+135   printf("web-server: HTTP request method: %s\n", httpRequest\&.method);
+136   printf("web-server: HTTP request uri: %s\n", httpRequest\&.uri);
+137   printf("web-server: HTTP request version: %s\n", httpRequest\&.version);
+138 
+139   for (HTTPHeaders* currentHeader = httpRequest\&.headers; currentHeader != NULL; currentHeader = currentHeader->next) {
+140     printf("web-server: HTTP header: %s: %s\n", currentHeader->name, currentHeader->value);
+141   }
+142 
+143   int httpRequestMethodHandler = -1;
+144   for (int i = 0; i <= PATCH; i++)
+145     if (strcmp(httpRequest\&.method, httpMethodStr[i]) == 0)
+146       httpRequestMethodHandler = i;
+147 
+148   switch (httpRequestMethodHandler) {
+149     case GET:
+150       if (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -1)
+151         return -1;  /* Failure */
+152       break;
+153     case HEAD:
+154     case POST:
+155     case PUT:
+156     case DELETE:
+157     case CONNECT:
+158     case OPTIONS:
+159     case TRACE:
+160     case PATCH:
+161       if (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD_NOT_ALLOWED) == -1)
+162         return -1;  /* Failure */
+163       break;
+164     default:
+165       if (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT_IMPLEMENTED) == -1)
+166         return -1;  /* Failure */
+167       break;
+168   };
+169 
+170   return 0; /* Success */
+171 };
 .fi
 .PP
-References \fBHTTP_REQUEST_METHOD_LEN\fP, \fBHTTP_REQUEST_PATH_LEN\fP, and \fBHTTP_REQUEST_VERSION_LEN\fP\&.
+References \fBHTTPRequest::headers\fP, \fBHTTPRequest::method\fP, \fBHTTPHeaders::name\fP, \fBHTTPHeaders::next\fP, \fBHTTPRequest::uri\fP, \fBHTTPHeaders::value\fP, and \fBHTTPRequest::version\fP\&.
 .PP
 Referenced by \fBmain()\fP\&.
 .SH "Author"

@@ -1,0 +1,50 @@
+.TH "HTTPHeaders" 3 "Wed Sep 14 2022" "web-server" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HTTPHeaders
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "char * \fBname\fP"
+.br
+.ti -1c
+.RI "char * \fBvalue\fP"
+.br
+.ti -1c
+.RI "\fBHTTPHeaders\fP * \fBnext\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A recursive struct represents a typical HTTP header with a linked list approach 
+.PP
+Definition at line \fB30\fP of file \fBhttp\-handler\&.c\fP\&.
+.SH "Field Documentation"
+.PP 
+.SS "char* HTTPHeaders::name"
+The current header name 
+.PP
+Definition at line \fB32\fP of file \fBhttp\-handler\&.c\fP\&.
+.PP
+Referenced by \fBhandleHTTPClientRequest()\fP\&.
+.SS "\fBHTTPHeaders\fP* HTTPHeaders::next"
+The next header 
+.PP
+Definition at line \fB36\fP of file \fBhttp\-handler\&.c\fP\&.
+.PP
+Referenced by \fBhandleHTTPClientRequest()\fP\&.
+.SS "char* HTTPHeaders::value"
+The value of the current header 
+.PP
+Definition at line \fB34\fP of file \fBhttp\-handler\&.c\fP\&.
+.PP
+Referenced by \fBhandleHTTPClientRequest()\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for web-server from the source code\&.
