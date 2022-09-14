@@ -51,10 +51,6 @@ static int parseHTTPRequest(int receiveMessageSize,
   }
   httpRequest->headers = headers;
 
-  // for (NextStackNode currentHeader = httpRequest->headers; currentHeader != NULL; currentHeader = currentHeader->next) {
-  //   printf("web-server: Result HTTP header: %s: %s\n", currentHeader->element->name, currentHeader->element->value);
-  // }
-
   fflush(stdout);
   return 0; /* Success */
 
