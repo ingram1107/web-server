@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['name_0',['name',['../structHTTPHeaders.html#a99c7a9f0294a8542072e8e77a7efc095',1,'HTTPHeaders']]],
-  ['next_1',['next',['../structHTTPHeaders.html#a553734dec55a26f57c6ef4af1b15ebc7',1,'HTTPHeaders']]]
+  ['main_0',['main',['../main_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main.c']]],
+  ['main_2ec_1',['main.c',['../main_8c.html',1,'']]],
+  ['method_2',['method',['../structHTTPRequest.html#a0a56419f687fbe217f99746136676963',1,'HTTPRequest']]]
 ];

@@ -1,0 +1,113 @@
+.TH "/home/clover/Projects/web-server/lib/http-request.h" 3 "Wed Sep 14 2022" "web-server" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/home/clover/Projects/web-server/lib/http-request.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'stack\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBHTTPRequest\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBHTTPRequest\fP \fBHTTPRequest\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHTTPRequest\fP * \fBhttpRequestInit\fP (void)"
+.br
+.ti -1c
+.RI "void \fBhttpRequestFree\fP (\fBHTTPRequest\fP *httpRequest)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor\fP
+.RS 4
+Little Clover 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+2022-09-14 14:11:46 PM +0800 
+.RE
+.PP
+
+.PP
+Definition in file \fBhttp\-request\&.h\fP\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBHTTPRequest\fP \fBHTTPRequest\fP"
+Shorthand for struct \fBHTTPRequest\fP 
+.PP
+Definition at line \fB13\fP of file \fBhttp\-request\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "void httpRequestFree (\fBHTTPRequest\fP * httpRequest)"
+Free a HTTP request
+.PP
+\fBParameters\fP
+.RS 4
+\fIhttpRequest\fP A pointer to an HTTP request 
+.RE
+.PP
+
+.PP
+Definition at line \fB21\fP of file \fBhttp\-request\&.c\fP\&.
+.PP
+.nf
+21                                                {
+22   stackFree(httpRequest->headers, httpHeaderFree);
+23   free(httpRequest->version);
+24   free(httpRequest->uri);
+25   free(httpRequest->method);
+26   free(httpRequest);
+27 }
+.fi
+.PP
+References \fBHTTPRequest::headers\fP, \fBHTTPRequest::method\fP, \fBstackFree()\fP, \fBHTTPRequest::uri\fP, and \fBHTTPRequest::version\fP\&.
+.SS "\fBHTTPRequest\fP * httpRequestInit (void)"
+Initialise a HTTP request
+.PP
+\fBReturns\fP
+.RS 4
+A pointer to the newly created HTTP request 
+.RE
+.PP
+
+.PP
+Definition at line \fB9\fP of file \fBhttp\-request\&.c\fP\&.
+.PP
+.nf
+9                                    {
+10   HTTPRequest* newHTTPRequest = malloc(sizeof(struct HTTPRequest));
+11   if (!newHTTPRequest) {
+12     errno = ENOMEM;
+13     perror("http-request");
+14     exit(EXIT_FAILURE);
+15   }
+16 
+17   newHTTPRequest->headers = stackInit();
+18   return newHTTPRequest;
+19 }
+.fi
+.PP
+References \fBHTTPRequest::headers\fP, and \fBstackInit()\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for web-server from the source code\&.

@@ -1,0 +1,43 @@
+.TH "HTTPHeader" 3 "Wed Sep 14 2022" "web-server" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HTTPHeader
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <http\-header\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "char * \fBname\fP"
+.br
+.ti -1c
+.RI "char * \fBvalue\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A recursive struct represents a typical HTTP header with a linked list approach 
+.PP
+Definition at line \fB17\fP of file \fBhttp\-header\&.h\fP\&.
+.SH "Field Documentation"
+.PP 
+.SS "char* HTTPHeader::name"
+The current header name 
+.PP
+Definition at line \fB19\fP of file \fBhttp\-header\&.h\fP\&.
+.PP
+Referenced by \fBhandleHTTPClientRequest()\fP\&.
+.SS "char* HTTPHeader::value"
+The value of the current header 
+.PP
+Definition at line \fB21\fP of file \fBhttp\-header\&.h\fP\&.
+.PP
+Referenced by \fBhandleHTTPClientRequest()\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for web-server from the source code\&.

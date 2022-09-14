@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uri_0',['uri',['../structHTTPRequest.html#a78debcdccecf2606e01f40514e5ced05',1,'HTTPRequest']]]
+  ['printerrorandexit_0',['printErrorAndExit',['../main_8c.html#adcdaf28c5d70f00a5be4385cd85fb3a0',1,'main.c']]]
 ];

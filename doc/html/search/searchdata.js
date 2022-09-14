@@ -1,12 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "chmnpuv",
-  1: "h",
-  2: "hm",
-  3: "hmp",
-  4: "hmnuv",
-  5: "h",
-  6: "ch"
+  0: "cehmnpsuv",
+  1: "hs",
+  2: "hms",
+  3: "hmps",
+  4: "ehmnuv",
+  5: "hns",
+  6: "h",
+  7: "ch"
 };
 
 var indexSectionNames =
@@ -16,8 +17,9 @@ var indexSectionNames =
   2: "files",
   3: "functions",
   4: "variables",
-  5: "enums",
-  6: "defines"
+  5: "typedefs",
+  6: "enums",
+  7: "defines"
 };
 
 var indexSectionLabels =
@@ -27,7 +29,8 @@ var indexSectionLabels =
   2: "Files",
   3: "Functions",
   4: "Variables",
-  5: "Enumerations",
-  6: "Macros"
+  5: "Typedefs",
+  6: "Enumerations",
+  7: "Macros"
 };
 

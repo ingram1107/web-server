@@ -6,6 +6,8 @@ HTTPRequest
 .SH SYNOPSIS
 .br
 .PP
+.PP
+\fC#include <http\-request\&.h>\fP
 .SS "Data Fields"
 
 .in +1c
@@ -19,40 +21,40 @@ HTTPRequest
 .RI "char * \fBversion\fP"
 .br
 .ti -1c
-.RI "\fBHTTPHeaders\fP * \fBheaders\fP"
+.RI "\fBStack\fP \fBheaders\fP"
 .br
 .in -1c
 .SH "Detailed Description"
 .PP 
 A struct represents a typical HTTP Request parsed from a web client 
 .PP
-Definition at line \fB15\fP of file \fBhttp\-handler\&.c\fP\&.
+Definition at line \fB18\fP of file \fBhttp\-request\&.h\fP\&.
 .SH "Field Documentation"
 .PP 
-.SS "\fBHTTPHeaders\fP* HTTPRequest::headers"
+.SS "\fBStack\fP HTTPRequest::headers"
 The additional headers requested from the web client 
 .PP
-Definition at line \fB23\fP of file \fBhttp\-handler\&.c\fP\&.
+Definition at line \fB26\fP of file \fBhttp\-request\&.h\fP\&.
 .PP
-Referenced by \fBhandleHTTPClientRequest()\fP\&.
+Referenced by \fBhandleHTTPClientRequest()\fP, \fBhttpRequestFree()\fP, and \fBhttpRequestInit()\fP\&.
 .SS "char* HTTPRequest::method"
 The requested HTTP method 
 .PP
-Definition at line \fB17\fP of file \fBhttp\-handler\&.c\fP\&.
+Definition at line \fB20\fP of file \fBhttp\-request\&.h\fP\&.
 .PP
-Referenced by \fBhandleHTTPClientRequest()\fP\&.
+Referenced by \fBhandleHTTPClientRequest()\fP, and \fBhttpRequestFree()\fP\&.
 .SS "char* HTTPRequest::uri"
 The requested HTTP URI 
 .PP
-Definition at line \fB19\fP of file \fBhttp\-handler\&.c\fP\&.
+Definition at line \fB22\fP of file \fBhttp\-request\&.h\fP\&.
 .PP
-Referenced by \fBhandleHTTPClientRequest()\fP\&.
+Referenced by \fBhandleHTTPClientRequest()\fP, and \fBhttpRequestFree()\fP\&.
 .SS "char* HTTPRequest::version"
 The version of the HTTP from the web client 
 .PP
-Definition at line \fB21\fP of file \fBhttp\-handler\&.c\fP\&.
+Definition at line \fB24\fP of file \fBhttp\-request\&.h\fP\&.
 .PP
-Referenced by \fBhandleHTTPClientRequest()\fP\&.
+Referenced by \fBhandleHTTPClientRequest()\fP, and \fBhttpRequestFree()\fP\&.
 
 .SH "Author"
 .PP 

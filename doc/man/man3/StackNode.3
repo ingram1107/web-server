@@ -1,0 +1,50 @@
+.TH "StackNode" 3 "Wed Sep 14 2022" "web-server" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+StackNode
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <stack\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBElement\fP \fBelement\fP"
+.br
+.ti -1c
+.RI "\fBNextStackNode\fP \fBnext\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A stack contain the header information and pointer to next node using linked list implementation
+.PP
+\fBAttention\fP
+.RS 4
+Most of the linked stack operation defined in this library assume a header stack unless specified\&. 
+.RE
+.PP
+
+.PP
+Definition at line \fB26\fP of file \fBstack\&.h\fP\&.
+.SH "Field Documentation"
+.PP 
+.SS "\fBElement\fP StackNode::element"
+HTTP header 
+.PP
+Definition at line \fB28\fP of file \fBstack\&.h\fP\&.
+.PP
+Referenced by \fBstackPop()\fP, and \fBstackPush()\fP\&.
+.SS "\fBNextStackNode\fP StackNode::next"
+next node 
+.PP
+Definition at line \fB30\fP of file \fBstack\&.h\fP\&.
+.PP
+Referenced by \fBhandleHTTPClientRequest()\fP, \fBstackFree()\fP, \fBstackInit()\fP, \fBstackPop()\fP, and \fBstackPush()\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for web-server from the source code\&.

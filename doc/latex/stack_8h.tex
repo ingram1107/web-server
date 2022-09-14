@@ -1,0 +1,217 @@
+\hypertarget{stack_8h}{}\doxysection{/home/clover/\+Projects/web-\/server/lib/stack.h File Reference}
+\label{stack_8h}\index{/home/clover/Projects/web-\/server/lib/stack.h@{/home/clover/Projects/web-\/server/lib/stack.h}}
+{\ttfamily \#include \char`\"{}http-\/header.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structStackNode}{Stack\+Node}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structStackNode}{Stack\+Node}} $\ast$ \mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}}
+\item 
+typedef struct \mbox{\hyperlink{structStackNode}{Stack\+Node}} $\ast$ \mbox{\hyperlink{stack_8h_a498f324cba320897d23678d227dd9609}{Next\+Stack\+Node}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}} \mbox{\hyperlink{stack_8h_adf6de21fc013d2fa57f3176daf9f1ea1}{stack\+Init}} (void)
+\item 
+void \mbox{\hyperlink{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}{stack\+Free}} (\mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}} stack, void(free\+Method)(\mbox{\hyperlink{structHTTPHeader}{Element}}))
+\item 
+void \mbox{\hyperlink{stack_8h_a3509fe96c7b15dd24c3aad455f503c88}{stack\+Push}} (\mbox{\hyperlink{structHTTPHeader}{Element}} element, \mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}} stack)
+\item 
+void \mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{stack\+Pop}} (\mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}} stack, void(free\+Method)(\mbox{\hyperlink{structHTTPHeader}{Element}}))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Little Clover 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2022-\/09-\/14 14\+:11\+:46 PM +0800 
+\end{DoxyDate}
+
+
+Definition in file \mbox{\hyperlink{stack_8h_source}{stack.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{stack_8h_a498f324cba320897d23678d227dd9609}\label{stack_8h_a498f324cba320897d23678d227dd9609}} 
+\index{stack.h@{stack.h}!NextStackNode@{NextStackNode}}
+\index{NextStackNode@{NextStackNode}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{NextStackNode}{NextStackNode}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structStackNode}{Stack\+Node}}$\ast$ \mbox{\hyperlink{stack_8h_a498f324cba320897d23678d227dd9609}{Next\+Stack\+Node}}}
+
+Define the next pointed stack node as a \mbox{\hyperlink{structStackNode}{Stack\+Node}} 
+
+Definition at line \mbox{\hyperlink{stack_8h_source_l00017}{17}} of file \mbox{\hyperlink{stack_8h_source}{stack.\+h}}.
+
+\mbox{\Hypertarget{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}\label{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}} 
+\index{stack.h@{stack.h}!Stack@{Stack}}
+\index{Stack@{Stack}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack}{Stack}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structStackNode}{Stack\+Node}}$\ast$ \mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}}}
+
+Define stack as a pointer to a \mbox{\hyperlink{structStackNode}{Stack\+Node}} 
+
+Definition at line \mbox{\hyperlink{stack_8h_source_l00013}{13}} of file \mbox{\hyperlink{stack_8h_source}{stack.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}\label{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}} 
+\index{stack.h@{stack.h}!stackFree@{stackFree}}
+\index{stackFree@{stackFree}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{stackFree()}{stackFree()}}
+{\footnotesize\ttfamily void stack\+Free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}}}]{stack,  }\item[{void(free\+Method)(\mbox{\hyperlink{structHTTPHeader}{Element}})}]{ }\end{DoxyParamCaption})}
+
+Free a stack
+
+
+\begin{DoxyParams}{Parameters}
+{\em stack} & A stack to be freed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{stack_8c_source_l00030}{30}} of file \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030                                                         \{}
+\DoxyCodeLine{00031   \textcolor{keywordflow}{do} \{}
+\DoxyCodeLine{00032     \mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{stackPop}}(stack, freeMethod);}
+\DoxyCodeLine{00033   \} \textcolor{keywordflow}{while} (stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}});}
+\DoxyCodeLine{00034 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stack_8h_source_l00030}{Stack\+Node\+::next}}, and \mbox{\hyperlink{stack_8c_source_l00019}{stack\+Pop()}}.
+
+
+
+Referenced by \mbox{\hyperlink{http-request_8c_source_l00021}{http\+Request\+Free()}}.
+
+\mbox{\Hypertarget{stack_8h_adf6de21fc013d2fa57f3176daf9f1ea1}\label{stack_8h_adf6de21fc013d2fa57f3176daf9f1ea1}} 
+\index{stack.h@{stack.h}!stackInit@{stackInit}}
+\index{stackInit@{stackInit}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{stackInit()}{stackInit()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}} stack\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Initialise an empty stack
+
+\begin{DoxyReturn}{Returns}
+An empty stack 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{stack_8c_source_l00007}{7}} of file \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00007                       \{}
+\DoxyCodeLine{00008   \mbox{\hyperlink{structStackNode}{Stack}} newStack = malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structStackNode}{StackNode}}));}
+\DoxyCodeLine{00009   \textcolor{keywordflow}{if} (!newStack) \{}
+\DoxyCodeLine{00010     errno = ENOMEM;}
+\DoxyCodeLine{00011     perror(\textcolor{stringliteral}{"{}stack"{}});}
+\DoxyCodeLine{00012     exit(EXIT\_FAILURE);}
+\DoxyCodeLine{00013   \}}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015   newStack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = NULL;}
+\DoxyCodeLine{00016   \textcolor{keywordflow}{return} newStack;}
+\DoxyCodeLine{00017 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stack_8h_source_l00030}{Stack\+Node\+::next}}.
+
+
+
+Referenced by \mbox{\hyperlink{http-request_8c_source_l00009}{http\+Request\+Init()}}.
+
+\mbox{\Hypertarget{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}\label{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}} 
+\index{stack.h@{stack.h}!stackPop@{stackPop}}
+\index{stackPop@{stackPop}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{stackPop()}{stackPop()}}
+{\footnotesize\ttfamily void stack\+Pop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}}}]{stack,  }\item[{void(free\+Method)(\mbox{\hyperlink{structHTTPHeader}{Element}})}]{ }\end{DoxyParamCaption})}
+
+Pop the top element to a stack
+
+
+\begin{DoxyParams}{Parameters}
+{\em stack} & A stack \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{stack_8c_source_l00019}{19}} of file \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019                                                        \{}
+\DoxyCodeLine{00020   \mbox{\hyperlink{structStackNode}{NextStackNode}} top;}
+\DoxyCodeLine{00021 }
+\DoxyCodeLine{00022   \textcolor{keywordflow}{if} (stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}}) \{}
+\DoxyCodeLine{00023     top = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
+\DoxyCodeLine{00024     stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}}-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
+\DoxyCodeLine{00025     freeMethod(top-\/>\mbox{\hyperlink{structStackNode_ae6fca953d88edcaba7310600f96621d9}{element}});}
+\DoxyCodeLine{00026     free(top);}
+\DoxyCodeLine{00027   \} \textcolor{keywordflow}{else} fprintf(stderr, \textcolor{stringliteral}{"{}stack: empty stack\(\backslash\)n"{}});}
+\DoxyCodeLine{00028 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stack_8h_source_l00028}{Stack\+Node\+::element}}, and \mbox{\hyperlink{stack_8h_source_l00030}{Stack\+Node\+::next}}.
+
+
+
+Referenced by \mbox{\hyperlink{stack_8c_source_l00030}{stack\+Free()}}.
+
+\mbox{\Hypertarget{stack_8h_a3509fe96c7b15dd24c3aad455f503c88}\label{stack_8h_a3509fe96c7b15dd24c3aad455f503c88}} 
+\index{stack.h@{stack.h}!stackPush@{stackPush}}
+\index{stackPush@{stackPush}!stack.h@{stack.h}}
+\doxysubsubsection{\texorpdfstring{stackPush()}{stackPush()}}
+{\footnotesize\ttfamily void stack\+Push (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structHTTPHeader}{Element}}}]{element,  }\item[{\mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}}}]{stack }\end{DoxyParamCaption})}
+
+Push an element to the top a stack
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & Element to be pushed \\
+\hline
+{\em stack} & A stack \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{stack_8c_source_l00036}{36}} of file \mbox{\hyperlink{stack_8c_source}{stack.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036                                              \{}
+\DoxyCodeLine{00037   \mbox{\hyperlink{structStackNode}{NextStackNode}} tmp;}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039   tmp = malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structStackNode}{StackNode}}));}
+\DoxyCodeLine{00040   \textcolor{keywordflow}{if} (!tmp) \{}
+\DoxyCodeLine{00041     errno = ENOMEM;}
+\DoxyCodeLine{00042     perror(\textcolor{stringliteral}{"{}stack"{}});}
+\DoxyCodeLine{00043     exit(EXIT\_FAILURE);}
+\DoxyCodeLine{00044   \}}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046   tmp-\/>\mbox{\hyperlink{structStackNode_ae6fca953d88edcaba7310600f96621d9}{element}} = element;}
+\DoxyCodeLine{00047   tmp-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
+\DoxyCodeLine{00048   stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = tmp;}
+\DoxyCodeLine{00049 \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stack_8h_source_l00028}{Stack\+Node\+::element}}, and \mbox{\hyperlink{stack_8h_source_l00030}{Stack\+Node\+::next}}.
+

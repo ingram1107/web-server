@@ -1,5 +1,9 @@
 \hypertarget{structHTTPRequest}{}\doxysection{HTTPRequest Struct Reference}
 \label{structHTTPRequest}\index{HTTPRequest@{HTTPRequest}}
+
+
+{\ttfamily \#include $<$http-\/request.\+h$>$}
+
 \doxysubsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
@@ -9,31 +13,31 @@ char $\ast$ \mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05
 \item 
 char $\ast$ \mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}}
 \item 
-\mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}} $\ast$ \mbox{\hyperlink{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}{headers}}
+\mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}} \mbox{\hyperlink{structHTTPRequest_a4b8949796ac9300ba6ba11dcd27e1233}{headers}}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 A struct represents a typical HTTP Request parsed from a web client 
 
-Definition at line \mbox{\hyperlink{http-handler_8c_source_l00015}{15}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+Definition at line \mbox{\hyperlink{http-request_8h_source_l00018}{18}} of file \mbox{\hyperlink{http-request_8h_source}{http-\/request.\+h}}.
 
 
 
 \doxysubsection{Field Documentation}
-\mbox{\Hypertarget{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}\label{structHTTPRequest_a583589c72daed531aafc151d8acb4c1a}} 
+\mbox{\Hypertarget{structHTTPRequest_a4b8949796ac9300ba6ba11dcd27e1233}\label{structHTTPRequest_a4b8949796ac9300ba6ba11dcd27e1233}} 
 \index{HTTPRequest@{HTTPRequest}!headers@{headers}}
 \index{headers@{headers}!HTTPRequest@{HTTPRequest}}
 \doxysubsubsection{\texorpdfstring{headers}{headers}}
-{\footnotesize\ttfamily \mbox{\hyperlink{structHTTPHeaders}{HTTPHeaders}}$\ast$ HTTPRequest\+::headers}
+{\footnotesize\ttfamily \mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}} HTTPRequest\+::headers}
 
 The additional headers requested from the web client 
 
-Definition at line \mbox{\hyperlink{http-handler_8c_source_l00023}{23}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+Definition at line \mbox{\hyperlink{http-request_8h_source_l00026}{26}} of file \mbox{\hyperlink{http-request_8h_source}{http-\/request.\+h}}.
 
 
 
-Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient\+Request()}}.
+Referenced by \mbox{\hyperlink{http-handler_8c_source_l00085}{handle\+HTTPClient\+Request()}}, \mbox{\hyperlink{http-request_8c_source_l00021}{http\+Request\+Free()}}, and \mbox{\hyperlink{http-request_8c_source_l00009}{http\+Request\+Init()}}.
 
 \mbox{\Hypertarget{structHTTPRequest_a0a56419f687fbe217f99746136676963}\label{structHTTPRequest_a0a56419f687fbe217f99746136676963}} 
 \index{HTTPRequest@{HTTPRequest}!method@{method}}
@@ -43,11 +47,11 @@ Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient
 
 The requested HTTP method 
 
-Definition at line \mbox{\hyperlink{http-handler_8c_source_l00017}{17}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+Definition at line \mbox{\hyperlink{http-request_8h_source_l00020}{20}} of file \mbox{\hyperlink{http-request_8h_source}{http-\/request.\+h}}.
 
 
 
-Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient\+Request()}}.
+Referenced by \mbox{\hyperlink{http-handler_8c_source_l00085}{handle\+HTTPClient\+Request()}}, and \mbox{\hyperlink{http-request_8c_source_l00021}{http\+Request\+Free()}}.
 
 \mbox{\Hypertarget{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}\label{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}} 
 \index{HTTPRequest@{HTTPRequest}!uri@{uri}}
@@ -57,11 +61,11 @@ Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient
 
 The requested HTTP URI 
 
-Definition at line \mbox{\hyperlink{http-handler_8c_source_l00019}{19}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+Definition at line \mbox{\hyperlink{http-request_8h_source_l00022}{22}} of file \mbox{\hyperlink{http-request_8h_source}{http-\/request.\+h}}.
 
 
 
-Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient\+Request()}}.
+Referenced by \mbox{\hyperlink{http-handler_8c_source_l00085}{handle\+HTTPClient\+Request()}}, and \mbox{\hyperlink{http-request_8c_source_l00021}{http\+Request\+Free()}}.
 
 \mbox{\Hypertarget{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}\label{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}} 
 \index{HTTPRequest@{HTTPRequest}!version@{version}}
@@ -71,14 +75,14 @@ Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient
 
 The version of the HTTP from the web client 
 
-Definition at line \mbox{\hyperlink{http-handler_8c_source_l00021}{21}} of file \mbox{\hyperlink{http-handler_8c_source}{http-\/handler.\+c}}.
+Definition at line \mbox{\hyperlink{http-request_8h_source_l00024}{24}} of file \mbox{\hyperlink{http-request_8h_source}{http-\/request.\+h}}.
 
 
 
-Referenced by \mbox{\hyperlink{http-handler_8c_source_l00118}{handle\+HTTPClient\+Request()}}.
+Referenced by \mbox{\hyperlink{http-handler_8c_source_l00085}{handle\+HTTPClient\+Request()}}, and \mbox{\hyperlink{http-request_8c_source_l00021}{http\+Request\+Free()}}.
 
 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-/home/clover/\+Projects/web-\/server/lib/http-\/handler.\+c\end{DoxyCompactItemize}
+/home/clover/\+Projects/web-\/server/lib/\mbox{\hyperlink{http-request_8h}{http-\/request.\+h}}\end{DoxyCompactItemize}

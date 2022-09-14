@@ -1,0 +1,29 @@
+\hypertarget{stack_8h_source}{}\doxysection{stack.\+h}
+\label{stack_8h_source}\index{/home/clover/Projects/web-\/server/lib/stack.h@{/home/clover/Projects/web-\/server/lib/stack.h}}
+\mbox{\hyperlink{stack_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00001}00001 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00005}00005 \textcolor{preprocessor}{\#ifndef STACK\_H}}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00006}00006 \textcolor{preprocessor}{\#define STACK\_H}}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00008}00008 \textcolor{preprocessor}{\#include "{}http-\/header.h"{}}}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00013}\mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{00013}} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structStackNode}{StackNode}}* \mbox{\hyperlink{stack_8h_aec9600ed0663b192e0ef6d7da3ba7eb5}{Stack}};}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00017}\mbox{\hyperlink{stack_8h_a498f324cba320897d23678d227dd9609}{00017}} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structStackNode}{StackNode}}* \mbox{\hyperlink{stack_8h_a498f324cba320897d23678d227dd9609}{NextStackNode}};}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00026}\mbox{\hyperlink{structStackNode}{00026}} \textcolor{keyword}{struct }\mbox{\hyperlink{structStackNode}{StackNode}} \{}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00028}\mbox{\hyperlink{structStackNode_ae6fca953d88edcaba7310600f96621d9}{00028}}   \mbox{\hyperlink{structHTTPHeader}{Element}} \mbox{\hyperlink{structStackNode_ae6fca953d88edcaba7310600f96621d9}{element}};}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00030}\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{00030}}   \mbox{\hyperlink{structStackNode}{NextStackNode}} \mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00031}00031 \};}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00038}00038 \mbox{\hyperlink{structStackNode}{Stack}} \mbox{\hyperlink{stack_8h_adf6de21fc013d2fa57f3176daf9f1ea1}{stackInit}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00045}00045 \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}{stackFree}}(\mbox{\hyperlink{structStackNode}{Stack}} stack, \textcolor{keywordtype}{void} (freeMethod)(\mbox{\hyperlink{structHTTPHeader}{Element}}));}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00053}00053 \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a3509fe96c7b15dd24c3aad455f503c88}{stackPush}}(\mbox{\hyperlink{structHTTPHeader}{Element}} element, \mbox{\hyperlink{structStackNode}{Stack}} stack);}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00060}00060 \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{stackPop}}(\mbox{\hyperlink{structStackNode}{Stack}} stack, \textcolor{keywordtype}{void} (freeMethod)(\mbox{\hyperlink{structHTTPHeader}{Element}}));}
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{stack_8h_source_l00062}00062 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

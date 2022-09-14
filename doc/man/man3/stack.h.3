@@ -1,0 +1,188 @@
+.TH "/home/clover/Projects/web-server/lib/stack.h" 3 "Wed Sep 14 2022" "web-server" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/home/clover/Projects/web-server/lib/stack.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'http\-header\&.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBStackNode\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBStackNode\fP * \fBStack\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBStackNode\fP * \fBNextStackNode\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBStack\fP \fBstackInit\fP (void)"
+.br
+.ti -1c
+.RI "void \fBstackFree\fP (\fBStack\fP stack, void(freeMethod)(\fBElement\fP))"
+.br
+.ti -1c
+.RI "void \fBstackPush\fP (\fBElement\fP element, \fBStack\fP stack)"
+.br
+.ti -1c
+.RI "void \fBstackPop\fP (\fBStack\fP stack, void(freeMethod)(\fBElement\fP))"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor\fP
+.RS 4
+Little Clover 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+2022-09-14 14:11:46 PM +0800 
+.RE
+.PP
+
+.PP
+Definition in file \fBstack\&.h\fP\&.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBStackNode\fP* \fBNextStackNode\fP"
+Define the next pointed stack node as a \fBStackNode\fP 
+.PP
+Definition at line \fB17\fP of file \fBstack\&.h\fP\&.
+.SS "typedef struct \fBStackNode\fP* \fBStack\fP"
+Define stack as a pointer to a \fBStackNode\fP 
+.PP
+Definition at line \fB13\fP of file \fBstack\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "void stackFree (\fBStack\fP stack, void(freeMethod)(\fBElement\fP))"
+Free a stack
+.PP
+\fBParameters\fP
+.RS 4
+\fIstack\fP A stack to be freed 
+.RE
+.PP
+
+.PP
+Definition at line \fB30\fP of file \fBstack\&.c\fP\&.
+.PP
+.nf
+30                                                         {
+31   do {
+32     stackPop(stack, freeMethod);
+33   } while (stack->next);
+34 }
+.fi
+.PP
+References \fBStackNode::next\fP, and \fBstackPop()\fP\&.
+.PP
+Referenced by \fBhttpRequestFree()\fP\&.
+.SS "\fBStack\fP stackInit (void)"
+Initialise an empty stack
+.PP
+\fBReturns\fP
+.RS 4
+An empty stack 
+.RE
+.PP
+
+.PP
+Definition at line \fB7\fP of file \fBstack\&.c\fP\&.
+.PP
+.nf
+7                       {
+8   Stack newStack = malloc(sizeof(struct StackNode));
+9   if (!newStack) {
+10     errno = ENOMEM;
+11     perror("stack");
+12     exit(EXIT_FAILURE);
+13   }
+14 
+15   newStack->next = NULL;
+16   return newStack;
+17 }
+.fi
+.PP
+References \fBStackNode::next\fP\&.
+.PP
+Referenced by \fBhttpRequestInit()\fP\&.
+.SS "void stackPop (\fBStack\fP stack, void(freeMethod)(\fBElement\fP))"
+Pop the top element to a stack
+.PP
+\fBParameters\fP
+.RS 4
+\fIstack\fP A stack 
+.RE
+.PP
+
+.PP
+Definition at line \fB19\fP of file \fBstack\&.c\fP\&.
+.PP
+.nf
+19                                                        {
+20   NextStackNode top;
+21 
+22   if (stack->next) {
+23     top = stack->next;
+24     stack->next = stack->next->next;
+25     freeMethod(top->element);
+26     free(top);
+27   } else fprintf(stderr, "stack: empty stack\n");
+28 }
+.fi
+.PP
+References \fBStackNode::element\fP, and \fBStackNode::next\fP\&.
+.PP
+Referenced by \fBstackFree()\fP\&.
+.SS "void stackPush (\fBElement\fP element, \fBStack\fP stack)"
+Push an element to the top a stack
+.PP
+\fBParameters\fP
+.RS 4
+\fIelement\fP Element to be pushed 
+.br
+\fIstack\fP A stack 
+.RE
+.PP
+
+.PP
+Definition at line \fB36\fP of file \fBstack\&.c\fP\&.
+.PP
+.nf
+36                                              {
+37   NextStackNode tmp;
+38 
+39   tmp = malloc(sizeof(struct StackNode));
+40   if (!tmp) {
+41     errno = ENOMEM;
+42     perror("stack");
+43     exit(EXIT_FAILURE);
+44   }
+45 
+46   tmp->element = element;
+47   tmp->next = stack->next;
+48   stack->next = tmp;
+49 }
+.fi
+.PP
+References \fBStackNode::element\fP, and \fBStackNode::next\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for web-server from the source code\&.

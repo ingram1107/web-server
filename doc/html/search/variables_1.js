@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['method_0',['method',['../structHTTPRequest.html#a0a56419f687fbe217f99746136676963',1,'HTTPRequest']]]
+  ['headers_0',['headers',['../structHTTPRequest.html#a4b8949796ac9300ba6ba11dcd27e1233',1,'HTTPRequest']]]
 ];

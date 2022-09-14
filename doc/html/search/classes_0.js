@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['httpheaders_0',['HTTPHeaders',['../structHTTPHeaders.html',1,'']]],
+  ['httpheader_0',['HTTPHeader',['../structHTTPHeader.html',1,'']]],
   ['httprequest_1',['HTTPRequest',['../structHTTPRequest.html',1,'']]]
 ];

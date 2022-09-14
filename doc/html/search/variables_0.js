@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['headers_0',['headers',['../structHTTPRequest.html#a583589c72daed531aafc151d8acb4c1a',1,'HTTPRequest']]]
+  ['element_0',['element',['../structStackNode.html#ae6fca953d88edcaba7310600f96621d9',1,'StackNode']]]
 ];
