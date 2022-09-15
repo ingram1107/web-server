@@ -237,8 +237,9 @@ static const char* const httpStatusStr[] = {
  *                                    @a httpResponseMessage
  *
  * @retval 0  @a httpResponseMessage has been successfully created.
- * @retval -1 There is an encoding error or the HTTP status message string is
- *            too large to @a httpResponseMessage
+ * @retval -1 There is an encoding error, the HTTP status message string is
+ *            too large to @a httpResponseMessage or there is an error occurred
+ *            when executing `date` from command line.
  * @private
  *
  * @see httpStatus

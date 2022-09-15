@@ -64,18 +64,34 @@ static int createHTTPResponseMessage(int httpResponseMessageSize,
                                      char httpResponseMessage[httpResponseMessageSize],
                                      int httpResponseStatus)
 {
-  int returnStatus = snprintf(httpResponseMessage,
-                              httpResponseMessageSize,
-                              "HTTP/1.1 %s",
-                              httpStatusStr[httpResponseStatus]);
-  if (returnStatus < 0) {
-    errno = EILSEQ;     /* Encoding Error */
-    return -1;          /* Failure */
-  } else if (returnStatus > httpResponseMessageSize) {
-    errno = EOVERFLOW;  /* String Too Large */
-    return -1;          /* Failure */
+  FILE* dateCmd = popen("date -u +\"%a, %d %b %Y %T %Z\"", "r");
+  if (dateCmd) {
+    char date[1024] = { 0 };
+    int dateStrSize = 0;
+    for (int i = 0, c = fgetc(dateCmd); c != EOF; i++, c = fgetc(dateCmd)) {
+      date[i] = c;
+      dateStrSize++;
+    }
+    date[dateStrSize] = '\0';
+
+    int returnStatus = snprintf(httpResponseMessage,
+                                httpResponseMessageSize,
+                                "HTTP/1.1 %sServer: web-server/0.0.1" CRLF "Last-Modified: %s" CRLF CRLF "<h1>Hello World</h1><p>Welcome to the web-server</p>",
+                                httpStatusStr[httpResponseStatus],
+                                date);
+    if (returnStatus < 0) {
+      errno = EILSEQ;     /* Encoding Error */
+      goto cleanup;
+    } else if (returnStatus > httpResponseMessageSize) {
+      errno = EOVERFLOW;  /* String Too Large */
+      goto cleanup;
+    }
+    return 0; /* Success */
   }
-  return 0; /* Success */
+
+cleanup:
+  pclose(dateCmd);
+  return -1;
 };
 
 int handleHTTPClientRequest(int receiveMessageSize,
