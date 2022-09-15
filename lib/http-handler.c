@@ -28,7 +28,7 @@ static int parseHTTPRequest(int receiveMessageSize,
   readBuffer += lineLen + 1;
   httpRequest->uri[lineLen] = '\0';
 
-  lineLen = strcspn(readBuffer, "\r\n");
+  lineLen = strcspn(readBuffer, CRLF);
   httpRequest->version = calloc(lineLen, sizeof(char));
   strncpy(httpRequest->version, readBuffer, lineLen);
   readBuffer += lineLen + 2; /* Skip through the read line and CRLF */
@@ -43,7 +43,7 @@ static int parseHTTPRequest(int receiveMessageSize,
     readBuffer += lineLen + 1;
     currentHeader->name[lineLen] = '\0';
     while (*readBuffer == ' ') readBuffer++;
-    lineLen = strcspn(readBuffer, "\r\n");
+    lineLen = strcspn(readBuffer, CRLF);
     currentHeader->value = calloc(lineLen, sizeof(char));
     strncpy(currentHeader->value, readBuffer, lineLen);
     currentHeader->value[lineLen] = '\0';
