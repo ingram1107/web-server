@@ -68,16 +68,16 @@ Free a HTTP request
 .PP
 
 .PP
-Definition at line \fB21\fP of file \fBhttp\-request\&.c\fP\&.
+Definition at line \fB22\fP of file \fBhttp\-request\&.c\fP\&.
 .PP
 .nf
-21                                                {
-22   stackFree(httpRequest->headers, httpHeaderFree);
-23   free(httpRequest->version);
-24   free(httpRequest->uri);
-25   free(httpRequest->method);
-26   free(httpRequest);
-27 }
+22                                                {
+23   stackFree(httpRequest->headers, httpHeaderFree);
+24   free(httpRequest->version);
+25   free(httpRequest->uri);
+26   free(httpRequest->method);
+27   free(httpRequest);
+28 }
 .fi
 .PP
 References \fBHTTPRequest::headers\fP, \fBHTTPRequest::method\fP, \fBstackFree()\fP, \fBHTTPRequest::uri\fP, and \fBHTTPRequest::version\fP\&.
@@ -96,15 +96,16 @@ Definition at line \fB9\fP of file \fBhttp\-request\&.c\fP\&.
 .nf
 9                                    {
 10   HTTPRequest* newHTTPRequest = malloc(sizeof(struct HTTPRequest));
-11   if (!newHTTPRequest) {
-12     errno = ENOMEM;
-13     perror("http-request");
-14     exit(EXIT_FAILURE);
-15   }
-16 
-17   newHTTPRequest->headers = stackInit();
-18   return newHTTPRequest;
-19 }
+11 
+12   if (!newHTTPRequest) {
+13     errno = ENOMEM;
+14     perror("http-request");
+15     exit(EXIT_FAILURE);
+16   }
+17 
+18   newHTTPRequest->headers = stackInit();
+19   return newHTTPRequest;
+20 }
 .fi
 .PP
 References \fBHTTPRequest::headers\fP, and \fBstackInit()\fP\&.

@@ -216,60 +216,77 @@ createHTTPResponseMessage()
 .PP
 
 .PP
-Definition at line \fB97\fP of file \fBhttp\-handler\&.c\fP\&.
+Definition at line \fB110\fP of file \fBhttp\-handler\&.c\fP\&.
 .PP
 .nf
-101 {
-102   HTTPRequest* httpRequest = malloc(sizeof(struct HTTPRequest));
-103 
-104   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
-105                                          receiveMessage,
-106                                          httpRequest);
-107   if (httpParseStatus == -1 ) {
-108     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
-109     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
-110             receiveMessage);
-111     return -1;  /* Failure */
-112   }
-113 
-114   printf("web-server: HTTP request method: %s\n", httpRequest->method);
-115   printf("web-server: HTTP request uri: %s\n", httpRequest->uri);
-116   printf("web-server: HTTP request version: %s\n", httpRequest->version);
-117 
-118   for (NextStackNode currentHeader = httpRequest->headers->next; currentHeader != NULL; currentHeader = currentHeader->next) {
-119     printf("web-server: HTTP header: %s: %s\n", currentHeader->element->name, currentHeader->element->value);
-120   }
-121 
-122   int httpRequestMethodHandler = -1;
-123   for (int i = 0; i <= PATCH; i++)
-124     if (strcmp(httpRequest->method, httpMethodStr[i]) == 0)
-125       httpRequestMethodHandler = i;
-126 
-127   switch (httpRequestMethodHandler) {
-128     case GET:
-129       if (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -1)
-130         return -1;  /* Failure */
-131       break;
-132     case HEAD:
-133     case POST:
-134     case PUT:
-135     case DELETE:
-136     case CONNECT:
-137     case OPTIONS:
-138     case TRACE:
-139     case PATCH:
-140       if (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD_NOT_ALLOWED) == -1)
-141         return -1;  /* Failure */
-142       break;
-143     default:
-144       if (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT_IMPLEMENTED) == -1)
-145         return -1;  /* Failure */
-146       break;
-147   };
-148 
-149   httpRequestFree(httpRequest);
-150   return 0; /* Success */
-151 };
+114 {
+115   HTTPRequest* httpRequest = malloc(sizeof(struct HTTPRequest));
+116 
+117   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
+118                                          receiveMessage,
+119                                          httpRequest);
+120 
+121   if (httpParseStatus == -1) {
+122     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
+123     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
+124             receiveMessage);
+125     return -1;  /* Failure */
+126   }
+127 
+128   printf("web-server: HTTP request method: %s\n", httpRequest->method);
+129   printf("web-server: HTTP request uri: %s\n", httpRequest->uri);
+130   printf("web-server: HTTP request version: %s\n", httpRequest->version);
+131 
+132   for (NextStackNode currentHeader = httpRequest->headers->next;
+133        currentHeader != NULL; currentHeader = currentHeader->next) {
+134     printf("web-server: HTTP header: %s: %s\n", currentHeader->element->name,
+135            currentHeader->element->value);
+136   }
+137 
+138   int httpRequestMethodHandler = -1;
+139 
+140   for (int i = 0; i <= PATCH; i++)
+141     if (strcmp(httpRequest->method, httpMethodStr[i]) == 0) {
+142       httpRequestMethodHandler = i;
+143     }
+144 
+145   switch (httpRequestMethodHandler) {
+146   case GET:
+147     if (createHTTPResponseMessage(responseMessageSize, responseMessage,
+148                                   OK) == -1) {
+149       return -1;  /* Failure */
+150     }
+151 
+152     break;
+153 
+154   case HEAD:
+155   case POST:
+156   case PUT:
+157   case DELETE:
+158   case CONNECT:
+159   case OPTIONS:
+160   case TRACE:
+161   case PATCH:
+162     if (createHTTPResponseMessage(responseMessageSize, responseMessage,
+163                                   METHOD_NOT_ALLOWED) == -1) {
+164       return -1;  /* Failure */
+165     }
+166 
+167     break;
+168 
+169   default:
+170     if (createHTTPResponseMessage(responseMessageSize, responseMessage,
+171                                   NOT_IMPLEMENTED) == -1) {
+172       return -1;  /* Failure */
+173     }
+174 
+175     break;
+176   };
+177 
+178   httpRequestFree(httpRequest);
+179 
+180   return 0; /* Success */
+181 };
 .fi
 .PP
 References \fBHTTPRequest::headers\fP, \fBHTTPRequest::method\fP, \fBHTTPHeader::name\fP, \fBStackNode::next\fP, \fBHTTPRequest::uri\fP, \fBHTTPHeader::value\fP, and \fBHTTPRequest::version\fP\&.

@@ -10,46 +10,50 @@
 \DoxyCodeLine{\Hypertarget{stack_8c_source_l00006}00006 }
 \DoxyCodeLine{\Hypertarget{stack_8c_source_l00007}\mbox{\hyperlink{stack_8h_adf6de21fc013d2fa57f3176daf9f1ea1}{00007}} \mbox{\hyperlink{structStackNode}{Stack}} \mbox{\hyperlink{stack_8h_adf6de21fc013d2fa57f3176daf9f1ea1}{stackInit}}(\textcolor{keywordtype}{void}) \{}
 \DoxyCodeLine{\Hypertarget{stack_8c_source_l00008}00008   \mbox{\hyperlink{structStackNode}{Stack}} newStack = malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structStackNode}{StackNode}}));}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00009}00009   \textcolor{keywordflow}{if} (!newStack) \{}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00010}00010     errno = ENOMEM;}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00011}00011     perror(\textcolor{stringliteral}{"{}stack"{}});}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00012}00012     exit(EXIT\_FAILURE);}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00013}00013   \}}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00014}00014 }
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00015}00015   newStack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = NULL;}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00016}00016   \textcolor{keywordflow}{return} newStack;}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00017}00017 \}}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00018}00018 }
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00019}\mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{00019}} \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{stackPop}}(\mbox{\hyperlink{structStackNode}{Stack}} stack, \textcolor{keywordtype}{void} (freeMethod)(\mbox{\hyperlink{structHTTPHeader}{Element}})) \{}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00020}00020   \mbox{\hyperlink{structStackNode}{NextStackNode}} top;}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00021}00021 }
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00022}00022   \textcolor{keywordflow}{if} (stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}}) \{}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00023}00023     top = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00024}00024     stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}}-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00025}00025     freeMethod(top-\/>\mbox{\hyperlink{structStackNode_ae6fca953d88edcaba7310600f96621d9}{element}});}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00026}00026     free(top);}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00027}00027   \} \textcolor{keywordflow}{else} fprintf(stderr, \textcolor{stringliteral}{"{}stack: empty stack\(\backslash\)n"{}});}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00028}00028 \}}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00029}00029 }
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00030}\mbox{\hyperlink{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}{00030}} \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}{stackFree}}(\mbox{\hyperlink{structStackNode}{Stack}} stack, \textcolor{keywordtype}{void} (freeMethod)(\mbox{\hyperlink{structHTTPHeader}{Element}})) \{}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00031}00031   \textcolor{keywordflow}{do} \{}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00032}00032     \mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{stackPop}}(stack, freeMethod);}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00033}00033   \} \textcolor{keywordflow}{while} (stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}});}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00034}00034 \}}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00035}00035 }
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00036}\mbox{\hyperlink{stack_8h_a3509fe96c7b15dd24c3aad455f503c88}{00036}} \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a3509fe96c7b15dd24c3aad455f503c88}{stackPush}}(\mbox{\hyperlink{structHTTPHeader}{Element}} element, \mbox{\hyperlink{structStackNode}{Stack}} stack) \{}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00037}00037   \mbox{\hyperlink{structStackNode}{NextStackNode}} tmp;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00010}00010   \textcolor{keywordflow}{if} (!newStack) \{}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00011}00011     errno = ENOMEM;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00012}00012     perror(\textcolor{stringliteral}{"{}stack"{}});}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00013}00013     exit(EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00014}00014   \}}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00016}00016   newStack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = NULL;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00017}00017   \textcolor{keywordflow}{return} newStack;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00018}00018 \}}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00020}\mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{00020}} \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{stackPop}}(\mbox{\hyperlink{structStackNode}{Stack}} stack, \textcolor{keywordtype}{void} (freeMethod)(\mbox{\hyperlink{structHTTPHeader}{Element}})) \{}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00021}00021   \mbox{\hyperlink{structStackNode}{NextStackNode}} top;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00023}00023   \textcolor{keywordflow}{if} (stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}}) \{}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00024}00024     top = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00025}00025     stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}}-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00026}00026     freeMethod(top-\/>\mbox{\hyperlink{structStackNode_ae6fca953d88edcaba7310600f96621d9}{element}});}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00027}00027     free(top);}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00028}00028   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00029}00029     fprintf(stderr, \textcolor{stringliteral}{"{}stack: empty stack\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00030}00030   \}}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00031}00031 \}}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00033}\mbox{\hyperlink{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}{00033}} \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}{stackFree}}(\mbox{\hyperlink{structStackNode}{Stack}} stack, \textcolor{keywordtype}{void} (freeMethod)(\mbox{\hyperlink{structHTTPHeader}{Element}})) \{}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00034}00034   \textcolor{keywordflow}{do} \{}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00035}00035     \mbox{\hyperlink{stack_8h_a30c4ef6c37523b39e0e8f5f197b57f71}{stackPop}}(stack, freeMethod);}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00036}00036   \} \textcolor{keywordflow}{while} (stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}});}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00037}00037 \}}
 \DoxyCodeLine{\Hypertarget{stack_8c_source_l00038}00038 }
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00039}00039   tmp = malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structStackNode}{StackNode}}));}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00040}00040   \textcolor{keywordflow}{if} (!tmp) \{}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00041}00041     errno = ENOMEM;}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00042}00042     perror(\textcolor{stringliteral}{"{}stack"{}});}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00043}00043     exit(EXIT\_FAILURE);}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00044}00044   \}}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00045}00045 }
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00046}00046   tmp-\/>\mbox{\hyperlink{structStackNode_ae6fca953d88edcaba7310600f96621d9}{element}} = element;}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00047}00047   tmp-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00048}00048   stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = tmp;}
-\DoxyCodeLine{\Hypertarget{stack_8c_source_l00049}00049 \}}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00039}\mbox{\hyperlink{stack_8h_a3509fe96c7b15dd24c3aad455f503c88}{00039}} \textcolor{keywordtype}{void} \mbox{\hyperlink{stack_8h_a3509fe96c7b15dd24c3aad455f503c88}{stackPush}}(\mbox{\hyperlink{structHTTPHeader}{Element}} element, \mbox{\hyperlink{structStackNode}{Stack}} stack) \{}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00040}00040   \mbox{\hyperlink{structStackNode}{NextStackNode}} tmp;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00042}00042   tmp = malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structStackNode}{StackNode}}));}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00044}00044   \textcolor{keywordflow}{if} (!tmp) \{}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00045}00045     errno = ENOMEM;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00046}00046     perror(\textcolor{stringliteral}{"{}stack"{}});}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00047}00047     exit(EXIT\_FAILURE);}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00048}00048   \}}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00050}00050   tmp-\/>\mbox{\hyperlink{structStackNode_ae6fca953d88edcaba7310600f96621d9}{element}} = element;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00051}00051   tmp-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}};}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00052}00052   stack-\/>\mbox{\hyperlink{structStackNode_a11541e588678195d1f7401e60a8daaf6}{next}} = tmp;}
+\DoxyCodeLine{\Hypertarget{stack_8c_source_l00053}00053 \}}
 
 \end{DoxyCode}

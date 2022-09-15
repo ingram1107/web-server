@@ -63,48 +63,72 @@ Definition at line \fB32\fP of file \fBmain\&.c\fP\&.
 34   char receiveBuffer[HTTP_HEADER_LEN] = { 0 };
 35   char serverData[HTTP_HEADER_LEN] = { 0 };
 36   int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-37   if (serverSocket == -1) printErrorAndExit("web-server");
-38 
-39   struct sockaddr_in serverAddress = {
-40     \&.sin_family = AF_INET,
-41     \&.sin_port = htons(80),          /* connect with HTTP protocol */
-42     \&.sin_addr\&.s_addr = INADDR_ANY,
-43   };
-44 
-45   int bindStatus = bind(serverSocket,
-46                         (struct sockaddr *) &serverAddress,
-47                         sizeof(serverAddress));
-48   if (bindStatus == -1) printErrorAndExit("web-server");
-49 
-50 
-51   int listenStatus = listen(serverSocket, 5);
-52   if (listenStatus == -1) printErrorAndExit("web-server");
-53 
-54   while (1) {
-55     int clientSocket;
-56     clientSocket = accept(serverSocket,
-57         (struct sockaddr *) NULL,
-58         NULL);
-59     if (clientSocket == -1) printErrorAndExit("web-server");
-60 
-61     int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
-62     if (messageSize < 0) printErrorAndExit("web-server");
-63     receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
-64 
-65     char responseMessage[HTTP_HEADER_LEN] = { 0 };
-66     int handler = handleHTTPClientRequest(messageSize-1, receiveBuffer, HTTP_HEADER_LEN, responseMessage);
-67     if (handler == -1) printErrorAndExit("web-server");
+37 
+38   if (serverSocket == -1) {
+39     printErrorAndExit("web-server");
+40   }
+41 
+42   struct sockaddr_in serverAddress = {
+43     \&.sin_family = AF_INET,
+44     \&.sin_port = htons(80),          /* connect with HTTP protocol */
+45     \&.sin_addr\&.s_addr = INADDR_ANY,
+46   };
+47 
+48   int bindStatus = bind(serverSocket,
+49                         (struct sockaddr*) &serverAddress,
+50                         sizeof(serverAddress));
+51 
+52   if (bindStatus == -1) {
+53     printErrorAndExit("web-server");
+54   }
+55 
+56 
+57   int listenStatus = listen(serverSocket, 5);
+58 
+59   if (listenStatus == -1) {
+60     printErrorAndExit("web-server");
+61   }
+62 
+63   while (1) {
+64     int clientSocket;
+65     clientSocket = accept(serverSocket,
+66                           (struct sockaddr*) NULL,
+67                           NULL);
 68 
-69     snprintf(serverData, sizeof(serverData), "%s", responseMessage);
-70     int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-71     if (responseStatus == -1) printErrorAndExit("web-server");
+69     if (clientSocket == -1) {
+70       printErrorAndExit("web-server");
+71     }
 72 
-73     close(clientSocket);
-74   }
-75   close(serverSocket);
-76 
-77   return EXIT_SUCCESS;
-78 }
+73     int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN - 1);
+74 
+75     if (messageSize < 0) {
+76       printErrorAndExit("web-server");
+77     }
+78 
+79     receiveBuffer[messageSize - 1] = '\0'; /* Null terminate the received string */
+80 
+81     char responseMessage[HTTP_HEADER_LEN] = { 0 };
+82     int handler = handleHTTPClientRequest(messageSize - 1, receiveBuffer,
+83                                           HTTP_HEADER_LEN, responseMessage);
+84 
+85     if (handler == -1) {
+86       printErrorAndExit("web-server");
+87     }
+88 
+89     snprintf(serverData, sizeof(serverData), "%s", responseMessage);
+90     int responseStatus = write(clientSocket, &serverData, strlen(serverData));
+91 
+92     if (responseStatus == -1) {
+93       printErrorAndExit("web-server");
+94     }
+95 
+96     close(clientSocket);
+97   }
+98 
+99   close(serverSocket);
+100 
+101   return EXIT_SUCCESS;
+102 }
 .fi
 .PP
 References \fBhandleHTTPClientRequest()\fP, \fBHTTP_HEADER_LEN\fP, and \fBprintErrorAndExit()\fP\&.

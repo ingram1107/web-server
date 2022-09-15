@@ -62,22 +62,22 @@ Free a HTTP request
 \end{DoxyParams}
 
 
-Definition at line \mbox{\hyperlink{http-request_8c_source_l00021}{21}} of file \mbox{\hyperlink{http-request_8c_source}{http-\/request.\+c}}.
+Definition at line \mbox{\hyperlink{http-request_8c_source_l00022}{22}} of file \mbox{\hyperlink{http-request_8c_source}{http-\/request.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00021                                                \{}
-\DoxyCodeLine{00022   \mbox{\hyperlink{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}{stackFree}}(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a4b8949796ac9300ba6ba11dcd27e1233}{headers}}, httpHeaderFree);}
-\DoxyCodeLine{00023   free(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}});}
-\DoxyCodeLine{00024   free(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}});}
-\DoxyCodeLine{00025   free(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}});}
-\DoxyCodeLine{00026   free(httpRequest);}
-\DoxyCodeLine{00027 \}}
+\DoxyCodeLine{00022                                                \{}
+\DoxyCodeLine{00023   \mbox{\hyperlink{stack_8h_a1208ba8da85afbdfcb0bc74e7223035b}{stackFree}}(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a4b8949796ac9300ba6ba11dcd27e1233}{headers}}, httpHeaderFree);}
+\DoxyCodeLine{00024   free(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a1823b852a6155b673b26f3436e86aefc}{version}});}
+\DoxyCodeLine{00025   free(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a78debcdccecf2606e01f40514e5ced05}{uri}});}
+\DoxyCodeLine{00026   free(httpRequest-\/>\mbox{\hyperlink{structHTTPRequest_a0a56419f687fbe217f99746136676963}{method}});}
+\DoxyCodeLine{00027   free(httpRequest);}
+\DoxyCodeLine{00028 \}}
 
 \end{DoxyCode}
 
 
-References \mbox{\hyperlink{http-request_8h_source_l00026}{HTTPRequest\+::headers}}, \mbox{\hyperlink{http-request_8h_source_l00020}{HTTPRequest\+::method}}, \mbox{\hyperlink{stack_8c_source_l00030}{stack\+Free()}}, \mbox{\hyperlink{http-request_8h_source_l00022}{HTTPRequest\+::uri}}, and \mbox{\hyperlink{http-request_8h_source_l00024}{HTTPRequest\+::version}}.
+References \mbox{\hyperlink{http-request_8h_source_l00026}{HTTPRequest\+::headers}}, \mbox{\hyperlink{http-request_8h_source_l00020}{HTTPRequest\+::method}}, \mbox{\hyperlink{stack_8c_source_l00033}{stack\+Free()}}, \mbox{\hyperlink{http-request_8h_source_l00022}{HTTPRequest\+::uri}}, and \mbox{\hyperlink{http-request_8h_source_l00024}{HTTPRequest\+::version}}.
 
 \mbox{\Hypertarget{http-request_8h_af6539b4106cdde75124fbbf20f2dc548}\label{http-request_8h_af6539b4106cdde75124fbbf20f2dc548}} 
 \index{http-\/request.h@{http-\/request.h}!httpRequestInit@{httpRequestInit}}
@@ -98,15 +98,16 @@ Definition at line \mbox{\hyperlink{http-request_8c_source_l00009}{9}} of file \
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00009                                    \{}
 \DoxyCodeLine{00010   \mbox{\hyperlink{structHTTPRequest}{HTTPRequest}}* newHTTPRequest = malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structHTTPRequest}{HTTPRequest}}));}
-\DoxyCodeLine{00011   \textcolor{keywordflow}{if} (!newHTTPRequest) \{}
-\DoxyCodeLine{00012     errno = ENOMEM;}
-\DoxyCodeLine{00013     perror(\textcolor{stringliteral}{"{}http-\/request"{}});}
-\DoxyCodeLine{00014     exit(EXIT\_FAILURE);}
-\DoxyCodeLine{00015   \}}
-\DoxyCodeLine{00016 }
-\DoxyCodeLine{00017   newHTTPRequest-\/>\mbox{\hyperlink{structHTTPRequest_a4b8949796ac9300ba6ba11dcd27e1233}{headers}} = \mbox{\hyperlink{stack_8h_adf6de21fc013d2fa57f3176daf9f1ea1}{stackInit}}();}
-\DoxyCodeLine{00018   \textcolor{keywordflow}{return} newHTTPRequest;}
-\DoxyCodeLine{00019 \}}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012   \textcolor{keywordflow}{if} (!newHTTPRequest) \{}
+\DoxyCodeLine{00013     errno = ENOMEM;}
+\DoxyCodeLine{00014     perror(\textcolor{stringliteral}{"{}http-\/request"{}});}
+\DoxyCodeLine{00015     exit(EXIT\_FAILURE);}
+\DoxyCodeLine{00016   \}}
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{00018   newHTTPRequest-\/>\mbox{\hyperlink{structHTTPRequest_a4b8949796ac9300ba6ba11dcd27e1233}{headers}} = \mbox{\hyperlink{stack_8h_adf6de21fc013d2fa57f3176daf9f1ea1}{stackInit}}();}
+\DoxyCodeLine{00019   \textcolor{keywordflow}{return} newHTTPRequest;}
+\DoxyCodeLine{00020 \}}
 
 \end{DoxyCode}
 

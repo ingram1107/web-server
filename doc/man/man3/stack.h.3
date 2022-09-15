@@ -81,14 +81,14 @@ Free a stack
 .PP
 
 .PP
-Definition at line \fB30\fP of file \fBstack\&.c\fP\&.
+Definition at line \fB33\fP of file \fBstack\&.c\fP\&.
 .PP
 .nf
-30                                                         {
-31   do {
-32     stackPop(stack, freeMethod);
-33   } while (stack->next);
-34 }
+33                                                         {
+34   do {
+35     stackPop(stack, freeMethod);
+36   } while (stack->next);
+37 }
 .fi
 .PP
 References \fBStackNode::next\fP, and \fBstackPop()\fP\&.
@@ -109,15 +109,16 @@ Definition at line \fB7\fP of file \fBstack\&.c\fP\&.
 .nf
 7                       {
 8   Stack newStack = malloc(sizeof(struct StackNode));
-9   if (!newStack) {
-10     errno = ENOMEM;
-11     perror("stack");
-12     exit(EXIT_FAILURE);
-13   }
-14 
-15   newStack->next = NULL;
-16   return newStack;
-17 }
+9 
+10   if (!newStack) {
+11     errno = ENOMEM;
+12     perror("stack");
+13     exit(EXIT_FAILURE);
+14   }
+15 
+16   newStack->next = NULL;
+17   return newStack;
+18 }
 .fi
 .PP
 References \fBStackNode::next\fP\&.
@@ -133,19 +134,21 @@ Pop the top element to a stack
 .PP
 
 .PP
-Definition at line \fB19\fP of file \fBstack\&.c\fP\&.
+Definition at line \fB20\fP of file \fBstack\&.c\fP\&.
 .PP
 .nf
-19                                                        {
-20   NextStackNode top;
-21 
-22   if (stack->next) {
-23     top = stack->next;
-24     stack->next = stack->next->next;
-25     freeMethod(top->element);
-26     free(top);
-27   } else fprintf(stderr, "stack: empty stack\n");
-28 }
+20                                                        {
+21   NextStackNode top;
+22 
+23   if (stack->next) {
+24     top = stack->next;
+25     stack->next = stack->next->next;
+26     freeMethod(top->element);
+27     free(top);
+28   } else {
+29     fprintf(stderr, "stack: empty stack\n");
+30   }
+31 }
 .fi
 .PP
 References \fBStackNode::element\fP, and \fBStackNode::next\fP\&.
@@ -163,23 +166,24 @@ Push an element to the top a stack
 .PP
 
 .PP
-Definition at line \fB36\fP of file \fBstack\&.c\fP\&.
+Definition at line \fB39\fP of file \fBstack\&.c\fP\&.
 .PP
 .nf
-36                                              {
-37   NextStackNode tmp;
-38 
-39   tmp = malloc(sizeof(struct StackNode));
-40   if (!tmp) {
-41     errno = ENOMEM;
-42     perror("stack");
-43     exit(EXIT_FAILURE);
-44   }
-45 
-46   tmp->element = element;
-47   tmp->next = stack->next;
-48   stack->next = tmp;
-49 }
+39                                              {
+40   NextStackNode tmp;
+41 
+42   tmp = malloc(sizeof(struct StackNode));
+43 
+44   if (!tmp) {
+45     errno = ENOMEM;
+46     perror("stack");
+47     exit(EXIT_FAILURE);
+48   }
+49 
+50   tmp->element = element;
+51   tmp->next = stack->next;
+52   stack->next = tmp;
+53 }
 .fi
 .PP
 References \fBStackNode::element\fP, and \fBStackNode::next\fP\&.
