@@ -7,11 +7,13 @@
 
 HTTPHeader* httpHeaderInit(void) {
   HTTPHeader* newHTTPHeader = malloc(sizeof(struct HTTPHeader));
+
   if (!newHTTPHeader) {
     errno = ENOMEM;
     perror("http-header");
     exit(EXIT_FAILURE);
   }
+
   return newHTTPHeader;
 }
 

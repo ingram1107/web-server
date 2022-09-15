@@ -8,6 +8,7 @@
 
 HTTPRequest* httpRequestInit(void) {
   HTTPRequest* newHTTPRequest = malloc(sizeof(struct HTTPRequest));
+
   if (!newHTTPRequest) {
     errno = ENOMEM;
     perror("http-request");

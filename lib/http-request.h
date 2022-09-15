@@ -7,7 +7,7 @@
 
 #include "stack.h"
 
-/** 
+/**
  * Shorthand for struct HTTPRequest
  */
 typedef struct HTTPRequest HTTPRequest;

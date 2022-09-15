@@ -35,20 +35,27 @@ static int parseHTTPRequest(int receiveMessageSize,
   httpRequest->version[lineLen] = '\0';
 
   Stack headers = stackInit();
-  for (; readBuffer[0] != '\r' && readBuffer[1] != '\n'; readBuffer += lineLen + 2) {
+
+  for (; readBuffer[0] != '\r'
+       && readBuffer[1] != '\n'; readBuffer += lineLen + 2) {
     HTTPHeader* currentHeader = httpHeaderInit();
     lineLen = strcspn(readBuffer, ":");
     currentHeader->name = calloc(lineLen, sizeof(char));
     strncpy(currentHeader->name, readBuffer, lineLen);
     readBuffer += lineLen + 1;
     currentHeader->name[lineLen] = '\0';
-    while (*readBuffer == ' ') readBuffer++;
+
+    while (*readBuffer == ' ') {
+      readBuffer++;
+    }
+
     lineLen = strcspn(readBuffer, CRLF);
     currentHeader->value = calloc(lineLen, sizeof(char));
     strncpy(currentHeader->value, readBuffer, lineLen);
     currentHeader->value[lineLen] = '\0';
     stackPush(currentHeader, headers);
   }
+
   httpRequest->headers = headers;
 
   fflush(stdout);
@@ -65,20 +72,25 @@ static int createHTTPResponseMessage(int httpResponseMessageSize,
                                      int httpResponseStatus)
 {
   FILE* dateCmd = popen("date -u +\"%a, %d %b %Y %T %Z\"", "r");
+
   if (dateCmd) {
     char date[1024] = { 0 };
     int dateStrSize = 0;
+
     for (int i = 0, c = fgetc(dateCmd); c != EOF; i++, c = fgetc(dateCmd)) {
       date[i] = c;
       dateStrSize++;
     }
+
     date[dateStrSize] = '\0';
 
     int returnStatus = snprintf(httpResponseMessage,
                                 httpResponseMessageSize,
-                                "HTTP/1.1 %s" CRLF "Server: web-server/0.0.1" CRLF "Last-Modified: %s" CRLF CRLF "<h1>Hello World</h1><p>Welcome to the web-server</p>",
+                                "HTTP/1.1 %s" CRLF "Server: web-server/0.0.1" CRLF "Last-Modified: %s" CRLF
+                                CRLF "<h1>Hello World</h1><p>Welcome to the web-server</p>",
                                 httpStatusStr[httpResponseStatus],
                                 date);
+
     if (returnStatus < 0) {
       errno = EILSEQ;     /* Encoding Error */
       goto cleanup;
@@ -86,6 +98,7 @@ static int createHTTPResponseMessage(int httpResponseMessageSize,
       errno = EOVERFLOW;  /* String Too Large */
       goto cleanup;
     }
+
     return 0; /* Success */
   }
 
@@ -104,7 +117,8 @@ int handleHTTPClientRequest(int receiveMessageSize,
   int httpParseStatus = parseHTTPRequest(receiveMessageSize,
                                          receiveMessage,
                                          httpRequest);
-  if (httpParseStatus == -1 ) {
+
+  if (httpParseStatus == -1) {
     fprintf(stderr, "web-server: Failed to parse HTTP request header\n");
     fprintf(stderr, "web-server: Received HTTP request as follows:\n%s",
             receiveMessage);
@@ -115,20 +129,28 @@ int handleHTTPClientRequest(int receiveMessageSize,
   printf("web-server: HTTP request uri: %s\n", httpRequest->uri);
   printf("web-server: HTTP request version: %s\n", httpRequest->version);
 
-  for (NextStackNode currentHeader = httpRequest->headers->next; currentHeader != NULL; currentHeader = currentHeader->next) {
-    printf("web-server: HTTP header: %s: %s\n", currentHeader->element->name, currentHeader->element->value);
+  for (NextStackNode currentHeader = httpRequest->headers->next;
+       currentHeader != NULL; currentHeader = currentHeader->next) {
+    printf("web-server: HTTP header: %s: %s\n", currentHeader->element->name,
+           currentHeader->element->value);
   }
 
   int httpRequestMethodHandler = -1;
+
   for (int i = 0; i <= PATCH; i++)
-    if (strcmp(httpRequest->method, httpMethodStr[i]) == 0)
+    if (strcmp(httpRequest->method, httpMethodStr[i]) == 0) {
       httpRequestMethodHandler = i;
+    }
 
   switch (httpRequestMethodHandler) {
     case GET:
-      if (createHTTPResponseMessage(responseMessageSize, responseMessage, OK) == -1)
+      if (createHTTPResponseMessage(responseMessageSize, responseMessage,
+                                    OK) == -1) {
         return -1;  /* Failure */
+      }
+
       break;
+
     case HEAD:
     case POST:
     case PUT:
@@ -137,15 +159,23 @@ int handleHTTPClientRequest(int receiveMessageSize,
     case OPTIONS:
     case TRACE:
     case PATCH:
-      if (createHTTPResponseMessage(responseMessageSize, responseMessage, METHOD_NOT_ALLOWED) == -1)
+      if (createHTTPResponseMessage(responseMessageSize, responseMessage,
+                                    METHOD_NOT_ALLOWED) == -1) {
         return -1;  /* Failure */
+      }
+
       break;
+
     default:
-      if (createHTTPResponseMessage(responseMessageSize, responseMessage, NOT_IMPLEMENTED) == -1)
+      if (createHTTPResponseMessage(responseMessageSize, responseMessage,
+                                    NOT_IMPLEMENTED) == -1) {
         return -1;  /* Failure */
+      }
+
       break;
   };
 
   httpRequestFree(httpRequest);
+
   return 0; /* Success */
 };

@@ -34,7 +34,10 @@ int main(void) {
   char receiveBuffer[HTTP_HEADER_LEN] = { 0 };
   char serverData[HTTP_HEADER_LEN] = { 0 };
   int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-  if (serverSocket == -1) printErrorAndExit("web-server");
+
+  if (serverSocket == -1) {
+    printErrorAndExit("web-server");
+  }
 
   struct sockaddr_in serverAddress = {
     .sin_family = AF_INET,
@@ -43,35 +46,56 @@ int main(void) {
   };
 
   int bindStatus = bind(serverSocket,
-                        (struct sockaddr *) &serverAddress,
+                        (struct sockaddr*) &serverAddress,
                         sizeof(serverAddress));
-  if (bindStatus == -1) printErrorAndExit("web-server");
+
+  if (bindStatus == -1) {
+    printErrorAndExit("web-server");
+  }
 
 
   int listenStatus = listen(serverSocket, 5);
-  if (listenStatus == -1) printErrorAndExit("web-server");
+
+  if (listenStatus == -1) {
+    printErrorAndExit("web-server");
+  }
 
   while (1) {
     int clientSocket;
     clientSocket = accept(serverSocket,
-        (struct sockaddr *) NULL,
-        NULL);
-    if (clientSocket == -1) printErrorAndExit("web-server");
+                          (struct sockaddr*) NULL,
+                          NULL);
 
-    int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN-1);
-    if (messageSize < 0) printErrorAndExit("web-server");
-    receiveBuffer[messageSize-1] = '\0';  /* Null terminate the received string */
+    if (clientSocket == -1) {
+      printErrorAndExit("web-server");
+    }
+
+    int messageSize = read(clientSocket, receiveBuffer, HTTP_HEADER_LEN - 1);
+
+    if (messageSize < 0) {
+      printErrorAndExit("web-server");
+    }
+
+    receiveBuffer[messageSize - 1] = '\0'; /* Null terminate the received string */
 
     char responseMessage[HTTP_HEADER_LEN] = { 0 };
-    int handler = handleHTTPClientRequest(messageSize-1, receiveBuffer, HTTP_HEADER_LEN, responseMessage);
-    if (handler == -1) printErrorAndExit("web-server");
+    int handler = handleHTTPClientRequest(messageSize - 1, receiveBuffer,
+                                          HTTP_HEADER_LEN, responseMessage);
+
+    if (handler == -1) {
+      printErrorAndExit("web-server");
+    }
 
     snprintf(serverData, sizeof(serverData), "%s", responseMessage);
     int responseStatus = write(clientSocket, &serverData, strlen(serverData));
-    if (responseStatus == -1) printErrorAndExit("web-server");
+
+    if (responseStatus == -1) {
+      printErrorAndExit("web-server");
+    }
 
     close(clientSocket);
   }
+
   close(serverSocket);
 
   return EXIT_SUCCESS;

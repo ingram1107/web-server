@@ -1,7 +1,7 @@
 #ifndef HTTP_HEADER_H
 #define HTTP_HEADER_H
 
-/** 
+/**
  *  Shorthand for struct HTTPHeader
  */
 typedef struct HTTPHeader HTTPHeader;
