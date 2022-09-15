@@ -10,3 +10,4 @@ but if you have any idea on time, feel free to contribute to this.
 - GCC (12.2)
 - Doxygen (1.9.3)
 - CMake (3.24.1)
+- AStyle (3.)
