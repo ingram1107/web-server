@@ -6,7 +6,19 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_FLAG "-Wall -Wextra -Wformat-nonliteral -Wcast-align
   -Wpointer-arith -Wbad-function-cast -Wmissing-prototypes -Wstrict-prototypes
   -Wmissing-declarations -Winline -Wundef -Wnested-externs -Wcast-qual -Wshadow
-  -Wwrite-strings -Wno-unused-parameter -Wfloat-equal -pedantic -ansi")
+  -Wwrite-strings -Wno-unused-parameter -Wfloat-equal -pedantic -ansi -O2")
+
+option(CMAKE_C_ASAN "Enable address sanitiser" OFF)
+option(CMAKE_C_UBSAN "Enable undefined behaviour sanitiser" OFF)
+option(CMAKE_C_TSAN "Enable thread sanitiser" OFF)
+
+if(CMAKE_C_ASAN)
+  add_compile_options("-lasan -fsanitize=address")
+elseif(CMAKE_C_UBSAN)
+  add_compile_options("-lubsan -fsanitize=undefined")
+elseif(CMAKE_C_TSAN)
+  add_compile_options("-ltsan -fsanitize=thread")
+endif()
 
 find_package(Doxygen)
 option(BUILD_DOCS "Creating documentation" ${DOXYGEN_FOUND})
