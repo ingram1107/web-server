@@ -76,7 +76,7 @@ static int createHTTPResponseMessage(int httpResponseMessageSize,
 
     int returnStatus = snprintf(httpResponseMessage,
                                 httpResponseMessageSize,
-                                "HTTP/1.1 %sServer: web-server/0.0.1" CRLF "Last-Modified: %s" CRLF CRLF "<h1>Hello World</h1><p>Welcome to the web-server</p>",
+                                "HTTP/1.1 %s" CRLF "Server: web-server/0.0.1" CRLF "Last-Modified: %s" CRLF CRLF "<h1>Hello World</h1><p>Welcome to the web-server</p>",
                                 httpStatusStr[httpResponseStatus],
                                 date);
     if (returnStatus < 0) {
